@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tanvir's Portfolio | ML | AI | IoT</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Responsive HTML5 Website landing Page for Developers">
+    <meta name="author" content="3rd Wave Media">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <img class="profile-image img-responsive pull-left" src="assets/images/profile.png" alt="Tanvir" />
+            <div class="profile-content pull-left">
+                <h1 class="name">Md Tanvir Ahmmed Rasel</h1>
+                <h2 class="desc">AI, ML and IoT Specialist</h2>
+                <ul class="social list-inline">
+                    <li><a href="#"><i class="fa fa-github"></i></a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="container sections-wrapper">
+        <div class="row">
+            <div class="primary col-md-8 col-sm-12 col-xs-12">
+                <section class="latest section">
+                    <div class="section-inner">
+                        <h2 class="heading">Latest Projects</h2>
+                        <div class="content">
+
+                            <!-- First 3 projects (Always visible) -->
+                            <div class="item project">
+                                <h3 class="title"><a href="#">KickStarter - Potato Salad App</a></h3>
+                                <p class="summary">A mobile app to help you make delicious potato salad.</p>
+                            </div>
+
+                            <div class="item project">
+                                <h3 class="title"><a href="#">Velocity - Designed for Products</a></h3>
+                                <p class="summary">A Bootstrap theme designed for product marketing.</p>
+                            </div>
+
+                            <div class="item project">
+                                <h3 class="title"><a href="#">Tempo - Designed for Startups</a></h3>
+                                <p class="summary">A sleek Bootstrap theme designed for startups.</p>
+                            </div>
+
+                            <!-- Hidden projects (Initially hidden) -->
+                            <div id="more-projects" style="display: none;">
+                                <div class="item project">
+                                    <h3 class="title"><a href="#">Delta - Designed for Mobile Apps</a></h3>
+                                    <p class="summary">A clean Bootstrap theme for mobile apps.</p>
+                                </div>
+
+                                <div class="item project">
+                                    <h3 class="title"><a href="#">Project Alpha</a></h3>
+                                    <p class="summary">A revolutionary AI-driven web application.</p>
+                                </div>
+
+                                <div class="item project">
+                                    <h3 class="title"><a href="#">IoT Smart Home</a></h3>
+                                    <p class="summary">A smart home automation project using IoT.</p>
+                                </div>
+                            </div>
+
+                            <!-- View More Button -->
+                            <button id="viewMoreBtn" class="btn btn-cta-secondary">View More Projects</button>
+
+                        </div><!--//content-->
+                    </div><!--//section-inner-->
+                </section><!--//section-->
+
+                <!-- Keeping your previous sections intact (Skills, Experience, Testimonials, Education, etc.) -->
+                <section class="skills section">
+                    <div class="section-inner">
+                        <h2 class="heading">Skills</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="level-title">Python <span class="level-label">Expert</span></h3>
+                            </div>
+                            <div class="item">
+                                <h3 class="level-title">Machine Learning <span class="level-label">Expert</span></h3>
+                            </div>
+                            <div class="item">
+                                <h3 class="level-title">AI <span class="level-label">Expert</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="experience section">
+                    <div class="section-inner">
+                        <h2 class="heading">Work Experience</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title">Associate Developer (AI) - <span class="place">AKIJ iBOS Limited</span></h3>
+                                <p>Working on AI-driven automation, SaaS, and IoT solutions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="education section">
+                    <div class="section-inner">
+                        <h2 class="heading">Education</h2>
+                        <div class="content">
+                            <div class="item">
+                                <h3 class="title">BSc Computer Science</h3>
+                                <h4 class="university">IUBAT (2019-2023)</h4>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div><!--//primary-->
+        </div><!--//row-->
+    </div><!--//container-->
+
+    <footer class="footer">
+        <div class="container text-center">
+            <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="#">Tanvir</a></small>
+        </div>
+    </footer>
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="assets/plugins/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById("viewMoreBtn").addEventListener("click", function() {
+            var hiddenProjects = document.getElementById("more-projects");
+            if (hiddenProjects.style.display === "none") {
+                hiddenProjects.style.display = "block";
+                this.textContent = "View Less Projects";
+            } else {
+                hiddenProjects.style.display = "none";
+                this.textContent = "View More Projects";
+            }
+        });
+    </script>
+</body>
+</html>
