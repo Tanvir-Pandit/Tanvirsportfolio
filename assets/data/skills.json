@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Python",
+    "level": "Expert",
+    "percent": "100%",
+    "subSkills": [
+      "Loops & Conditionals",
+      "Object-Oriented Programming (OOP)",
+      "Data Structures",
+      "Multithreading"
+    ]
+  },
+  {
+    "title": "Machine Learning",
+    "level": "Expert",
+    "percent": "96%",
+    "subSkills": [
+      "TensorFlow",
+      "PyTorch",
+      "Scikit-learn",
+      "Model Optimization"
+    ]
+  },
+  {
+    "title": "AI",
+    "level": "Expert",
+    "percent": "100%",
+    "subSkills": [
+      "Natural Language Processing (NLP)",
+      "Computer Vision",
+      "Reinforcement Learning",
+      "Generative AI"
+    ]
+  },
+  {
+    "title": "Ruby on Rails",
+    "level": "Pro",
+    "percent": "85%",
+    "subSkills": [
+      "Active Record",
+      "RESTful APIs",
+      "Authentication & Authorization",
+      "Background Jobs"
+    ]
+  }
+]

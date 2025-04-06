@@ -1,34 +1,52 @@
 [
   {
+    "id": "1",
     "title": "KickStarter - Potato Salad App",
     "summary": "A mobile app to help you make delicious potato salad.",
     "image": "assets/images/projects/project-featured.png",
     "link": "./sub_pages/project1.html",
     "type": "App",
-    "date": "2025-03-30"
+    "date": "2025-03-30",
+    "description": "This project was inspired by a viral Kickstarter campaign. It's a fun, interactive mobile app that helps users create the perfect potato salad through step-by-step guidance, shopping lists, and potato science tips. Built using React Native and Firebase."
   },
   {
+    "id": "2",
     "title": "Velocity - Designed for Products",
     "summary": "Responsive product showcase template.",
     "image": "assets/images/projects/project-4.png",
-    "link": "https://example.com/velocity",
+    "link": "https://themes.3rdwavemedia.com/velocity",
     "type": "Web",
-    "date": "2025-03-20"
+    "date": "2025-03-20",
+    "description": "Velocity is a Bootstrap-based responsive HTML5 theme ideal for promoting product-based startups. It includes sections for product features, pricing, testimonials, and contact forms. Designed with speed and mobile usability in mind."
   },
   {
+    "id": "3",
     "title": "Tempo - Designed for Startups",
     "summary": "Startup landing page template.",
     "image": "assets/images/projects/project-1.png",
-    "link": "https://example.com/tempo",
+    "link": "https://wrapbootstrap.com/theme/tempo-designed-for-startups-WB07364T3?ref=3wm",
     "type": "Web",
-    "date": "2025-03-10"
+    "date": "2025-03-10",
+    "description": "Tempo is a modern, clean startup template tailored for early-stage companies. It features lead generation forms, calls to action, animated content, and smooth scrolling. Built with SCSS, jQuery, and minimal dependencies."
   },
   {
+    "id": "4",
     "title": "Delta - Mobile App Template",
     "summary": "Designed for mobile apps promotion.",
     "image": "assets/images/projects/project-2.png",
-    "link": "https://example.com/delta",
+    "link": "https://wrapbootstrap.com/theme/delta-promote-mobile-app-effectively-WB09R23P8?ref=3wm",
     "type": "App",
-    "date": "2025-02-25"
+    "date": "2025-02-25",
+    "description": "Delta is a beautiful landing page template for promoting mobile apps. It includes sections for app features, screenshots, testimonials, and download CTAs. Optimized for conversion and performance. Ideal for iOS/Android app marketing."
+  },
+  {
+    "id": "5",
+    "title": "AAAAAAAAA",
+    "summary": "Designed for mobile apps promotion.",
+    "image": "assets/images/projects/project-2.png",
+    "link": "https://wrapbootstrap.com/theme/delta-promote-mobile-app-effectively-WB09R23P8?ref=3wm",
+    "type": "App",
+    "date": "2025-04-06",
+    "description": "Delta is a beautiful landing page template for promoting mobile apps. It includes sections for app features, screenshots, testimonials, and download CTAs. Optimized for conversion and performance. Ideal for iOS/Android app marketing."
   }
 ]
