@@ -62,16 +62,28 @@ jQuery(document).ready(function ($) {
     $('#projects-container').html('<p><strong>Error loading projects.json</strong></p>');
   });
 
+  // Helper to calculate level label from percent
+  function getLevelLabel(percent) {
+    const p = parseInt(percent);
+    if (p >= 95) return 'Expert';
+    if (p >= 85) return 'Pro';
+    if (p >= 70) return 'Intermediate';
+    if (p >= 50) return 'Beginner';
+    return 'Learning';
+  }
+
   // Load Skills Dynamically
   $.getJSON('assets/data/skills.json', function (skills) {
     const skillsContainer = $('#skills-container');
 
     skills.forEach(skill => {
       const subSkills = skill.subSkills.map(s => `<li>${s}</li>`).join('');
+      const levelLabel = getLevelLabel(skill.percent);
+
       const skillHtml = `
         <div class="item">
           <h3 class="level-title">${skill.title}
-            <span class="level-label" data-toggle="tooltip" data-placement="left" title="${skill.level}">${skill.level}</span>
+            <span class="level-label" data-toggle="tooltip" data-placement="left" title="${levelLabel}">${levelLabel}</span>
           </h3>
           <div class="level-bar">
             <div class="level-bar-inner" data-level="${skill.percent}"></div>

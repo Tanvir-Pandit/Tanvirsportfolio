@@ -31,7 +31,7 @@ $(document).ready(function () {
         <h3>Details</h3>
         <p>${project.description || 'No additional details available.'}</p>
 
-        <p><a href="${project.link}" class="btn btn-primary" target="_blank"><i class="fa fa-external-link"></i> Visit Project</a></p>
+        <p><a href="${project.link}" class="btn btn-primary" target="_blank"><i class="fa fa-external-link"></i> Visit on GitHub</a></p>
       </div>
     `;
 
