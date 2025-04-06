@@ -1,0 +1,34 @@
+[
+  {
+    "title": "KickStarter - Potato Salad App",
+    "summary": "A mobile app to help you make delicious potato salad.",
+    "image": "assets/images/projects/project-featured.png",
+    "link": "./sub_pages/project1.html",
+    "type": "App",
+    "date": "2025-03-30"
+  },
+  {
+    "title": "Velocity - Designed for Products",
+    "summary": "Responsive product showcase template.",
+    "image": "assets/images/projects/project-4.png",
+    "link": "https://example.com/velocity",
+    "type": "Web",
+    "date": "2025-03-20"
+  },
+  {
+    "title": "Tempo - Designed for Startups",
+    "summary": "Startup landing page template.",
+    "image": "assets/images/projects/project-1.png",
+    "link": "https://example.com/tempo",
+    "type": "Web",
+    "date": "2025-03-10"
+  },
+  {
+    "title": "Delta - Mobile App Template",
+    "summary": "Designed for mobile apps promotion.",
+    "image": "assets/images/projects/project-2.png",
+    "link": "https://example.com/delta",
+    "type": "App",
+    "date": "2025-02-25"
+  }
+]

@@ -1,59 +1,55 @@
-jQuery(document).ready(function($) {
-
-
-    /*======= Skillset *=======*/
-    
-    $('.level-bar-inner').css('width', '0');
-    
-    $(window).on('load', function() {
-
-        $('.level-bar-inner').each(function() {
-        
-            var itemWidth = $(this).data('level');
-            
-            $(this).animate({
-                width: itemWidth
-            }, 800);
-            
-        });
-
+jQuery(document).ready(function ($) {
+  // Skill bar animation
+  $('.level-bar-inner').css('width', '0');
+  $(window).on('load', function () {
+    $('.level-bar-inner').each(function () {
+      var itemWidth = $(this).data('level');
+      $(this).animate({ width: itemWidth }, 800);
     });
-    
-    /* Bootstrap Tooltip for Skillset */
-    $('.level-label').tooltip();
-    
-    /* jQuery RSS - https://github.com/sdepold/jquery-rss */
-    $("#rss-feeds").rss(
-    
-        //Change this to your own rss feeds
-        "http://feeds.feedburner.com/TechCrunch/startups",
-        
-        {
-        // how many entries do you want?
-        // default: 4
-        // valid values: any integer
-        limit: 3,
-        
-        // the effect, which is used to let the entries appear
-        // default: 'show'
-        // valid values: 'show', 'slide', 'slideFast', 'slideSynced', 'slideFastSynced'
-        effect: 'slideFastSynced',
-        
-        // outer template for the html transformation
-        // default: "<ul>{entries}</ul>"
-        // valid values: any string
-        layoutTemplate: "<div class='item'>{entries}</div>",
-        
-        // inner template for each entry
-        // default: '<li><a href="{url}">[{author}@{date}] {title}</a><br/>{shortBodyPlain}</li>'
-        // valid values: any string
-        entryTemplate: '<h3 class="title"><a href="{url}" target="_blank">{title}</a></h3><div><p>{shortBodyPlain}</p><a class="more-link" href="{url}" target="_blank"><i class="fa fa-external-link"></i>Read more</a></div>'
-        
-        }
-    );
-    
-    /* Github Activity Feed - https://github.com/caseyscarborough/github-activity */
-    GitHubActivity.feed({ username: "caseyscarborough", selector: "#ghfeed" });
+  });
 
+  // Tooltip
+  $('.level-label').tooltip();
 
+  // Load Projects Dynamically
+  let allProjects = [];
+  let shownProjects = 3;
+
+  function renderProjects(projects) {
+    const container = $('#projects-container');
+    container.empty();
+
+    projects.forEach(project => {
+      const html = `
+        <div class="item row">
+          <a class="col-md-4 col-sm-4 col-xs-12" href="${project.link}" target="_blank">
+            <img class="img-responsive project-image" src="${project.image}" alt="${project.title}" />
+          </a>
+          <div class="desc col-md-8 col-sm-8 col-xs-12">
+            <h3 class="title"><a href="${project.link}" target="_blank">${project.title}</a></h3>
+            <p>${project.summary}</p>
+            <p><small><i class="fa fa-calendar"></i> ${project.date}</small></p>
+          </div>
+        </div>
+        <hr class="divider"/>
+      `;
+      container.append(html);
+    });
+  }
+
+  $.getJSON('assets/data/projects.json', function (data) {
+    allProjects = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+    renderProjects(allProjects.slice(0, shownProjects));
+
+    if (allProjects.length <= shownProjects) {
+      $('#show-more-btn').hide();
+    }
+
+    $('#show-more-btn').on('click', function () {
+      renderProjects(allProjects);
+      $(this).hide();
+    });
+  }).fail(function () {
+    $('#projects-container').html('<p><strong>Error loading projects.json</strong></p>');
+  });
 });
