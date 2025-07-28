@@ -1,0 +1,39 @@
+{
+  "personalInfo": {
+    "fullName": "Md Tanvir Ahmmed Rasel",
+    "title": "AI, ML and IoT Specialist",
+    "tagline": "AI, ML and IoT Specialist",
+    "bio": "I am an experienced AI and IoT expert with a strong background in software development, machine learning, and embedded systems. With a passion for automation, computer vision, and large language models, I specialize in developing cutting-edge solutions that bridge artificial intelligence with real-world applications. Currently working as an Associate Developer (AI) at iBOS Limited, a concern of Akij Group, I focus on AI-driven software development, automation, and SaaS-based solutions.",
+    "bioParagraph2": "My interest in research extends to RPA (Robotic Process Automation), Large Language Models (LLM), and Forecasting.",
+    "profileImage": "assets/images/profile.png"
+  },
+  "contactInfo": {
+    "location": "Dhaka, Bangladesh",
+    "email": "tanvirrcse@gmail.com",
+    "website": "http://www.website.com",
+    "phone": ""
+  },
+  "socialLinks": {
+    "github": "https://github.com/yourusername",
+    "linkedin": "https://linkedin.com/in/yourusername",
+    "googleplus": "",
+    "twitter": "",
+    "hackerNews": ""
+  },
+  "siteInfo": {
+    "pageTitle": "Tanvir's Portfolio | ML | AI | IoT",
+    "metaDescription": "Responsive HTML5 Website landing Page for Developers",
+    "metaAuthor": "Tanvir",
+    "copyrightText": "Designed with <i class=\"fa fa-heart\"></i> by <a href=\"#\">Tanvir</a>",
+    "ctaButtonText": "Contact Me",
+    "ctaButtonLink": "#"
+  },
+  "sections": {
+    "aboutTitle": "About Me",
+    "projectsTitle": "Latest Projects",
+    "githubTitle": "My GitHub",
+    "skillsTitle": "Skills",
+    "showMoreButtonText": "Show More",
+    "showLessButtonText": "Show Less"
+  }
+}

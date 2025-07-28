@@ -3,6 +3,7 @@ class DataManager {
   constructor() {
     this.projects = [];
     this.skills = [];
+    this.profile = {};
     this.initialized = false;
   }
 
@@ -11,7 +12,8 @@ class DataManager {
     
     await Promise.all([
       this.loadProjects(),
-      this.loadSkills()
+      this.loadSkills(),
+      this.loadProfile()
     ]);
     
     this.initialized = true;
@@ -79,12 +81,47 @@ class DataManager {
     return this.skills;
   }
 
+  async loadProfile() {
+    try {
+      // First check if admin has modified data in localStorage
+      const adminProfile = localStorage.getItem('portfolio_profile');
+      
+      if (adminProfile) {
+        try {
+          this.profile = JSON.parse(adminProfile);
+          console.log('Loaded profile from admin modifications');
+          return this.profile;
+        } catch (e) {
+          console.warn('Failed to parse admin profile, falling back to original');
+        }
+      }
+      
+      // Fallback to original JSON file
+      const response = await fetch('assets/data/profile.json');
+      if (response.ok) {
+        this.profile = await response.json();
+        console.log('Loaded profile from original JSON file');
+      } else {
+        throw new Error('Failed to load profile.json');
+      }
+    } catch (error) {
+      console.error('Error loading profile:', error);
+      this.profile = {};
+    }
+    
+    return this.profile;
+  }
+
   getProjects() {
     return this.projects;
   }
 
   getSkills() {
     return this.skills;
+  }
+
+  getProfile() {
+    return this.profile;
   }
 
   getProject(id) {
@@ -107,7 +144,7 @@ class DataManager {
   // Listen for changes from admin panel
   onDataChange(callback) {
     window.addEventListener('storage', (e) => {
-      if (e.key === 'portfolioProjects' || e.key === 'portfolioSkills') {
+      if (e.key === 'portfolioProjects' || e.key === 'portfolioSkills' || e.key === 'portfolioProfile') {
         this.init().then(() => {
           callback();
         });

@@ -1,10 +1,184 @@
 // Admin Panel JavaScript
 let projects = [];
 let skills = [];
+let profile = {};
 let currentEditingProject = null;
 let currentEditingSkill = null;
 
+// Load profile data
+async function loadProfile() {
+  try {
+    await window.dataManager.init();
+    profile = window.dataManager.getProfile();
+    populateProfileForms();
+  } catch (error) {
+    console.error('Error loading profile:', error);
+    showAlert('Error loading profile data', 'error');
+  }
+}
+
+// Populate profile forms with current data
+function populateProfileForms() {
+  // Update status indicators
+  const hasLocalData = localStorage.getItem('portfolio_profile');
+  $('#profileStatus').text(Object.keys(profile).length > 0 ? 'Loaded Successfully' : 'Load Failed');
+  $('#profileSource').text(hasLocalData ? 'Custom Data (LocalStorage)' : 'Default JSON File');
+  
+  // Personal Information
+  if (profile.personalInfo) {
+    $('#fullName').val(profile.personalInfo.fullName || '');
+    $('#title').val(profile.personalInfo.title || '');
+    $('#location').val(profile.personalInfo.location || '');
+    $('#bio').val(profile.personalInfo.bio || '');
+    $('#bioParagraph2').val(profile.personalInfo.bioParagraph2 || '');
+    const imagePath = profile.personalInfo.profileImage || 'assets/images/profile.png';
+    $('#profileImagePath').val(imagePath);
+    
+    // Show current image
+    if (imagePath !== 'assets/images/profile.png') {
+      $('.custom-file-label[for="profileImageUpload"]').text('Current: ' + imagePath.split('/').pop());
+    }
+  }
+  
+  // Contact Information
+  if (profile.contactInfo) {
+    $('#email').val(profile.contactInfo.email || '');
+    $('#phone').val(profile.contactInfo.phone || '');
+    $('#website').val(profile.contactInfo.website || '');
+    $('#cv').val(profile.contactInfo.cv || '');
+  }
+  
+  // Social Links
+  if (profile.socialLinks) {
+    $('#github').val(profile.socialLinks.github || '');
+    $('#linkedin').val(profile.socialLinks.linkedin || '');
+    $('#twitter').val(profile.socialLinks.twitter || '');
+    $('#behance').val(profile.socialLinks.behance || '');
+    $('#dribbble').val(profile.socialLinks.dribbble || '');
+    $('#instagram').val(profile.socialLinks.instagram || '');
+    $('#facebook').val(profile.socialLinks.facebook || '');
+  }
+  
+  // Site Settings
+  if (profile.siteInfo) {
+    $('#siteTitle').val(profile.siteInfo.title || '');
+    $('#siteDescription').val(profile.siteInfo.description || '');
+    $('#siteKeywords').val(profile.siteInfo.keywords || '');
+    $('#copyrightText').val(profile.siteInfo.copyright || '');
+    $('#welcomeMessage').val(profile.siteInfo.welcomeMessage || '');
+  }
+}
+
+// Save Personal Information
+function savePersonalInfo() {
+  profile.personalInfo = {
+    fullName: $('#fullName').val() || '',
+    title: $('#title').val() || '',
+    location: $('#location').val() || '',
+    bio: $('#bio').val() || '',
+    bioParagraph2: $('#bioParagraph2').val() || '',
+    profileImage: $('#profileImagePath').val() || 'assets/images/profile.png'
+  };
+  
+  saveProfileData();
+  showAlert('Personal information saved successfully!', 'success');
+}
+
+// Save Contact Information
+function saveContactInfo() {
+  profile.contactInfo = {
+    email: $('#email').val() || '',
+    phone: $('#phone').val() || '',
+    website: $('#website').val() || '',
+    cv: $('#cv').val() || ''
+  };
+  
+  saveProfileData();
+  showAlert('Contact information saved successfully!', 'success');
+}
+
+// Save Social Links
+function saveSocialLinks() {
+  profile.socialLinks = {
+    github: $('#github').val() || '',
+    linkedin: $('#linkedin').val() || '',
+    twitter: $('#twitter').val() || '',
+    behance: $('#behance').val() || '',
+    dribbble: $('#dribbble').val() || '',
+    instagram: $('#instagram').val() || '',
+    facebook: $('#facebook').val() || ''
+  };
+  
+  saveProfileData();
+  showAlert('Social links saved successfully!', 'success');
+}
+
+// Save Site Settings
+function saveSiteSettings() {
+  profile.siteInfo = {
+    title: $('#siteTitle').val() || '',
+    description: $('#siteDescription').val() || '',
+    keywords: $('#siteKeywords').val() || '',
+    copyright: $('#copyrightText').val() || '',
+    welcomeMessage: $('#welcomeMessage').val() || ''
+  };
+  
+  saveProfileData();
+  showAlert('Site settings saved successfully!', 'success');
+}
+
+// Save profile data to localStorage
+function saveProfileData() {
+  localStorage.setItem('portfolio_profile', JSON.stringify(profile));
+  
+  // Update the dataManager's profile data as well
+  if (window.dataManager) {
+    window.dataManager.profile = profile;
+  }
+  
+  // Trigger profile change event for real-time updates
+  $(document).trigger('profileChanged', [profile]);
+  
+  // For development: log the saved data
+  console.log('Profile saved:', profile);
+}
+
+// View current profile data
+function viewCurrentProfile() {
+  const currentData = {
+    'From localStorage': JSON.parse(localStorage.getItem('portfolio_profile') || '{}'),
+    'Current form data': profile
+  };
+  
+  console.log('Current Profile Data:', currentData);
+  
+  const message = `
+    <h5>Current Profile Data Status:</h5>
+    <p><strong>LocalStorage:</strong> ${localStorage.getItem('portfolio_profile') ? 'Has custom data' : 'Using default JSON'}</p>
+    <p><strong>Loaded Profile:</strong> ${Object.keys(profile).length > 0 ? 'Successfully loaded' : 'Empty/Error'}</p>
+    <p>Check browser console for detailed data view.</p>
+  `;
+  
+  showAlert(message, 'info', 8000);
+}
+
+// Reset profile to default JSON
+function resetProfileToDefault() {
+  if (confirm('Are you sure you want to reset all profile data to default? This will remove all your customizations.')) {
+    localStorage.removeItem('portfolio_profile');
+    
+    // Reload profile from original JSON
+    loadProfile().then(() => {
+      showAlert('Profile reset to default successfully!', 'success');
+    });
+  }
+}
+
 $(document).ready(function() {
+  // Initialize managers
+  window.dataManager = new DataManager();
+  window.imageManager = new ImageManager();
+  
   // Check authentication
   if (localStorage.getItem('adminLoggedIn') !== 'true') {
     window.location.href = 'index.html';
@@ -17,7 +191,21 @@ $(document).ready(function() {
   // Load data
   loadProjects();
   loadSkills();
+  loadProfile();
   updateStats();
+  
+  // Profile image upload handler
+  $(document).on('change', '#profileImageUpload', function() {
+    const file = this.files[0];
+    if (file) {
+      $('.custom-file-label').text(file.name);
+      handleImageUpload(file, function(imagePath) {
+        if (imagePath) {
+          $('#profileImagePath').val(imagePath);
+        }
+      });
+    }
+  });
   
   // Image upload handler
   $(document).on('change', '#projectImageFile', function() {
@@ -35,6 +223,27 @@ $(document).ready(function() {
   // Update skill percent display
   $(document).on('input', '#skillPercent', function() {
     $('#percentValue').text($(this).val() + '%');
+  });
+  
+  // Profile form save handlers
+  $('#savePersonalInfo').on('click', function(e) {
+    e.preventDefault();
+    savePersonalInfo();
+  });
+  
+  $('#saveContactInfo').on('click', function(e) {
+    e.preventDefault();
+    saveContactInfo();
+  });
+  
+  $('#saveSocialLinks').on('click', function(e) {
+    e.preventDefault();
+    saveSocialLinks();
+  });
+  
+  $('#saveSiteSettings').on('click', function(e) {
+    e.preventDefault();
+    saveSiteSettings();
   });
 });
 

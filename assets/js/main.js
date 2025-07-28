@@ -41,10 +41,131 @@ jQuery(document).ready(function ($) {
     });
   }
 
+  // Load profile data and update page content
+  async function loadProfile() {
+    try {
+      await window.dataManager.init();
+      const profile = window.dataManager.getProfile();
+      
+      console.log('Profile loaded:', profile); // Debug log
+      
+      if (profile && Object.keys(profile).length > 0) {
+        // Update page title
+        if (profile.siteInfo?.title) {
+          document.title = profile.siteInfo.title;
+        }
+        
+        // Update meta tags
+        if (profile.siteInfo?.description) {
+          $('meta[name="description"]').attr('content', profile.siteInfo.description);
+        }
+        if (profile.siteInfo?.keywords) {
+          $('meta[name="keywords"]').attr('content', profile.siteInfo.keywords);
+        }
+        
+        // Update header content
+        if (profile.personalInfo?.fullName) {
+          $('.name').text(profile.personalInfo.fullName);
+        }
+        if (profile.personalInfo?.title) {
+          $('.desc').text(profile.personalInfo.title);
+        }
+        if (profile.personalInfo?.profileImage) {
+          const profileImageSrc = window.dataManager.getImageSrc(profile.personalInfo.profileImage);
+          $('.profile-image').attr('src', profileImageSrc);
+        }
+        
+        // Update social links
+        if (profile.socialLinks) {
+          const socialContainer = $('.social');
+          const socialLinks = [
+            { icon: 'fa-github', url: profile.socialLinks.github },
+            { icon: 'fa-linkedin', url: profile.socialLinks.linkedin },
+            { icon: 'fa-twitter', url: profile.socialLinks.twitter },
+            { icon: 'fa-behance', url: profile.socialLinks.behance },
+            { icon: 'fa-dribbble', url: profile.socialLinks.dribbble },
+            { icon: 'fa-instagram', url: profile.socialLinks.instagram },
+            { icon: 'fa-facebook', url: profile.socialLinks.facebook }
+          ];
+          
+          socialContainer.empty();
+          socialLinks.forEach((link, index) => {
+            if (link.url) {
+              const isLast = index === socialLinks.filter(l => l.url).length - 1;
+              const html = `<li${isLast ? ' class="last-item"' : ''}><a href="${link.url}" target="_blank"><i class="fa ${link.icon}"></i></a></li>`;
+              socialContainer.append(html);
+            }
+          });
+        }
+        
+        // Update CTA button
+        if (profile.siteInfo?.welcomeMessage) {
+          $('.btn-cta-primary').html(`<i class="fa fa-paper-plane"></i> ${profile.siteInfo.welcomeMessage}`);
+        }
+        
+        // Update contact info
+        if (profile.contactInfo) {
+          const contactList = $('.info .content ul');
+          contactList.empty();
+          
+          if (profile.personalInfo?.location) {
+            contactList.append(`<li><i class="fa fa-map-marker"></i> ${profile.personalInfo.location}</li>`);
+          }
+          if (profile.contactInfo.email) {
+            contactList.append(`<li><i class="fa fa-envelope-o"></i> <a href="mailto:${profile.contactInfo.email}">${profile.contactInfo.email}</a></li>`);
+          }
+          if (profile.contactInfo.website) {
+            contactList.append(`<li><i class="fa fa-link"></i> <a href="${profile.contactInfo.website}" target="_blank">${profile.contactInfo.website}</a></li>`);
+          }
+          if (profile.contactInfo.phone) {
+            contactList.append(`<li><i class="fa fa-phone"></i> <a href="tel:${profile.contactInfo.phone}">${profile.contactInfo.phone}</a></li>`);
+          }
+        }
+        
+        // Update about section
+        if (profile.personalInfo?.bio) {
+          const aboutContent = $('.about .content');
+          aboutContent.empty();
+          aboutContent.append(`<p>${profile.personalInfo.bio}</p>`);
+          if (profile.personalInfo.bioParagraph2) {
+            aboutContent.append(`<p>${profile.personalInfo.bioParagraph2}</p>`);
+          }
+        }
+        
+        // Update section titles
+        if (profile.sections) {
+          if (profile.sections.aboutTitle) {
+            $('.about .heading').text(profile.sections.aboutTitle);
+          }
+          if (profile.sections.projectsTitle) {
+            $('.latest .heading').text(profile.sections.projectsTitle);
+          }
+          if (profile.sections.githubTitle) {
+            $('.github .heading').text(profile.sections.githubTitle);
+          }
+          if (profile.sections.skillsTitle) {
+            $('.skills .heading').text(profile.sections.skillsTitle);
+          }
+          if (profile.sections.showMoreButtonText) {
+            $('#show-more-btn').text(profile.sections.showMoreButtonText);
+          }
+        }
+        
+        // Update footer
+        if (profile.siteInfo?.copyright) {
+          $('.copyright').html(profile.siteInfo.copyright);
+        }
+      }
+    } catch (error) {
+      console.error('Error loading profile:', error);
+    }
+  }
+
   // Load projects using data manager
   async function loadProjects() {
     try {
       await window.dataManager.init();
+      const profile = window.dataManager.getProfile();
       allProjects = window.dataManager.getProjects().sort((a, b) => new Date(b.date) - new Date(a.date));
       renderProjects(allProjects.slice(0, initialVisible));
 
@@ -52,11 +173,11 @@ jQuery(document).ready(function ($) {
       $('#show-more-btn').off('click').on('click', function () {
         if (showingAll) {
           renderProjects(allProjects.slice(0, initialVisible));
-          $(this).text('Show More');
+          $(this).text(profile.sections?.showMoreButtonText || 'Show More');
           showingAll = false;
         } else {
           renderProjects(allProjects);
-          $(this).text('Show Less');
+          $(this).text(profile.sections?.showLessButtonText || 'Show Less');
           showingAll = true;
         }
       });
@@ -119,14 +240,27 @@ jQuery(document).ready(function ($) {
   }
 
   // Initialize data loading
+  window.dataManager = new DataManager();
+  loadProfile();
   loadProjects();
   loadSkills();
 
   // Listen for data changes from admin panel
   if (window.dataManager) {
     window.dataManager.onDataChange(() => {
+      loadProfile();
       loadProjects();
       loadSkills();
     });
   }
+  
+  // Listen for storage changes (when admin panel updates data)
+  window.addEventListener('storage', function(e) {
+    if (e.key === 'portfolio_profile' || e.key === 'portfolioProjects' || e.key === 'portfolioSkills') {
+      console.log('Profile data changed, reloading...');
+      loadProfile();
+      loadProjects();
+      loadSkills();
+    }
+  });
 });
