@@ -149,17 +149,20 @@
         </div>
         
         <div class="btn-group ml-3" role="group">
-          <button class="btn btn-outline-info" onclick="exportProjects()" title="Backup projects to file">
+          <button class="btn btn-outline-info" onclick="exportProjects()" title="Export projects to file">
             <i class="fa fa-download"></i> Export Projects
           </button>
-          <button class="btn btn-outline-info" onclick="exportSkills()" title="Backup skills to file">
+          <button class="btn btn-outline-info" onclick="exportSkills()" title="Export skills to file">
             <i class="fa fa-download"></i> Export Skills
           </button>
-          <button class="btn btn-outline-success" onclick="exportImages()" title="Backup images to file">
+          <button class="btn btn-outline-success" onclick="exportImages()" title="Export image metadata to file">
             <i class="fa fa-download"></i> Export Images
           </button>
-          <button class="btn btn-outline-primary" onclick="importImages()" title="Import images from file">
-            <i class="fa fa-upload"></i> Import Images
+          <button class="btn btn-outline-primary" onclick="exportAllData()" title="Export complete portfolio backup">
+            <i class="fa fa-download"></i> Export All
+          </button>
+          <button class="btn btn-outline-primary" onclick="importAllData()" title="Import complete portfolio backup">
+            <i class="fa fa-upload"></i> Import All
           </button>
           <button class="btn btn-outline-warning" onclick="resetToOriginal()" title="Reset all changes back to original files">
             <i class="fa fa-refresh"></i> Reset to Original
@@ -576,7 +579,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../assets/js/data-manager.js"></script>
-<script src="../assets/js/base64-image-manager.js"></script>
+<script src="../assets/js/file-image-manager.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>

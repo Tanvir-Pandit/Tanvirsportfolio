@@ -242,21 +242,15 @@ jQuery(document).ready(function ($) {
   // Initialize data loading
   window.dataManager = new DataManager();
   
-  // Initialize base64 image manager
-  if (window.base64ImageManager) {
-    window.base64ImageManager.init().then(() => {
-      console.log('Base64 Image Manager initialized');
-      // Load data after image manager is ready
-      loadProfile();
-      loadProjects();
-      loadSkills();
-    });
-  } else {
-    // Fallback if base64ImageManager is not available
-    loadProfile();
-    loadProjects();
-    loadSkills();
+  // Initialize file image manager
+  if (window.fileImageManager) {
+    console.log('File Image Manager initialized');
   }
+  
+  // Load data
+  loadProfile();
+  loadProjects();
+  loadSkills();
 
   // Listen for data changes from admin panel
   if (window.dataManager) {
@@ -269,21 +263,11 @@ jQuery(document).ready(function ($) {
   
   // Listen for storage changes (when admin panel updates data)
   window.addEventListener('storage', function(e) {
-    if (e.key === 'portfolio_profile' || e.key === 'portfolioProjects' || e.key === 'portfolioSkills' || e.key === 'portfolio_images') {
+    if (e.key === 'portfolio_profile' || e.key === 'portfolioProjects' || e.key === 'portfolioSkills' || e.key === 'uploaded_images') {
       console.log('Portfolio data changed, reloading...');
-      // Reinitialize base64 image manager if images changed
-      if (e.key === 'portfolio_images' && window.base64ImageManager) {
-        window.base64ImageManager.initialized = false;
-        window.base64ImageManager.init().then(() => {
-          loadProfile();
-          loadProjects();
-          loadSkills();
-        });
-      } else {
-        loadProfile();
-        loadProjects();
-        loadSkills();
-      }
+      loadProfile();
+      loadProjects();
+      loadSkills();
     }
   });
 });

@@ -25,11 +25,11 @@ function populateProfileForms() {
   $('#profileSource').text(hasLocalData ? 'Custom Data (LocalStorage)' : 'Default JSON File');
   
   // Update image storage info
-  if (window.base64ImageManager && window.base64ImageManager.initialized) {
-    const storageInfo = window.base64ImageManager.getStorageInfo();
-    $('#imageStorage').text(`${storageInfo.totalImages} images (${storageInfo.storageUsed})`);
+  if (window.fileImageManager) {
+    const storageStats = window.fileImageManager.getStorageStats();
+    $('#imageStorage').text(`${storageStats.totalImages} images (${storageStats.totalSize})`);
   } else {
-    $('#imageStorage').text('Base64 Manager Loading...');
+    $('#imageStorage').text('File Manager Loading...');
   }
   
   // Personal Information
@@ -44,11 +44,8 @@ function populateProfileForms() {
     
     // Show current image status
     if (imagePath !== 'assets/images/profile.png') {
-      if (imagePath.startsWith('data:image/')) {
-        $('.custom-file-label[for="profileImageUpload"]').text('Current: Base64 Image');
-      } else {
-        $('.custom-file-label[for="profileImageUpload"]').text('Current: ' + imagePath.split('/').pop());
-      }
+      const fileName = imagePath.split('/').pop();
+      $('.custom-file-label[for="profileImageUpload"]').text('Current: ' + fileName);
     }
   }
   
@@ -139,20 +136,61 @@ function saveSiteSettings() {
   showAlert('Site settings saved successfully!', 'success');
 }
 
-// Save profile data to localStorage
+// Save profile data to localStorage and update DataManager
 function saveProfileData() {
-  localStorage.setItem('portfolio_profile', JSON.stringify(profile));
-  
-  // Update the dataManager's profile data as well
-  if (window.dataManager) {
-    window.dataManager.profile = profile;
+  try {
+    localStorage.setItem('portfolio_profile', JSON.stringify(profile));
+    
+    // Update the dataManager's profile data as well
+    if (window.dataManager) {
+      window.dataManager.updateProfile(profile);
+    }
+    
+    // Trigger profile change event for real-time updates
+    $(document).trigger('profileChanged', [profile]);
+    
+    // For development: log the saved data
+    console.log('Profile saved:', profile);
+    
+    return true;
+  } catch (error) {
+    console.error('Error saving profile data:', error);
+    return false;
   }
-  
-  // Trigger profile change event for real-time updates
-  $(document).trigger('profileChanged', [profile]);
-  
-  // For development: log the saved data
-  console.log('Profile saved:', profile);
+}
+
+// Save project data to localStorage and update DataManager
+function saveProjectData() {
+  try {
+    localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+    
+    // Update the dataManager's project data as well
+    if (window.dataManager) {
+      window.dataManager.updateProjects(projects);
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error saving project data:', error);
+    return false;
+  }
+}
+
+// Save skills data to localStorage and update DataManager
+function saveSkillsData() {
+  try {
+    localStorage.setItem('portfolioSkills', JSON.stringify(skills));
+    
+    // Update the dataManager's skills data as well
+    if (window.dataManager) {
+      window.dataManager.updateSkills(skills);
+    }
+    
+    return true;
+  } catch (error) {
+    console.error('Error saving skills data:', error);
+    return false;
+  }
 }
 
 // View current profile data
@@ -186,24 +224,102 @@ function resetProfileToDefault() {
   }
 }
 
-// Export images data
+// Export all data including images
+function exportAllData() {
+  try {
+    const allData = {
+      projects: projects,
+      skills: skills,
+      profile: profile,
+      imageMetadata: window.fileImageManager ? window.fileImageManager.getUploadedImages() : {},
+      exportDate: new Date().toISOString(),
+      version: '2.0'
+    };
+    
+    const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'portfolio-complete-backup.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showAlert('Complete portfolio data exported successfully!', 'success');
+  } catch (error) {
+    console.error('Export error:', error);
+    showAlert('Failed to export data', 'error');
+  }
+}
+
+// Import all data including images
+function importAllData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const importedData = JSON.parse(e.target.result);
+          
+          let importCount = 0;
+          
+          if (importedData.projects) {
+            projects = importedData.projects;
+            saveProjectData();
+            importCount++;
+          }
+          
+          if (importedData.skills) {
+            skills = importedData.skills;
+            saveSkillsData();
+            importCount++;
+          }
+          
+          if (importedData.profile) {
+            profile = importedData.profile;
+            saveProfileData();
+            importCount++;
+          }
+          
+          if (importedData.imageMetadata) {
+            localStorage.setItem('uploaded_images', JSON.stringify(importedData.imageMetadata));
+            importCount++;
+          }
+          
+          showAlert(`Successfully imported ${importCount} data types! Refreshing...`, 'success');
+          setTimeout(() => location.reload(), 2000);
+          
+        } catch (error) {
+          console.error('Import error:', error);
+          showAlert('Invalid JSON file or import failed', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+  input.click();
+}
+
+// Export images metadata
 function exportImages() {
-  if (window.base64ImageManager) {
-    const imageData = window.base64ImageManager.exportImages();
+  if (window.fileImageManager) {
+    const imageData = window.fileImageManager.exportImageMetadata();
     const blob = new Blob([imageData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'portfolio-images-backup.json';
+    a.download = 'portfolio-images-metadata.json';
     a.click();
     URL.revokeObjectURL(url);
-    showAlert('Images exported successfully!', 'success');
+    showAlert('Image metadata exported successfully!', 'success');
   } else {
-    showAlert('Image manager not available', 'error');
+    showAlert('File image manager not available', 'error');
   }
 }
 
-// Import images data
+// Import images metadata
 function importImages() {
   const input = document.createElement('input');
   input.type = 'file';
@@ -214,19 +330,12 @@ function importImages() {
       const reader = new FileReader();
       reader.onload = function(e) {
         try {
-          if (window.base64ImageManager) {
-            const result = window.base64ImageManager.importImages(e.target.result);
-            if (result.success) {
-              showAlert('Images imported successfully!', 'success');
-              // Refresh the page to reload with new images
-              setTimeout(() => location.reload(), 1500);
-            } else {
-              showAlert('Failed to import images: ' + result.error, 'error');
-            }
-          } else {
-            showAlert('Image manager not available', 'error');
-          }
+          const imageMetadata = JSON.parse(e.target.result);
+          localStorage.setItem('uploaded_images', JSON.stringify(imageMetadata));
+          showAlert('Image metadata imported successfully!', 'success');
+          setTimeout(() => location.reload(), 1500);
         } catch (error) {
+          console.error('Import error:', error);
           showAlert('Invalid JSON file', 'error');
         }
       };
@@ -240,11 +349,9 @@ $(document).ready(function() {
   // Initialize managers
   window.dataManager = new DataManager();
   
-  // Initialize base64 image manager
-  if (window.base64ImageManager) {
-    window.base64ImageManager.init().then(() => {
-      console.log('Base64 Image Manager initialized');
-    });
+  // Initialize file image manager
+  if (window.fileImageManager) {
+    console.log('File Image Manager initialized');
   }
   
   // Check authentication
@@ -267,9 +374,9 @@ $(document).ready(function() {
     const file = this.files[0];
     if (file) {
       $('.custom-file-label[for="profileImageUpload"]').text(file.name);
-      handleImageUpload(file, function(imageId) {
-        if (imageId) {
-          $('#profileImagePath').val(imageId);
+      handleImageUpload(file, function(imagePath) {
+        if (imagePath) {
+          $('#profileImagePath').val(imagePath);
           showNotification('Profile image uploaded successfully!', 'success');
         }
       }, 'profile');
@@ -281,9 +388,9 @@ $(document).ready(function() {
     const file = this.files[0];
     if (file) {
       $('.custom-file-label[for="projectImageFile"]').text(file.name);
-      handleImageUpload(file, function(imageId) {
-        if (imageId) {
-          $('#projectImage').val(imageId);
+      handleImageUpload(file, function(imagePath) {
+        if (imagePath) {
+          $('#projectImage').val(imagePath);
           showNotification('Project image uploaded successfully!', 'success');
         }
       }, 'projects');
@@ -431,37 +538,33 @@ function updateDataStatus() {
 
 // Auto-save functions - updates data in memory automatically
 function saveProjects() {
-  // Save to localStorage for persistence
-  localStorage.setItem('portfolioProjects', JSON.stringify(projects));
+  // Use the new data update method
+  const success = saveProjectData();
   
-  // Trigger storage event for other tabs/windows
-  window.dispatchEvent(new StorageEvent('storage', {
-    key: 'portfolioProjects',
-    newValue: JSON.stringify(projects)
-  }));
-  
-  // Show success message
-  showNotification('Projects updated successfully! Changes are live immediately.', 'success');
-  
-  // Update the data source that the admin panel uses
-  updateDataSource('projects', projects);
+  if (success) {
+    // Show success message
+    showNotification('Projects updated successfully! Changes are live immediately.', 'success');
+    
+    // Update the data source that the admin panel uses
+    updateDataSource('projects', projects);
+  } else {
+    showNotification('Failed to save projects. Please try again.', 'error');
+  }
 }
 
 function saveSkills() {
-  // Save to localStorage for persistence  
-  localStorage.setItem('portfolioSkills', JSON.stringify(skills));
+  // Use the new data update method
+  const success = saveSkillsData();
   
-  // Trigger storage event for other tabs/windows
-  window.dispatchEvent(new StorageEvent('storage', {
-    key: 'portfolioSkills',
-    newValue: JSON.stringify(skills)
-  }));
-  
-  // Show success message
-  showNotification('Skills updated successfully! Changes are live immediately.', 'success');
-  
-  // Update the data source that the admin panel uses
-  updateDataSource('skills', skills);
+  if (success) {
+    // Show success message
+    showNotification('Skills updated successfully! Changes are live immediately.', 'success');
+    
+    // Update the data source that the admin panel uses
+    updateDataSource('skills', skills);
+  } else {
+    showNotification('Failed to save skills. Please try again.', 'error');
+  }
 }
 
 // Function to update the data source the admin panel reads from
@@ -548,7 +651,7 @@ function showNotification(message, type = 'info') {
   }, 5000);
 }
 
-// Image Upload Handler - Now uses base64 storage
+// Image Upload Handler - File-based with directory copying simulation
 async function handleImageUpload(file, callback, category = 'projects') {
   if (!file) {
     callback(null);
@@ -557,52 +660,54 @@ async function handleImageUpload(file, callback, category = 'projects') {
   
   try {
     // Show upload progress
-    showNotification('Uploading image...', 'info');
+    showNotification('Processing image upload...', 'info');
     
-    // Use the new base64 image manager
-    if (window.base64ImageManager) {
-      const result = await window.base64ImageManager.storeImage(file, category);
+    // Use the file image manager
+    if (window.fileImageManager) {
+      const result = await window.fileImageManager.processImageUpload(file, category);
       
       if (result.success) {
-        callback(result.imageId);
-        showNotification(`Image uploaded successfully! ID: ${result.imageId}`, 'success');
+        callback(result.relativePath);
+        showNotification(`Image uploaded successfully! Saved as: ${result.fileName}`, 'success');
       } else {
         callback(null);
         showNotification(`Failed to upload image: ${result.error}`, 'error');
       }
     } else {
-      // Fallback to direct base64 conversion
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const base64 = e.target.result;
-        const imageId = 'img_' + Date.now();
-        
-        // Store in localStorage
-        const storedImages = JSON.parse(localStorage.getItem('portfolio_images') || '{"images":{"projects":{}}}');
-        if (!storedImages.images) storedImages.images = {};
-        if (!storedImages.images.projects) storedImages.images.projects = {};
-        
-        if (category === 'profile') {
-          storedImages.images.profile = base64;
-          callback('profile');
-        } else {
-          storedImages.images.projects[imageId] = base64;
-          callback(imageId);
-        }
-        
-        localStorage.setItem('portfolio_images', JSON.stringify(storedImages));
-        showNotification('Image uploaded successfully!', 'success');
+      // Fallback method
+      const timestamp = Date.now();
+      const extension = file.name.split('.').pop().toLowerCase();
+      
+      let fileName, relativePath;
+      if (category === 'profile') {
+        fileName = `profile-${timestamp}.${extension}`;
+        relativePath = `assets/images/${fileName}`;
+      } else {
+        fileName = `project-${timestamp}.${extension}`;
+        relativePath = `assets/images/projects/${fileName}`;
+      }
+      
+      // Simulate file storage
+      const imageMetadata = {
+        fileName: fileName,
+        relativePath: relativePath,
+        size: file.size,
+        mimeType: file.type,
+        uploadDate: new Date().toISOString()
       };
-      reader.onerror = function() {
-        callback(null);
-        showNotification('Failed to upload image. Please try again.', 'error');
-      };
-      reader.readAsDataURL(file);
+      
+      // Save metadata
+      const existingImages = JSON.parse(localStorage.getItem('uploaded_images') || '{}');
+      existingImages[fileName] = imageMetadata;
+      localStorage.setItem('uploaded_images', JSON.stringify(existingImages));
+      
+      callback(relativePath);
+      showNotification(`Image uploaded successfully! Path: ${relativePath}`, 'success');
     }
   } catch (error) {
     console.error('Image upload error:', error);
     callback(null);
-    showNotification('Failed to upload image. Please try again.', 'error');
+    showNotification(`Failed to upload image: ${error.message}`, 'error');
   }
 }
 

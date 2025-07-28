@@ -128,46 +128,95 @@ class DataManager {
     return this.projects.find(project => project.id === id);
   }
 
-  // Get image source - uses base64 image manager for dynamic images
+  // Get image source - handles file-based images with proper fallbacks
   getImageSrc(imagePath) {
     if (!imagePath) return 'assets/images/profile.png';
     
-    // If base64ImageManager is available, use it
-    if (window.base64ImageManager && window.base64ImageManager.initialized) {
-      return window.base64ImageManager.getImageSrc(imagePath);
+    // If fileImageManager is available, use it
+    if (window.fileImageManager) {
+      return window.fileImageManager.getImageSrc(imagePath);
     }
     
-    // Fallback: check old imageManager for compatibility
-    if (window.imageManager) {
-      const imageData = window.imageManager.getImageData(imagePath);
-      if (imageData) {
-        return imageData; // Returns base64 data URL
-      }
-    }
-    
-    // Check if it's already a base64 string
-    if (imagePath.startsWith('data:image/')) {
+    // Direct path handling
+    if (imagePath.startsWith('assets/') || imagePath.startsWith('http')) {
       return imagePath;
     }
     
-    // Check localStorage for base64 images
-    const storedImages = localStorage.getItem('portfolio_images');
-    if (storedImages) {
-      try {
-        const images = JSON.parse(storedImages);
-        if (imagePath === 'profile' && images.images?.profile) {
-          return images.images.profile;
-        }
-        if (images.images?.projects?.[imagePath]) {
-          return images.images.projects[imagePath];
-        }
-      } catch (e) {
-        console.warn('Failed to parse stored images');
-      }
+    // Default fallback paths
+    if (imagePath.includes('profile')) {
+      return `assets/images/${imagePath}`;
+    } else {
+      return `assets/images/projects/${imagePath}`;
     }
-    
-    // Fallback to actual file path
-    return imagePath;
+  }
+
+  // Update projects data
+  updateProjects(newProjects) {
+    this.projects = newProjects;
+    this.saveToLocalStorage('portfolioProjects', newProjects);
+  }
+
+  // Update skills data
+  updateSkills(newSkills) {
+    this.skills = newSkills;
+    this.saveToLocalStorage('portfolioSkills', newSkills);
+  }
+
+  // Update profile data
+  updateProfile(newProfile) {
+    this.profile = newProfile;
+    this.saveToLocalStorage('portfolio_profile', newProfile);
+  }
+
+  // Save data to localStorage
+  saveToLocalStorage(key, data) {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      console.log(`Data saved to localStorage: ${key}`);
+      
+      // Trigger storage event for cross-tab communication
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: key,
+        newValue: JSON.stringify(data),
+        oldValue: localStorage.getItem(key),
+        storageArea: localStorage
+      }));
+    } catch (error) {
+      console.error(`Error saving to localStorage: ${key}`, error);
+    }
+  }
+
+  // Export all data for backup
+  exportAllData() {
+    return {
+      projects: this.projects,
+      skills: this.skills,
+      profile: this.profile,
+      images: window.fileImageManager ? window.fileImageManager.getUploadedImages() : {},
+      exportDate: new Date().toISOString()
+    };
+  }
+
+  // Import data from backup
+  importAllData(backupData) {
+    try {
+      if (backupData.projects) {
+        this.updateProjects(backupData.projects);
+      }
+      if (backupData.skills) {
+        this.updateSkills(backupData.skills);
+      }
+      if (backupData.profile) {
+        this.updateProfile(backupData.profile);
+      }
+      if (backupData.images && window.fileImageManager) {
+        localStorage.setItem('uploaded_images', JSON.stringify(backupData.images));
+      }
+      return { success: true };
+    } catch (error) {
+      console.error('Error importing data:', error);
+      return { success: false, error: error.message };
+    }
   }
 
   // Listen for changes from admin panel
