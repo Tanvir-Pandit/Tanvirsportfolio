@@ -2,21 +2,51 @@
   {
     "title": "Python",
     "percent": "100%",
-    "subSkills": ["Loops & Conditionals", "OOP", "Data Structures", "Multithreading"]
+    "subSkills": ["Product Development","Loops & Conditionals", "OOP", "Data Structures", "Multithreading", "Decorators", "Generators", "Context Managers", "File I/O", "Error Handling", "Regular Expressions"]
   },
   {
     "title": "Machine Learning",
-    "percent": "96%",
-    "subSkills": ["TensorFlow", "PyTorch", "Scikit-learn", "Model Optimization"]
+    "percent": "100%",
+    "subSkills": ["TensorFlow", "PyTorch", "Scikit-learn", "Model Optimization", "Feature Engineering", "Hyperparameter Tuning", "Model Evaluation", "Deployment"]
   },
   {
     "title": "AI",
     "percent": "100%",
-    "subSkills": ["NLP", "Computer Vision", "Reinforcement Learning", "Generative AI"]
+    "subSkills": ["NLP", "Computer Vision", "Reinforcement Learning", "LLMs", "Generative Models", "AI Ethics", "AI Deployment", "AI in Production"]
   },
   {
-    "title": "Ruby on Rails",
-    "percent": "85%",
-    "subSkills": ["Active Record", "RESTful APIs", "Authentication", "Background Jobs"]
+    "title": "Image Processing",
+    "percent": "100%",
+    "subSkills": ["Image Segmentation", "Object Detection", "Image Classification", "Image Enhancement", "Feature Extraction", "Image Generation", "Image Augmentation", "Image Analysis"]
+  },
+  {
+    "title": "Database Management",
+    "percent": "90%",
+    "subSkills": ["SQL", "NoSQL", "Vector Databases", "Data Warehousing", "ETL Processes", "Database Optimization", "Data Migration", "Backup & Recovery"]
+  }, 
+  {
+    "title": "Web Development and Scraping",
+    "percent": "90%",
+    "subSkills": ["Django", "Flask", "FastAPI", "REST APIs", "GraphQL", "WebSockets", "Frontend Integration", "Deployment", "Web Scraping", "Beautiful Soup", "Scrapy", "Selenium", "Pypeeter", "Playwright"]
+  },
+  {
+    "title": "Cloud Computing",
+    "percent": "90%",
+    "subSkills": ["Azure", "Google Cloud", "Vertex AI", "AWS"]
+  },
+  {
+    "title": "DevOps",
+    "percent": "70%",
+    "subSkills": ["Docker", "Kubernetes", "CI/CD", "Infrastructure as Code", "Monitoring & Logging", "Cloud Platforms (AWS, GCP, Azure)", "Serverless Architectures"]
+  },
+  {
+    "title": "Data Visualization",
+    "percent": "80%",
+    "subSkills": ["Matplotlib", "Seaborn", "Plotly", "Dashboards", "Interactive Visualizations", "Data Storytelling"]
+  },
+  {
+    "title": "Soft Skills",
+    "percent": "100%",
+    "subSkills": ["Communication", "Teamwork", "Problem Solving", "Adaptability", "Time Management", "Critical Thinking"]
   }
 ]

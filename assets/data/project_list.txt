@@ -1,0 +1,1005 @@
+KRAL Gate Entry and Vehicle Automation
+Business Overview Document
+
+1. Purpose
+The Vehicle Scanner Solution is designed to automate and streamline vehicle entry, weighing, and exit at industrial sites, logistics hubs, and weighbridges.
+ By combining RFID, AI-powered video analytics, and digital record-keeping, the system delivers:
+Greater efficiency
+Fewer errors and reduced fraud
+Improved security and transparency
+Real-time, compliance-ready data
+
+
+
+2. Key Business Features
+Faster, Automated Processing
+RFID scanning and automatic weight capture accelerate gate operations and reduce manual tasks.
+Improved Accuracy & Security
+AI video analytics prevent fraud and ensure all events are securely logged for audit purposes.
+
+
+Seamless Integration
+Instantly connects to your ERP or logistics system and generates professional PDF reports.
+
+
+Enhanced User & Driver Experience
+Voice notifications in Bangla and large, clear displays improve workflow and communication at the weighbridge.
+
+
+Lower Operational Costs
+Automation reduces labor requirements and minimizes costly mistakes.
+Flexible & Scalable
+Suitable for any fleet or site size, with full support for your branding and growth.
+Compliance & Reporting
+Maintains digital, audit-ready records and provides rapid access to reports.
+Reliable & 24/7 Ready
+Robust error handling and kiosk-ready operation ensure maximum uptime.
+
+3. Use Cases
+Weighbridge automation at factories and logistics hubs
+
+
+Secure and fast vehicle gate processing
+
+
+Automated weighing for fleet operations
+
+
+Unmanned kiosk or 24/7 gate system
+Image:
+
+
+Automated QC Data Extraction from PDF Reports for Akij Heavy Industries
+
+Business Description
+This project introduces an automated solution for extracting quality control (QC) data from laboratory PDF reports in Akij Ispat’s steel production process. The system reads each PDF, captures key information such as chemical composition, batch number, and test date, and uploads the data directly to the company’s ERP system. This automation removes the need for manual data entry, reducing errors and streamlining QC workflows.
+
+Business Impact
+Time Savings: Automates QC data entry, significantly reducing processing time.
+
+
+Increased Accuracy: Minimizes human errors and ensures consistent, reliable data.
+
+
+Real-Time Data Availability: Enables instant access to QC results for better decision-making.
+
+
+Scalability: Efficiently manages large volumes of reports as production expands.
+
+
+
+
+
+Automated CV Parsing to Structured JSON Using a Custom Large Language Model (LLM)
+
+Project Description
+This project implements an automated solution that uses a custom-trained Large Language Model (LLM) to parse resumes (CVs) and convert them into clean, structured JSON data. The system intelligently extracts essential information such as name, contact details, education, experience, skills, and certifications, regardless of CV format or layout. By leveraging advanced AI language understanding, the parser ensures high accuracy even with complex or unstructured resumes.
+The resulting JSON output can be easily integrated into HR systems, applicant tracking systems (ATS), or databases for further processing and analysis, enabling more efficient and automated recruitment workflows.
+
+Key Features
+AI-powered Parsing: Utilizes a custom LLM for robust extraction from diverse CV formats.
+
+
+Structured Output: Converts extracted data into standardized JSON fields.
+
+
+High Accuracy: Reduces errors and manual corrections compared to traditional rule-based parsers.
+
+
+Seamless Integration: Output is ready for use in HR, ATS, or analytics platforms.
+
+
+Adaptability: Can be fine-tuned for industry-specific requirements or new data fields.
+
+
+
+Automated CV Parsing to Structured JSON Using a Custom Large Language Model (LLM)
+
+Purpose
+The purpose of this project is to automate the extraction of key information from resumes (CVs) and convert it into structured JSON format using a custom-trained Large Language Model (LLM). This eliminates manual data entry, increases processing speed, and enhances the accuracy of candidate data extraction for HR and recruitment workflows.
+
+Business Features
+AI-Driven Parsing: Uses a custom LLM to accurately extract information from resumes, regardless of their format or structure.
+
+
+Structured Output: Converts parsed data into standardized JSON fields (e.g., name, contact, education, experience, skills).
+
+
+Format Flexibility: Handles a wide variety of CV designs, including PDF, Word, and plain text.
+
+
+High Accuracy: Achieves superior extraction accuracy compared to traditional rule-based or template-based parsers.
+
+
+Seamless Integration: JSON output is ready for direct integration with HR software, ATS, or recruitment analytics tools.
+
+
+Customizable Extraction: Easily adapts to include new fields or industry-specific requirements through further LLM training.
+
+
+Scalable Processing: Capable of handling large volumes of CVs quickly and efficiently.
+
+
+
+Use Cases
+Automated Resume Screening: Instantly process incoming resumes and extract structured candidate data for faster shortlisting.
+
+
+ATS Integration: Feed JSON outputs directly into Applicant Tracking Systems to streamline recruitment workflows.
+
+
+Candidate Database Creation: Build searchable databases of candidate profiles from parsed CVs for talent pooling and talent mapping.
+
+
+Recruitment Analytics: Analyze structured candidate data for trends, diversity, or skill gaps using business intelligence tools.
+
+
+Bulk Resume Processing: Efficiently process large sets of resumes received during mass recruitment drives or job fairs.
+
+
+Third-Party HR Solutions: Provide resume parsing as a value-added service within HR SaaS platforms.
+
+
+
+
+Automated Lead Generation & Marketing Campaign System
+
+Purpose
+The purpose of this project is to automate the process of lead generation, marketing campaign management, and social media posting based on targeted business sectors and geographic locations. This system empowers organizations to efficiently identify, engage, and convert potential customers with minimal manual effort, maximizing marketing reach and operational efficiency.
+
+Business Features
+Automated Lead Generation: Identifies and collects potential leads based on predefined business sectors, locations, and other criteria using AI-driven tools and data sources.
+
+
+Smart Segmentation: Automatically categorizes leads for personalized campaigns based on sector, location, and engagement history.
+
+
+Automated Marketing Campaigns: Schedules, launches, and manages email, SMS, or digital ad campaigns with customizable templates and triggers.
+
+
+Social Media Posting Automation: Plans and auto-posts marketing content to various social media platforms (e.g., Facebook, LinkedIn, Twitter) according to optimal times and campaign strategies.
+
+
+Analytics & Reporting: Real-time dashboards track campaign performance, lead quality, and conversion rates.
+
+
+CRM Integration: Syncs leads and campaign data with CRM systems for unified sales and marketing operations.
+
+
+Personalization Engine: Delivers tailored content to each lead segment for higher engagement and conversion.
+
+
+Multi-Channel Support: Manages campaigns across multiple digital channels from a single platform.
+
+
+
+Use Cases
+Targeted Lead Acquisition: Automatically find and collect leads from specific industries or locations for niche B2B or B2C marketing.
+
+
+Hands-Free Campaign Management: Launch recurring or event-driven marketing campaigns without manual intervention.
+
+
+Social Media Scaling: Maintain an active presence across multiple social platforms with auto-scheduled and AI-curated posts.
+
+
+Sales Funnel Automation: Nurture leads through personalized messaging and automated follow-ups until conversion.
+
+
+Performance Tracking: Monitor which sectors, locations, or channels generate the most leads and sales for data-driven decision-making.
+
+
+Cross-Platform Consistency: Ensure brand messaging and promotional content are consistently published across all digital channels.
+
+
+Event & Offer Promotions: Rapidly announce events, sales, or new products to targeted audiences with minimal setup.
+
+
+
+
+
+
+
+
+
+
+
+Maritime Operations Automation & Smart Notification System
+
+Purpose
+The purpose of this project is to automate and streamline core maritime operations—such as survey scheduling, vessel documentation, voyage instructions, and lead generation—through a unified system of smart email notifications and digital report handling. This automation reduces manual workload, increases operational transparency, and ensures timely, consistent communication across all stakeholders involved in shipping, chartering, and vessel management.
+
+Business Features
+Automated Survey & Reporting Workflows:
+ Triggers and manages automated surveyor notifications (P&I, bunker on/off hire, TCL, EPDA, pre-stowage) via customizable email templates and real-time status tracking.
+
+
+Digital Document Generation & Distribution:
+ Automatically formats, generates, and sends departure documents, port disbursement accounts, voyage instructions, and nomination emails to relevant parties.
+
+
+Smart Notification Engine:
+ Ensures delivery of event-driven emails (e.g., vessel arrival, agency appointment, recap, response emails) to specific recipients, reducing delays and missed communications.
+
+
+Process Monitoring & Audit Trails:
+ Tracks and logs all automated communications for compliance and future reference, including response mail tracking.
+
+
+Data Integration:
+ Connects with ERPs and maritime databases for live data updates, survey results, and lead generation, syncing all outputs with internal systems.
+
+
+Bulk & Conditional Communication:
+ Supports sending different email formats and attachments based on operation type, port, or survey requirements.
+
+
+Lead Generation Automation:
+ Automatically processes and syncs new business leads and sector/location-based contacts for commercial follow-up.
+
+
+
+Use Cases
+Surveyor Appointment & Confirmation:
+ Automatically notifies and confirms appointments with P&I, bunker, and condition surveyors for vessel operations, reducing manual coordination.
+
+
+Vessel Documentation Delivery:
+ Instantly generates and distributes voyage, departure, and agency documents as vessels move between ports or undergo operations.
+
+
+Compliance & Audit:
+ Maintains a traceable record of all maritime operational emails and document exchanges for regulatory compliance and dispute resolution.
+
+
+Operational Alerts:
+ Notifies stakeholders of critical updates—such as voyage instructions, pre-stowage plans, flag waivers, and weather routing—in real time.
+
+
+Centralized Communication Hub:
+ Provides a single interface for managing all outgoing operational emails, templates, and response tracking.
+
+
+
+
+Automated Web Scraping and Data Collection System
+
+Purpose
+To automate the extraction of relevant data from websites and online sources, transforming unstructured web content into clean, structured datasets for business analysis, reporting, and operational use.
+
+Business Features
+Scheduled or on-demand web data extraction from target sites.
+
+
+Customizable scraping rules for different data types (text, tables, files).
+
+
+Data cleaning, normalization, and structured output (CSV, JSON, database).
+
+
+Error handling, duplicate detection, and robust anti-blocking mechanisms.
+
+
+Automated delivery or integration with analytics platforms, dashboards, or CRMs.
+
+
+
+Use Cases
+Market research: Monitor competitor prices, product catalogs, and trends.
+
+
+Lead generation: Collect contact information and business details.
+
+
+Content aggregation: Gather news, blogs, or updates from multiple sources.
+
+
+Compliance monitoring: Track regulatory changes or public records.
+
+
+Data enrichment: Update and enhance internal databases with fresh external data.
+
+
+Face Recognition-Based Attendance System
+
+Purpose
+To automate and secure the process of attendance tracking in organizations or educational institutions using facial recognition technology, eliminating manual entry and preventing proxy attendance.
+
+Business Features
+Automated Attendance: Uses AI-powered face recognition to mark attendance in real time.
+
+
+Contactless & Fast: No physical touch or ID card required; reduces queues and waiting time.
+
+
+Integration Ready: Connects with HR or student management systems for seamless record-keeping.
+
+
+Live Monitoring & Alerts: Provides real-time dashboards and notifies of irregularities or unregistered faces.
+
+
+Data Security: Stores and processes facial data securely, with privacy controls.
+
+
+Reporting: Generates daily, weekly, and monthly attendance reports.
+
+
+
+Use Cases
+Workplaces: Automate staff attendance, improve payroll accuracy, and reduce time fraud.
+
+
+Schools & Universities: Streamline student attendance and prevent proxy marking.
+
+
+Events: Register and verify participants efficiently at conferences or seminars.
+
+
+Restricted Areas: Grant access based on attendance or authorization.
+
+
+Remote/Hybrid Teams: Enable attendance tracking for distributed or work-from-home employees.
+
+
+
+
+
+Vision-Based Employee Monitoring System
+
+Purpose
+To automate and enhance workplace monitoring by using computer vision to count employees, track device usage (such as laptops), and provide real-time analytics—enabling data-driven management and operational insights.
+
+Business Features
+Automated Headcount: Uses cameras and AI to detect and count the number of people present in real time.
+
+
+Device Usage Detection: Identifies which employees are using laptops or not, allowing productivity analysis.
+
+
+Real-Time Dashboard: Visual displays of key workplace metrics (attendance, device usage, occupancy).
+
+
+Custom Analytics: Tracks workspace utilization, supports compliance, and detects unusual behavior.
+
+
+Integration Ready: Connects with HR or facility management software for automated reports and alerts.
+
+
+
+Use Cases
+Workplace Attendance: Automatically monitor employee presence without manual intervention.
+
+
+Productivity Analysis: Analyze how many employees are actively using workstations or laptops.
+
+
+Space Optimization: Manage workspace allocation and occupancy levels.
+
+
+Compliance & Security: Ensure only authorized personnel are present and devices are properly used.
+
+
+Remote Monitoring: Enable managers to oversee workplace activity from anywhere.
+
+
+
+AI Chatbot for ERP/User Manual Assistance Using LLM
+
+Purpose
+To provide instant, conversational support and intelligent search for ERP and software manuals (e.g., iBOS ERP, Managerium) using advanced Large Language Models (LLMs), enhancing user experience and reducing support workload.
+
+Business Features
+Conversational Q&A: Users can ask questions in natural language and receive accurate, context-aware answers from the manual.
+
+
+Intelligent Search: Instantly find relevant sections or instructions from large, complex documentation.
+
+
+24/7 Availability: Always accessible for immediate support, reducing dependency on human helpdesk.
+
+
+Easy Integration: Embeds seamlessly into ERP systems or web portals.
+
+
+Continuous Improvement: Learns from user queries to improve over time.
+
+
+
+Use Cases
+Self-Service Support: Users get fast answers about ERP/system features and troubleshooting steps.
+
+
+Onboarding & Training: New users can quickly learn system usage without digging through lengthy manuals.
+
+
+Support Ticket Reduction: Fewer repetitive questions reach human support teams.
+
+
+Boost Productivity: Employees resolve issues or find information faster, minimizing downtime.
+
+
+Consistent Information: Ensures users always receive the latest, verified instructions.
+
+
+
+Automatic License Plate Detection System
+
+Purpose
+To automate the detection and recognition of vehicle license plates from images or video streams using computer vision, enabling efficient vehicle tracking, access control, and law enforcement.
+
+Business Features
+Real-Time Plate Detection: Uses AI models to locate and read license plates instantly from cameras or uploaded media.
+
+
+High Accuracy Recognition: Supports multiple plate styles, fonts, and lighting conditions.
+
+
+Database Integration: Stores recognized plates for search, alerts, and analytics.
+
+
+Automated Alerts: Triggers notifications for unauthorized, blacklisted, or VIP vehicles.
+
+
+Easy Integration: Connects with security, parking, toll, or fleet management systems.
+
+
+
+Use Cases
+Automated Gate/Barrier Access: Grant or deny entry to vehicles based on plate recognition.
+
+
+Parking Management: Automate entry, exit, and fee calculation in parking lots.
+
+
+Traffic Monitoring: Track vehicle movements for urban planning or congestion analysis.
+
+
+Law Enforcement: Identify stolen, expired, or wanted vehicles automatically.
+
+
+Toll Collection: Enable cashless, plate-based toll payments.
+
+Akij Air – Voice-Powered AI Chatbot System
+
+1. Executive Summary
+The Akij Air Chatbot project is a voice-first AI assistant built for airline service simulation. It uses real-time communication, natural language understanding, and multi-agent coordination to mimic the operations of a professional airline support center. Designed to function via audio input and output, it is powered by LiveKit, OpenAI GPT, and speech processing systems. The goal is to demonstrate how intelligent automation can handle voice-based customer service for airline passengers.
+
+2. Objectives
+Enable real-time voice-based flight booking assistance.
+Replace basic human airline support tasks with AI agents.
+Demonstrate multi-agent AI logic for task routing.
+Integrate LiveKit for smooth, two-way audio streaming.
+Deliver an intelligent, scalable chatbot for travel use cases.
+
+
+3. System Architecture
+Frontend:
+Built with React.js or web interface
+Integrated LiveKit SDK for capturing and playing audio
+
+
+Backend:
+Handles:
+Audio stream reception
+Speech-to-text conversion (Whisper)
+Query classification
+Routing to appropriate GPT agent
+Text-to-speech response
+Stream output to frontend
+
+Agents:
+Booking Agent – Handles flight booking tasks
+Info Agent – Handles queries like schedule, baggage policy
+Support Agent – Handles general airline inquiries
+
+4. Key Features
+Feature
+Description
+🎤 LiveKit Voice Input
+Real-time voice streaming from user to backend
+🧠 AI Query Understanding
+OpenAI GPT interprets and responds contextually
+🔊 TTS Response
+Response is converted to natural-sounding audio
+🧑‍💻 Multi-Agent System
+Routes query to the right agent (e.g., Booking, Support)
+🌐 Extendable API Support
+Can plug in real airline APIs or mock data
+🖥️ Kiosk-Ready Frontend
+Ideal for airport kiosk systems or demo terminals
+
+
+
+
+
+
+
+
+
+
+5. Use Cases
+Flight Inquiry
+ “What’s the status of flight AK-102 to Dhaka?” → Bot responds in voice.
+
+
+Booking Simulation
+ “I want to book a ticket to Chattogram on Friday.” → Walks user through options.
+
+
+Travel Info Queries
+ “How much baggage is allowed in business class?” → Bot fetches relevant info.
+
+
+Airport Assistant Mode
+ Could be deployed at airport kiosks for passengers needing quick help.
+
+
+
+6. Technologies Used
+Component
+Stack
+Voice Streaming
+LiveKit
+STT
+Whisper or Google Speech-to-Text
+AI Response
+OpenAI GPT-4
+TTS
+Google Cloud TTS / Azure / ElevenLabs
+Frontend
+React.js or HTML + JS
+Backend
+Node.js / Python (Flask Socket)
+
+
+7. Project Status
+Architecture planned and documented
+Voice flow pipeline mapped
+LiveKit integration under development
+GPT agent logic and routing in progress
+TTS and STT module integration next
+
+
+
+8. Conclusion
+The Akij Air Chatbot offers a glimpse into the future of airline customer support — powered by AI, speech, and real-time interactivity. This project demonstrates a scalable, intelligent, and user-friendly voice interface that can be expanded for production-level airline systems or deployed in prototype environments for client demos and investor showcases.
+
+
+
+
+
+
+
+
+
+
+Smart Poultry Farm System with QR Code Display
+
+1. Executive Summary
+This project implements an IoT-based smart poultry farming solution using the LilyGo TTGO T-Display V1.1, integrated with MQ gas sensors, DHT11 temperature/humidity sensor, and a relay module for automated control. It monitors environmental parameters and controls ventilation/heating automatically. A TFT screen displays real-time data and a QR code enables quick access to external farm-related resources. Bluetooth connectivity provides remote monitoring support.
+
+2. Objectives
+Automate poultry farm environment monitoring.
+Provide real-time sensor readings on a local display.
+Enable remote monitoring through Bluetooth.
+Control fan/heating devices via relay module based on gas and temperature thresholds.
+
+
+
+3. System Architecture
+Core Components:
+ESP32-based TTGO T-Display board (with TFT screen & Bluetooth)
+MQ Gas Sensor – for detecting harmful gases
+DHT11 Sensor – for temperature and humidity
+Relay Module – for triggering devices like fans
+QR Code – static link for quick info access
+
+
+
+4. Key Features
+Feature
+Description
+Environmental Monitoring
+Measures gas, temperature, humidity
+Relay-Based Automation
+Activates fans/heaters when values exceed safe limits
+TFT Data Display
+Shows live sensor data and relay status
+QR Code
+Links to farm resources (e.g., manuals, safety info)
+Bluetooth Monitoring
+Sends sensor data in JSON format to paired device
+
+
+5. Use Cases
+Automated poultry farm environmental regulation.
+Remote monitoring by farm supervisors via Bluetooth.
+Quick access to system info via QR code.
+Low-cost solution for small to mid-sized poultry farms.
+
+
+
+6. Technology Stack
+Microcontroller: LilyGo TTGO T-Display (ESP32)
+Sensors: MQ Gas, DHT11
+Communication: BluetoothSerial
+Display: TFT_eSPI (240x240)
+QR Image: PNGdec
+Power: USB + Battery voltage monitoring
+
+
+
+7. Current Status
+✅ Working prototype includes:
+TFT Display output
+Sensor reading and relay control
+QR code display
+Bluetooth JSON data streaming
+
+
+
+8. Future Enhancements
+Cloud-based data logging
+SMS or email alerts
+Humidity control systems
+
+
+
+
+
+Smart Cattle Monitoring System with Infrared and Motion Sensing
+
+1. Executive Summary
+This project provides an IoT-based cattle monitoring solution using an ESP32-based LilyGo TTGO T-Display. It monitors both body temperature and motion/orientation through MLX90614 and MPU6050 sensors respectively. The system displays real-time data on a TFT screen and sends updates via Bluetooth, improving livestock health tracking and reducing manual monitoring.
+
+2. Objectives
+Enable automated monitoring of cattle health parameters.
+Display temperature and motion data locally on a TFT screen.
+Provide real-time remote monitoring via Bluetooth.
+Evaluate potential for farm-wide health monitoring systems.
+
+
+
+3. System Architecture
+Core Components:
+TTGO T-Display (ESP32) with Bluetooth and TFT screen
+MLX90614 – infrared sensor to measure body/ambient temp
+MPU6050 – detects movement and posture through acceleration & gyroscope
+Power Sensors – monitor battery voltage and charging status
+
+
+
+4. Key Features
+Feature
+Description
+Temperature Monitoring
+Measures cattle surface and ambient temperature
+Movement Tracking
+Monitors motion and orientation in real-time
+Battery/Charging Status
+Detects USB connection and battery level
+TFT Data Display
+Cycles between sensor data visually
+Bluetooth Updates
+Sends all sensor readings periodically to paired device
+Welcome PNG Screen
+Shows image on startup for branding or identity
+
+
+5. Use Cases
+Farm-based cattle health tracking
+Early illness detection via temp/motion anomalies
+Remote livestock monitoring by veterinarians or farmers
+Mobile-based Bluetooth tracking via paired devices
+
+
+
+6. Technology Stack
+Microcontroller: TTGO T-Display (ESP32)
+Sensors: MLX90614 (temp), MPU6050 (motion)
+Display: TFT_eSPI
+Libraries: Adafruit_MLX90614, MPU6050_light, PNGdec, BluetoothSerial
+
+
+
+7. Current Status
+✅ Working prototype includes:
+Cyclic sensor display logic
+Accurate temperature and motion detection
+Bluetooth data streaming
+
+
+Battery + USB monitoring
+
+
+
+8. Future Enhancements
+Real-time cloud integration for farm-wide insights
+Critical alerts for sudden temp or motion deviations
+Add gas or humidity sensors for barn-level monitoring
+
+
+
+
+AI-Based SQL Generator for HireDesk Recruitment System
+
+1. Executive Summary
+This project is an intelligent backend service that translates natural language questions into executable SQL queries for a recruitment platform named HireDesk. By integrating OpenAI/DeepSeek LLMs, Flask API, LangChain, and SQL Server, the system allows users (typically HR personnel or recruiters) to retrieve candidate data without needing SQL expertise.
+The core functionality includes schema-aware query generation, validation, optimization, and execution — with intelligent handling of complex conditions like years of experience, education background, skill matching, salary expectations, notice periods, and more.
+
+2. Objectives
+Convert natural language queries into valid MSSQL queries for complex candidate filtering.
+Handle schema awareness and dynamically apply joins and filters.
+Provide query validation and security before execution.
+Format and enrich the candidate data response with metadata (age, experience, etc.).
+Integrate with HireDesk’s SQL Server database via pyODBC.
+
+
+
+3. Architecture Overview
+Main Components:
+Component
+Description
+Flask API
+Main REST interface for frontend or external apps.
+LangChain + DeepSeek GPT
+Converts user question + schema into optimized SQL.
+pyODBC
+Connects to the HireDesk MSSQL Server database.
+SQL Validation Layer
+Ensures all queries are syntax-valid and safe.
+Rule-Based Templates
+Fallback logic for experience-based queries.
+Schema Parser
+Auto-extracts table and column descriptions from SQL Server metadata.
+
+
+4. Key Features
+Feature
+Functionality
+Natural Language to SQL
+Accepts user input like “Find 5 candidates with BBA and 3 years experience.”
+Dynamic Schema Filtering
+Includes only relevant tables for each query based on keywords.
+LLM-Powered SQL Generation
+Uses DeepSeek GPT via LangChain to generate optimized queries.
+SQL Validation
+Ensures query has valid syntax, correct parenthesis, and proper joins.
+Advanced Filtering Logic
+Handles filters for skills, education, location, notice periods, salary, etc.
+ Rule-Based Fallback
+For experience-based queries (e.g., “candidates with 5 years”), bypasses LLM for efficiency.
+Candidate Formatter
+Converts raw SQL result into structured JSON with age, experience, education, and job history.
+Caching
+Uses in-memory caching to avoid redundant LLM calls.
+Security
+Prevents unsafe SQL execution by verifying and sanitizing queries.
+API with Swagger Docs
+/candidate_find endpoint accepts POST requests with job ID and question.
+
+
+5. Use Cases
+HR Team: Search for ideal candidates using plain English.
+
+
+Recruiters: Filter applicants for specific job postings dynamically.
+
+
+Talent Analysts: Perform real-time reporting and analytics using flexible criteria.
+
+
+Admin Panel Integration: Can plug into a dashboard to run on-demand candidate queries.
+
+
+
+6. Technology Stack
+Category
+Tools
+Backend
+Flask, Flask-CORS, Flasgger
+AI/LLM
+DeepSeek API via LangChain
+Database
+Microsoft SQL Server
+DB Driver
+pyODBC
+Environment Management
+python-dotenv
+Logging
+Python Logging module
+SQL Parsing
+sqlparse
+API Docs
+Swagger UI via Flasgger
+
+
+7. Endpoint Example
+POST /candidate_find
+Payload:
+{
+  "question": "Find 5 candidates with BSc from public university and 3 years of experience.",
+  "intJobMasterId": 29017
+}
+
+Response:
+SQL query used
+Filtered candidate list
+Total count
+Enriched data (experience years, education, age, etc.)
+
+8. Current Status
+✅ Completed:
+DeepSeek integration via LangChain
+SQL schema documentation with extended descriptions
+Rule-based experience queries
+Candidate data parser and formatter
+Swagger API documentation
+
+
+🔄 In Progress or Next Steps:
+Authentication layer (e.g., API key or OAuth)
+Caching with Redis for scalability
+Optional pagination and offset in generated SQL
+GraphQL wrapper (optional)
+
+
+
+9. Future Enhancements
+Add UI panel for non-technical users to query data.
+Enable export to Excel or PDF for HR reports.
+Integrate chatbot interface with voice-to-text.
+Implement LLM feedback loop for fine-tuning queries based on result accuracy.
+Add rate limiting and API usage logging for production.
+
+
+
+
+
+AI-Powered Code Generator for ASP.NET Core RESTful APIs Using LLM
+
+Purpose
+To automate the generation of boilerplate and customized ASP.NET Core RESTful API code using Large Language Models (LLM), streamlining backend development and reducing manual coding time.
+
+Business Features
+Natural Language to Code: Converts user prompts or requirements into ready-to-use ASP.NET Core API code.
+
+
+Rapid Prototyping: Instantly generates controllers, models, and CRUD endpoints based on user specifications.
+
+
+Customizable Templates: Supports tailored code structures, authentication, validation, and documentation.
+
+
+Error Handling & Best Practices: Produces code that follows industry standards for security, scalability, and maintainability.
+
+
+Seamless Export: Provides downloadable code files or direct integration with development environments.
+
+
+
+Use Cases
+Accelerated Development: Quickly scaffold new API projects from business requirements or user stories.
+
+
+Code Consistency: Ensure standardized, best-practice code across teams and projects.
+
+
+Developer Onboarding: Help new developers ramp up by auto-generating code and sample projects.
+
+
+Learning & Prototyping: Use for training, hackathons, or rapid MVP validation.
+
+
+Legacy System Upgrades: Migrate or refactor APIs efficiently with minimal manual rewriting.
+
+Automated Document Generation & Processing Platform
+
+Purpose
+To automate the creation, formatting, and management of business, legal, financial, and shipping documents through ready-to-use templates and smart conversion tools—reducing manual effort and ensuring consistency across all organizational documentation.
+
+Business Features
+One-Click Document Generation: Instantly create letters, agreements, verification notices, claims, and shipping docs via API endpoints.
+
+
+Custom Templates: Supports a wide range of standard and industry-specific document templates (BG Encashment, Agreements, Legal Notices, Shipping Invoices, etc.).
+
+
+File Conversion Tools: Convert documents between PDF, Word, JPG, PPT, and more.
+
+
+Automated Processing: Upload documents for classification, indexing, and Q&A extraction.
+
+
+Export & Integration: Seamlessly export documents to internal systems or third-party services.
+
+
+
+Use Cases
+Legal Automation: Draft legal letters, agreements, and notices with zero manual formatting.
+
+
+Banking & Finance: Generate encashment, settlement, and payment request documents on demand.
+
+
+Shipping & Logistics: Produce invoices, NOCs, and shipping confirmations automatically.
+
+
+Compliance & Auditing: Standardize official correspondence and ensure audit trails.
+
+
+Bulk Document Handling: Quickly process and convert large numbers of documents for reporting or archiving.
+
+Project: Model Context Protocol (MCP) Analytics Server
+Overview
+This project implements a Model Context Protocol (MCP) Server—a modular, extensible backend platform designed to expose and orchestrate business analytics tools for enterprise AI and reporting workflows. By leveraging the MCP open standard, the server enables secure, context-aware communication between AI models (such as LLMs or digital assistants) and internal analytics functions, such as CRM reporting, lead analytics, and sales performance dashboards.
+
+Key Features
+1. MCP-Based Modular Analytics Framework
+Developed a scalable Python-based server using the Model Context Protocol to register, expose, and execute a variety of business analytics tools.
+
+
+Each tool (e.g., sales report, lead pipeline analysis, employee activity report) is a modular function, discoverable and callable through the MCP interface.
+
+
+2. Secure & Standardized Communication
+All communications are protected with robust encryption and token-based authentication.
+
+
+MCP enables standard, open-protocol interactions (using JSON-RPC 2.0), ensuring easy integration with modern AI applications and secure access to sensitive business data.
+
+
+3. Business Intelligence on Demand
+Registered analytics modules provide real-time access to critical metrics: sales performance, lead breakdowns, meeting analytics, and more.
+
+
+Users or AI systems can request insights via MCP without direct access to the raw databases, ensuring data governance and privacy.
+
+
+4. Extensible & Maintainable Architecture
+Designed the server for simple tool registration and removal, enabling rapid adaptation to evolving business requirements.
+
+
+The codebase supports environment-based configuration, making deployments consistent and secure.
+
+
+
+Technical Stack
+Python (Backend framework)
+
+
+MCP Server (Model Context Protocol)
+
+
+cryptography (for AES-based encryption)
+
+
+requests (for HTTP and API communication)
+
+
+Modular business logic components for analytics/reporting
+
+
+
+Business Impact
+Accelerated AI Integration: The MCP server enables AI models to retrieve, process, and act on enterprise analytics in real time—empowering digital assistants, dashboards, and automation workflows.
+
+
+Reduced Development Overhead: Standardized protocol minimizes the effort required to add or update analytics tools.
+
+
+Enhanced Security & Compliance: All business data is encrypted, authenticated, and only accessible through managed, auditable endpoints.
+
+
+
+What Sets This Project Apart
+Fully aligned with the latest industry standard (MCP) for connecting AI systems with enterprise data and tools.
+
+
+Modular, scalable, and production-ready: Easy to extend as business needs change.
+
+
+Practical business value: Immediately delivers actionable insights to sales, management, and analytics teams—without compromising security.
+
+
+
