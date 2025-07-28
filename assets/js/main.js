@@ -21,10 +21,13 @@ jQuery(document).ready(function ($) {
     container.empty();
 
     projects.forEach(project => {
+      // Get image source (base64 from localStorage or file path)
+      const imageSrc = window.dataManager.getImageSrc(project.image);
+      
       const html = `
         <div class="item row">
           <a class="col-md-4 col-sm-4 col-xs-12" href="project.html?id=${project.id}">
-            <img class="img-responsive project-image" src="${project.image}" alt="${project.title}" />
+            <img class="img-responsive project-image" src="${imageSrc}" alt="${project.title}" />
           </a>
           <div class="desc col-md-8 col-sm-8 col-xs-12">
             <h3 class="title"><a href="project.html?id=${project.id}">${project.title}</a></h3>
@@ -38,29 +41,34 @@ jQuery(document).ready(function ($) {
     });
   }
 
-  $.getJSON('assets/data/projects.json', function (data) {
-    allProjects = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-    renderProjects(allProjects.slice(0, initialVisible));
+  // Load projects using data manager
+  async function loadProjects() {
+    try {
+      await window.dataManager.init();
+      allProjects = window.dataManager.getProjects().sort((a, b) => new Date(b.date) - new Date(a.date));
+      renderProjects(allProjects.slice(0, initialVisible));
 
-    // Toggle Show More / Less
-    $('#show-more-btn').on('click', function () {
-      if (showingAll) {
-        renderProjects(allProjects.slice(0, initialVisible));
-        $(this).text('Show More');
-        showingAll = false;
-      } else {
-        renderProjects(allProjects);
-        $(this).text('Show Less');
-        showingAll = true;
+      // Toggle Show More / Less
+      $('#show-more-btn').off('click').on('click', function () {
+        if (showingAll) {
+          renderProjects(allProjects.slice(0, initialVisible));
+          $(this).text('Show More');
+          showingAll = false;
+        } else {
+          renderProjects(allProjects);
+          $(this).text('Show Less');
+          showingAll = true;
+        }
+      });
+
+      if (allProjects.length <= initialVisible) {
+        $('#show-more-btn').hide();
       }
-    });
-
-    if (allProjects.length <= initialVisible) {
-      $('#show-more-btn').hide();
+    } catch (error) {
+      console.error('Error loading projects:', error);
+      $('#projects-container').html('<p><strong>Error loading projects data</strong></p>');
     }
-  }).fail(function () {
-    $('#projects-container').html('<p><strong>Error loading projects.json</strong></p>');
-  });
+  }
 
   // Helper to calculate level label from percent
   function getLevelLabel(percent) {
@@ -72,35 +80,53 @@ jQuery(document).ready(function ($) {
     return 'Learning';
   }
 
-  // Load Skills Dynamically
-  $.getJSON('assets/data/skills.json', function (skills) {
-    const skillsContainer = $('#skills-container');
+  // Load Skills using data manager
+  async function loadSkills() {
+    try {
+      await window.dataManager.init();
+      const skills = window.dataManager.getSkills();
+      const skillsContainer = $('#skills-container');
+      skillsContainer.empty();
 
-    skills.forEach(skill => {
-      const subSkills = skill.subSkills.map(s => `<li>${s}</li>`).join('');
-      const levelLabel = getLevelLabel(skill.percent);
+      skills.forEach(skill => {
+        const subSkills = skill.subSkills.map(s => `<li>${s}</li>`).join('');
+        const levelLabel = getLevelLabel(skill.percent);
 
-      const skillHtml = `
-        <div class="item">
-          <h3 class="level-title">${skill.title}
-            <span class="level-label" data-toggle="tooltip" data-placement="left" title="${levelLabel}">${levelLabel}</span>
-          </h3>
-          <div class="level-bar">
-            <div class="level-bar-inner" data-level="${skill.percent}"></div>
+        const skillHtml = `
+          <div class="item">
+            <h3 class="level-title">${skill.title}
+              <span class="level-label" data-toggle="tooltip" data-placement="left" title="${levelLabel}">${levelLabel}</span>
+            </h3>
+            <div class="level-bar">
+              <div class="level-bar-inner" data-level="${skill.percent}"></div>
+            </div>
+            <ul class="sub-skills">${subSkills}</ul>
           </div>
-          <ul class="sub-skills">${subSkills}</ul>
-        </div>
-      `;
-      skillsContainer.append(skillHtml);
-    });
+        `;
+        skillsContainer.append(skillHtml);
+      });
 
-    // Re-apply tooltip and bar animation
-    $('.level-label').tooltip();
-    $('.level-bar-inner').css('width', '0').each(function () {
-      const level = $(this).data('level');
-      $(this).animate({ width: level }, 800);
+      // Re-apply tooltip and bar animation
+      $('.level-label').tooltip();
+      $('.level-bar-inner').css('width', '0').each(function () {
+        const level = $(this).data('level');
+        $(this).animate({ width: level }, 800);
+      });
+    } catch (error) {
+      console.error('Error loading skills:', error);
+      $('#skills-container').html('<p><strong>Error loading skills data</strong></p>');
+    }
+  }
+
+  // Initialize data loading
+  loadProjects();
+  loadSkills();
+
+  // Listen for data changes from admin panel
+  if (window.dataManager) {
+    window.dataManager.onDataChange(() => {
+      loadProjects();
+      loadSkills();
     });
-  }).fail(function () {
-    $('#skills-container').html('<p><strong>Error loading skills.json</strong></p>');
-  });
+  }
 });

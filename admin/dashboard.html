@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Portfolio</title>
+  <link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .admin-header {
+      background: #343a40;
+      color: white;
+      padding: 15px 0;
+      margin-bottom: 30px;
+    }
+    .admin-nav {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 5px;
+      margin-bottom: 30px;
+    }
+    .admin-nav .nav-link {
+      color: #333;
+      padding: 10px 15px;
+      margin: 0 5px;
+      border-radius: 5px;
+    }
+    .admin-nav .nav-link.active {
+      background: #007bff;
+      color: white;
+    }
+    .content-section {
+      display: none;
+    }
+    .content-section.active {
+      display: block;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .stat-card h3 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .project-card, .skill-card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: white;
+    }
+    .btn-sm {
+      margin: 2px;
+    }
+    .modal-body {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .form-group label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="admin-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h2><i class="fa fa-dashboard"></i> Admin Dashboard</h2>
+        <p>Portfolio Management System</p>
+      </div>
+      <div class="col-md-4 text-right">
+        <span id="adminEmail" class="text-muted"></span>
+        <button class="btn btn-outline-light btn-sm ml-2" onclick="logout()">
+          <i class="fa fa-sign-out"></i> Logout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- Navigation -->
+  <div class="admin-nav">
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+          <i class="fa fa-dashboard"></i> Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" onclick="showSection('projects')">
+          <i class="fa fa-folder"></i> Projects
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" onclick="showSection('skills')">
+          <i class="fa fa-cogs"></i> Skills
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Dashboard Section -->
+  <div id="dashboard" class="content-section active">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="stat-card">
+          <h3 id="projectCount">0</h3>
+          <p>Total Projects</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-card">
+          <h3 id="skillCount">0</h3>
+          <p>Skills Listed</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="stat-card">
+          <h3 id="imageCount">4</h3>
+          <p>Project Images</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h4>Quick Actions</h4>
+        <div class="btn-group" role="group">
+          <button class="btn btn-primary" onclick="showSection('projects'); openProjectModal();">
+            <i class="fa fa-plus"></i> Add New Project
+          </button>
+          <button class="btn btn-success" onclick="showSection('skills'); openSkillModal();">
+            <i class="fa fa-plus"></i> Add New Skill
+          </button>
+        </div>
+        
+        <div class="btn-group ml-3" role="group">
+          <button class="btn btn-outline-info" onclick="exportProjects()" title="Backup projects to file">
+            <i class="fa fa-download"></i> Export Projects
+          </button>
+          <button class="btn btn-outline-info" onclick="exportSkills()" title="Backup skills to file">
+            <i class="fa fa-download"></i> Export Skills
+          </button>
+          <button class="btn btn-outline-warning" onclick="resetToOriginal()" title="Reset all changes back to original files">
+            <i class="fa fa-refresh"></i> Reset to Original
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <div class="alert alert-info">
+          <h5><i class="fa fa-info-circle"></i> Data Management</h5>
+          <p><strong>Auto-Save:</strong> All changes are automatically saved in your browser. Your edits persist until you clear browser data.</p>
+          <p><strong>Images:</strong> Uploaded images are stored directly in browser memory - no manual file management needed!</p>
+          <p><strong>Backup:</strong> Use the Export buttons above to download backup files. For permanent deployment, replace the files in <code>assets/data/</code> folder.</p>
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <small class="text-muted">
+                <strong>Status:</strong> <span id="dataStatus">Loading...</span>
+              </small>
+            </div>
+            <div class="col-md-6">
+              <small class="text-muted">
+                <strong>Image Storage:</strong> <span id="imageStatus">Loading...</span>
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
+  <div id="projects" class="content-section">
+    <div class="row">
+      <div class="col-md-8">
+        <h4>Projects Management</h4>
+      </div>
+      <div class="col-md-4 text-right">
+        <button class="btn btn-primary" onclick="openProjectModal()">
+          <i class="fa fa-plus"></i> Add Project
+        </button>
+      </div>
+    </div>
+    <div id="projectsList" class="mt-3">
+      <!-- Projects will be loaded here -->
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div id="skills" class="content-section">
+    <div class="row">
+      <div class="col-md-8">
+        <h4>Skills Management</h4>
+      </div>
+      <div class="col-md-4 text-right">
+        <button class="btn btn-primary" onclick="openSkillModal()">
+          <i class="fa fa-plus"></i> Add Skill
+        </button>
+      </div>
+    </div>
+    <div id="skillsList" class="mt-3">
+      <!-- Skills will be loaded here -->
+    </div>
+  </div>
+</div>
+
+<!-- Project Modal -->
+<div class="modal fade" id="projectModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Project Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="projectForm">
+          <input type="hidden" id="projectId">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="projectTitle">Title *</label>
+                <input type="text" class="form-control" id="projectTitle" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="projectType">Type *</label>
+                <select class="form-control" id="projectType" required>
+                  <option value="">Select Type</option>
+                  <option value="AI">AI</option>
+                  <option value="IoT">IoT</option>
+                  <option value="Backend">Backend</option>
+                  <option value="Enterprise">Enterprise</option>
+                  <option value="Marketing">Marketing</option>
+                  <option value="Automation">Automation</option>
+                  <option value="Development Tool">Development Tool</option>
+                  <option value="Data">Data</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectSummary">Summary *</label>
+            <textarea class="form-control" id="projectSummary" rows="2" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectDescription">Description *</label>
+            <textarea class="form-control" id="projectDescription" rows="4" required></textarea>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="projectDate">Date *</label>
+                <input type="date" class="form-control" id="projectDate" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="projectImage">Project Image *</label>
+                <div class="custom-file mb-2">
+                  <input type="file" class="custom-file-input" id="projectImageFile" accept="image/*">
+                  <label class="custom-file-label" for="projectImageFile">Choose image file...</label>
+                </div>
+                <input type="text" class="form-control" id="projectImage" placeholder="Image path will be generated automatically" readonly required>
+                <small class="form-text text-muted">
+                  Upload a new image or enter existing image path manually
+                </small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectLink">Link (optional)</label>
+            <input type="url" class="form-control" id="projectLink" placeholder="https://example.com">
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="projectTeamSize">Team Size (optional)</label>
+                <input type="number" class="form-control" id="projectTeamSize" min="1">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="projectRole">Your Role (optional)</label>
+                <input type="text" class="form-control" id="projectRole" placeholder="e.g., Backend Developer">
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectTechnologies">Technologies (comma-separated) *</label>
+            <input type="text" class="form-control" id="projectTechnologies" 
+                   placeholder="e.g., Python, Django, PostgreSQL" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="projectStatus">Status (optional)</label>
+            <select class="form-control" id="projectStatus">
+              <option value="">Not specified</option>
+              <option value="Running">Running</option>
+              <option value="Done">Done</option>
+              <option value="In Progress">In Progress</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="saveProject()">Save Project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Skill Modal -->
+<div class="modal fade" id="skillModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Skill Details</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="skillForm">
+          <input type="hidden" id="skillIndex">
+          <div class="form-group">
+            <label for="skillTitle">Skill Title *</label>
+            <input type="text" class="form-control" id="skillTitle" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="skillPercent">Proficiency Percentage *</label>
+            <input type="range" class="form-control-range" id="skillPercent" 
+                   min="10" max="100" step="10" value="70" 
+                   oninput="document.getElementById('percentValue').textContent = this.value + '%'">
+            <small class="form-text text-muted">Current: <span id="percentValue">70%</span></small>
+          </div>
+          
+          <div class="form-group">
+            <label for="skillSubSkills">Sub-skills (comma-separated) *</label>
+            <textarea class="form-control" id="skillSubSkills" rows="3" required
+                      placeholder="e.g., Django, Flask, FastAPI, REST APIs"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="saveSkill()">Save Skill</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../assets/js/image-manager.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

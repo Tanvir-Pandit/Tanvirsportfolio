@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(async function () {
   // Get URL param ?id=1
   const urlParams = new URLSearchParams(window.location.search);
   const projectId = urlParams.get('id');
@@ -8,7 +8,10 @@ $(document).ready(function () {
     return;
   }
 
-  $.getJSON('assets/data/projects.json', function (projects) {
+  try {
+    // Use data manager to load projects
+    await window.dataManager.init();
+    const projects = window.dataManager.getProjects();
     const project = projects.find(p => p.id === projectId);
 
     if (!project) {
@@ -16,13 +19,16 @@ $(document).ready(function () {
       return;
     }
 
+    // Get image source (base64 from localStorage or file path)
+    const imageSrc = window.dataManager.getImageSrc(project.image);
+
     const html = `
       <div class="project-header text-center">
         <h1>${project.title}</h1>
         <p class="text-muted"><i class="fa fa-calendar"></i> ${project.date}</p>
       </div>
       <div class="text-center">
-        <img src="${project.image}" class="img-responsive center-block" alt="${project.title}" style="max-width:400px;"/>
+        <img src="${imageSrc}" class="img-responsive center-block" alt="${project.title}" style="max-width:400px;"/>
       </div>
       <div class="mt-4">
         <h3>Summary</h3>
@@ -36,5 +42,8 @@ $(document).ready(function () {
     `;
 
     $('#project-detail').html(html);
-  });
+  } catch (error) {
+    console.error('Error loading project:', error);
+    $('#project-detail').html('<p><strong>Error loading project data.</strong></p>');
+  }
 });

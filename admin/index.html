@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Portfolio</title>
+  <link rel="stylesheet" href="../assets/plugins/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/plugins/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <style>
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .login-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .login-header h2 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .btn-login:hover {
+      background: #0056b3;
+    }
+    .alert {
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+
+<div class="container">
+  <div class="login-container">
+    <div class="login-header">
+      <i class="fa fa-lock fa-3x text-primary"></i>
+      <h2>Admin Login</h2>
+      <p class="text-muted">Portfolio Management System</p>
+    </div>
+    
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">
+          <i class="fa fa-envelope"></i> Email Address
+        </label>
+        <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="password">
+          <i class="fa fa-key"></i> Password
+        </label>
+        <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+      </div>
+      
+      <button type="submit" class="btn btn-login">
+        <i class="fa fa-sign-in"></i> Login
+      </button>
+      
+      <div id="loginAlert" class="alert" style="display: none;"></div>
+    </form>
+    
+    <div class="text-center mt-3">
+      <a href="../index.html" class="text-muted">
+        <i class="fa fa-arrow-left"></i> Back to Portfolio
+      </a>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script>
+$(document).ready(function() {
+  // Check if already logged in
+  if (localStorage.getItem('adminLoggedIn') === 'true') {
+    window.location.href = 'dashboard.html';
+  }
+
+  $('#loginForm').on('submit', function(e) {
+    e.preventDefault();
+    
+    const email = $('#email').val();
+    const password = $('#password').val();
+    
+    // Hardcoded credentials (in production, this should be server-side)
+    if (email === 'tanvirrcse@gmail.com' && password === 'T@nvir2000') {
+      localStorage.setItem('adminLoggedIn', 'true');
+      localStorage.setItem('adminEmail', email);
+      
+      $('#loginAlert').removeClass('alert-danger').addClass('alert-success')
+        .text('Login successful! Redirecting...').show();
+      
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1000);
+    } else {
+      $('#loginAlert').removeClass('alert-success').addClass('alert-danger')
+        .text('Invalid email or password!').show();
+    }
+  });
+});
+</script>
+</body>
+</html>
