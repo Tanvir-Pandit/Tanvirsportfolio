@@ -128,12 +128,41 @@ class DataManager {
     return this.projects.find(project => project.id === id);
   }
 
-  // Get image source - checks localStorage first, then falls back to actual file
+  // Get image source - uses base64 image manager for dynamic images
   getImageSrc(imagePath) {
+    if (!imagePath) return 'assets/images/profile.png';
+    
+    // If base64ImageManager is available, use it
+    if (window.base64ImageManager && window.base64ImageManager.initialized) {
+      return window.base64ImageManager.getImageSrc(imagePath);
+    }
+    
+    // Fallback: check old imageManager for compatibility
     if (window.imageManager) {
       const imageData = window.imageManager.getImageData(imagePath);
       if (imageData) {
         return imageData; // Returns base64 data URL
+      }
+    }
+    
+    // Check if it's already a base64 string
+    if (imagePath.startsWith('data:image/')) {
+      return imagePath;
+    }
+    
+    // Check localStorage for base64 images
+    const storedImages = localStorage.getItem('portfolio_images');
+    if (storedImages) {
+      try {
+        const images = JSON.parse(storedImages);
+        if (imagePath === 'profile' && images.images?.profile) {
+          return images.images.profile;
+        }
+        if (images.images?.projects?.[imagePath]) {
+          return images.images.projects[imagePath];
+        }
+      } catch (e) {
+        console.warn('Failed to parse stored images');
       }
     }
     

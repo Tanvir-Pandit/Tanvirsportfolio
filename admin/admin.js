@@ -24,6 +24,14 @@ function populateProfileForms() {
   $('#profileStatus').text(Object.keys(profile).length > 0 ? 'Loaded Successfully' : 'Load Failed');
   $('#profileSource').text(hasLocalData ? 'Custom Data (LocalStorage)' : 'Default JSON File');
   
+  // Update image storage info
+  if (window.base64ImageManager && window.base64ImageManager.initialized) {
+    const storageInfo = window.base64ImageManager.getStorageInfo();
+    $('#imageStorage').text(`${storageInfo.totalImages} images (${storageInfo.storageUsed})`);
+  } else {
+    $('#imageStorage').text('Base64 Manager Loading...');
+  }
+  
   // Personal Information
   if (profile.personalInfo) {
     $('#fullName').val(profile.personalInfo.fullName || '');
@@ -34,9 +42,13 @@ function populateProfileForms() {
     const imagePath = profile.personalInfo.profileImage || 'assets/images/profile.png';
     $('#profileImagePath').val(imagePath);
     
-    // Show current image
+    // Show current image status
     if (imagePath !== 'assets/images/profile.png') {
-      $('.custom-file-label[for="profileImageUpload"]').text('Current: ' + imagePath.split('/').pop());
+      if (imagePath.startsWith('data:image/')) {
+        $('.custom-file-label[for="profileImageUpload"]').text('Current: Base64 Image');
+      } else {
+        $('.custom-file-label[for="profileImageUpload"]').text('Current: ' + imagePath.split('/').pop());
+      }
     }
   }
   
@@ -174,10 +186,66 @@ function resetProfileToDefault() {
   }
 }
 
+// Export images data
+function exportImages() {
+  if (window.base64ImageManager) {
+    const imageData = window.base64ImageManager.exportImages();
+    const blob = new Blob([imageData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'portfolio-images-backup.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showAlert('Images exported successfully!', 'success');
+  } else {
+    showAlert('Image manager not available', 'error');
+  }
+}
+
+// Import images data
+function importImages() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          if (window.base64ImageManager) {
+            const result = window.base64ImageManager.importImages(e.target.result);
+            if (result.success) {
+              showAlert('Images imported successfully!', 'success');
+              // Refresh the page to reload with new images
+              setTimeout(() => location.reload(), 1500);
+            } else {
+              showAlert('Failed to import images: ' + result.error, 'error');
+            }
+          } else {
+            showAlert('Image manager not available', 'error');
+          }
+        } catch (error) {
+          showAlert('Invalid JSON file', 'error');
+        }
+      };
+      reader.readAsText(file);
+    }
+  };
+  input.click();
+}
+
 $(document).ready(function() {
   // Initialize managers
   window.dataManager = new DataManager();
-  window.imageManager = new ImageManager();
+  
+  // Initialize base64 image manager
+  if (window.base64ImageManager) {
+    window.base64ImageManager.init().then(() => {
+      console.log('Base64 Image Manager initialized');
+    });
+  }
   
   // Check authentication
   if (localStorage.getItem('adminLoggedIn') !== 'true') {
@@ -198,25 +266,27 @@ $(document).ready(function() {
   $(document).on('change', '#profileImageUpload', function() {
     const file = this.files[0];
     if (file) {
-      $('.custom-file-label').text(file.name);
-      handleImageUpload(file, function(imagePath) {
-        if (imagePath) {
-          $('#profileImagePath').val(imagePath);
+      $('.custom-file-label[for="profileImageUpload"]').text(file.name);
+      handleImageUpload(file, function(imageId) {
+        if (imageId) {
+          $('#profileImagePath').val(imageId);
+          showNotification('Profile image uploaded successfully!', 'success');
         }
-      });
+      }, 'profile');
     }
   });
   
-  // Image upload handler
+  // Project image upload handler
   $(document).on('change', '#projectImageFile', function() {
     const file = this.files[0];
     if (file) {
-      $('.custom-file-label').text(file.name);
-      handleImageUpload(file, function(imagePath) {
-        if (imagePath) {
-          $('#projectImage').val(imagePath);
+      $('.custom-file-label[for="projectImageFile"]').text(file.name);
+      handleImageUpload(file, function(imageId) {
+        if (imageId) {
+          $('#projectImage').val(imageId);
+          showNotification('Project image uploaded successfully!', 'success');
         }
-      });
+      }, 'projects');
     }
   });
   
@@ -478,23 +548,62 @@ function showNotification(message, type = 'info') {
   }, 5000);
 }
 
-// Image Upload Handler
-function handleImageUpload(file, callback) {
+// Image Upload Handler - Now uses base64 storage
+async function handleImageUpload(file, callback, category = 'projects') {
   if (!file) {
     callback(null);
     return;
   }
   
-  // Use the new image manager
-  window.imageManager.storeImage(file, (imagePath, imageData) => {
-    if (imagePath) {
-      callback(imagePath);
-      showNotification(`Image uploaded successfully! Stored as ${imageData.filename}`, 'success');
+  try {
+    // Show upload progress
+    showNotification('Uploading image...', 'info');
+    
+    // Use the new base64 image manager
+    if (window.base64ImageManager) {
+      const result = await window.base64ImageManager.storeImage(file, category);
+      
+      if (result.success) {
+        callback(result.imageId);
+        showNotification(`Image uploaded successfully! ID: ${result.imageId}`, 'success');
+      } else {
+        callback(null);
+        showNotification(`Failed to upload image: ${result.error}`, 'error');
+      }
     } else {
-      callback(null);
-      showNotification('Failed to upload image. Please try again.', 'error');
+      // Fallback to direct base64 conversion
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const base64 = e.target.result;
+        const imageId = 'img_' + Date.now();
+        
+        // Store in localStorage
+        const storedImages = JSON.parse(localStorage.getItem('portfolio_images') || '{"images":{"projects":{}}}');
+        if (!storedImages.images) storedImages.images = {};
+        if (!storedImages.images.projects) storedImages.images.projects = {};
+        
+        if (category === 'profile') {
+          storedImages.images.profile = base64;
+          callback('profile');
+        } else {
+          storedImages.images.projects[imageId] = base64;
+          callback(imageId);
+        }
+        
+        localStorage.setItem('portfolio_images', JSON.stringify(storedImages));
+        showNotification('Image uploaded successfully!', 'success');
+      };
+      reader.onerror = function() {
+        callback(null);
+        showNotification('Failed to upload image. Please try again.', 'error');
+      };
+      reader.readAsDataURL(file);
     }
-  });
+  } catch (error) {
+    console.error('Image upload error:', error);
+    callback(null);
+    showNotification('Failed to upload image. Please try again.', 'error');
+  }
 }
 
 // Render Projects

@@ -155,6 +155,12 @@
           <button class="btn btn-outline-info" onclick="exportSkills()" title="Backup skills to file">
             <i class="fa fa-download"></i> Export Skills
           </button>
+          <button class="btn btn-outline-success" onclick="exportImages()" title="Backup images to file">
+            <i class="fa fa-download"></i> Export Images
+          </button>
+          <button class="btn btn-outline-primary" onclick="importImages()" title="Import images from file">
+            <i class="fa fa-upload"></i> Import Images
+          </button>
           <button class="btn btn-outline-warning" onclick="resetToOriginal()" title="Reset all changes back to original files">
             <i class="fa fa-refresh"></i> Reset to Original
           </button>
@@ -209,11 +215,14 @@
       <div class="col-md-12">
         <div class="alert alert-light">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <strong>Profile Status:</strong> <span id="profileStatus">Loading...</span>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <strong>Data Source:</strong> <span id="profileSource">Checking...</span>
+            </div>
+            <div class="col-md-4">
+              <strong>Image Storage:</strong> <span id="imageStorage">Checking...</span>
             </div>
           </div>
         </div>
@@ -567,7 +576,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../assets/js/data-manager.js"></script>
-<script src="../assets/js/image-manager.js"></script>
+<script src="../assets/js/base64-image-manager.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>
