@@ -1,9 +1,178 @@
-// Admin Panel JavaScript
+// Admin Panel JavaScript - Static Hosting Compatible
 let projects = [];
 let skills = [];
 let profile = {};
 let currentEditingProject = null;
 let currentEditingSkill = null;
+
+// Initialize admin panel when page loads
+$(document).ready(function() {
+  console.log('🚀 Admin panel script loaded, DOM ready');
+  console.log('jQuery available:', !!window.$);
+  console.log('DataManager class available:', !!window.DataManager);
+  console.log('ImageManager available:', !!window.ImageManager);
+  
+  // Check authentication first
+  if (localStorage.getItem('adminLoggedIn') !== 'true') {
+    console.log('❌ Not authenticated, redirecting to login');
+    window.location.href = 'index.html';
+    return;
+  }
+  
+  console.log('✅ Authentication passed, initializing admin panel');
+  
+  // Initialize admin panel
+  initializeAdminPanel();
+});
+
+// Initialize admin panel with static managers
+async function initializeAdminPanel() {
+  try {
+    console.log('🚀 Starting admin panel initialization...');
+    
+    // Initialize managers
+    window.dataManager = new DataManager();
+    console.log('✅ DataManager instance created');
+    
+    // Initialize DataManager
+    await window.dataManager.init();
+    console.log('✅ DataManager initialized');
+    
+    // Check ImageManager
+    if (window.imageManager) {
+      console.log('✅ ImageManager available');
+    } else {
+      console.warn('⚠️ ImageManager not available');
+    }
+    
+    // Load all data
+    await loadAllData();
+    
+    // Display admin email
+    $('#adminEmail').text(localStorage.getItem('adminEmail') || 'Admin');
+    
+    // Setup navigation
+    setupNavigation();
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Update dashboard stats
+    updateStats();
+    
+    // Initialize default section (dashboard should be active)
+    showSection('dashboard');
+    
+    console.log('✅ Admin panel initialized successfully');
+    showAlert('Admin panel loaded successfully!', 'success');
+    
+  } catch (error) {
+    console.error('❌ Error initializing admin panel:', error);
+    console.error('Error stack:', error.stack);
+    showAlert('Error loading admin panel: ' + error.message, 'error');
+    
+    // Still try to show basic UI
+    try {
+      setupNavigation();
+      setupEventListeners();
+      showSection('dashboard');
+    } catch (fallbackError) {
+      console.error('❌ Fallback initialization also failed:', fallbackError);
+    }
+  }
+}
+
+// Debug functions for troubleshooting
+function debugProjects() {
+  console.log('🐛 DEBUG: Projects troubleshooting');
+  console.log('DataManager exists:', !!window.dataManager);
+  console.log('DataManager initialized:', window.dataManager ? window.dataManager.isInitialized : 'N/A');
+  console.log('Current projects array:', projects);
+  console.log('Projects count:', projects.length);
+  console.log('LocalStorage portfolioProjects:', localStorage.getItem('portfolioProjects'));
+  
+  // Test direct file access
+  fetch('../assets/data/projects.json')
+    .then(response => {
+      console.log('📡 Direct fetch response status:', response.status);
+      return response.json();
+    })
+    .then(data => {
+      console.log('📄 Direct fetch data:', data);
+      console.log('📄 Direct fetch count:', data.length);
+    })
+    .catch(error => {
+      console.error('❌ Direct fetch error:', error);
+    });
+  
+  // Test loading from DataManager
+  if (window.dataManager) {
+    window.dataManager.getProjects().then(loadedProjects => {
+      console.log('Projects from DataManager:', loadedProjects);
+      console.log('DataManager projects count:', loadedProjects.length);
+    }).catch(error => {
+      console.error('Error loading from DataManager:', error);
+    });
+  }
+  
+  showAlert('Debug info logged to console. Press F12 to view.', 'info');
+}
+
+async function reloadProjects() {
+  try {
+    console.log('🔄 Reloading projects...');
+    showAlert('Reloading projects...', 'info');
+    
+    if (!window.dataManager) {
+      throw new Error('DataManager not initialized');
+    }
+    
+    // Reinitialize DataManager
+    await window.dataManager.init();
+    
+    // Reload projects
+    await loadProjects();
+    
+    showAlert('Projects reloaded successfully!', 'success');
+  } catch (error) {
+    console.error('❌ Error reloading projects:', error);
+    showAlert('Error reloading projects: ' + error.message, 'error');
+  }
+}
+
+// Load all data from DataManager
+async function loadAllData() {
+  try {
+    console.log('🔄 Loading all data from DataManager...');
+    console.log('DataManager available:', !!window.dataManager);
+    console.log('DataManager initialized:', window.dataManager?.isInitialized);
+    
+    // Load projects from DataManager
+    projects = await window.dataManager.getProjects();
+    console.log(`📁 Loaded ${projects.length} projects:`, projects);
+    
+    // Load skills from DataManager
+    skills = await window.dataManager.getSkills();
+    console.log(`🛠️ Loaded ${skills.length} skills:`, skills);
+    
+    // Load profile from DataManager
+    profile = await window.dataManager.getProfile();
+    console.log('👤 Profile loaded:', profile);
+    
+    // Render UI
+    console.log('🎨 Starting to render UI...');
+    renderProjects();
+    renderSkills();
+    console.log('🎨 UI rendering complete');
+    
+    console.log('✅ All data loaded successfully');
+  } catch (error) {
+    console.error('❌ Error loading data:', error);
+    console.error('Error stack:', error.stack);
+    showAlert('Error loading data: ' + error.message, 'error');
+    throw error;
+  }
+}
 
 // Load profile data
 async function loadProfile() {
@@ -25,11 +194,11 @@ function populateProfileForms() {
   $('#profileSource').text(hasLocalData ? 'Custom Data (LocalStorage)' : 'Default JSON File');
   
   // Update image storage info
-  if (window.fileImageManager) {
-    const storageStats = window.fileImageManager.getStorageStats();
-    $('#imageStorage').text(`${storageStats.totalImages} images (${storageStats.totalSize})`);
+  if (window.imageManager) {
+    const storageStats = window.imageManager.getStorageStats();
+    $('#imageStorage').text(`${storageStats.totalImages} images (${storageStats.formattedSize})`);
   } else {
-    $('#imageStorage').text('File Manager Loading...');
+    $('#imageStorage').text('Image Manager Loading...');
   }
   
   // Personal Information
@@ -137,11 +306,11 @@ function saveSiteSettings() {
 }
 
 // Save profile data to localStorage and update DataManager
-function saveProfileData() {
+async function saveProfileData() {
   try {
     localStorage.setItem('portfolio_profile', JSON.stringify(profile));
     
-    // Update the dataManager's profile data as well
+    // Update the dataManager's profile data
     if (window.dataManager) {
       window.dataManager.updateProfile(profile);
     }
@@ -159,12 +328,102 @@ function saveProfileData() {
   }
 }
 
+// Export for static hosting deployment
+function exportForNetlify() {
+  if (window.dataManager && typeof window.dataManager.exportForDeployment === 'function') {
+    try {
+      window.dataManager.exportForDeployment();
+      showAlert('Portfolio data exported for static hosting deployment! Check your downloads folder.', 'success');
+    } catch (error) {
+      console.error('Export error:', error);
+      showAlert('Error exporting data: ' + error.message, 'error');
+    }
+  } else {
+    showAlert('Export function not available. Make sure data-manager.js is loaded.', 'error');
+  }
+}
+
+// Show static hosting deployment instructions
+function showNetlifyInstructions() {
+  const instructions = `
+    <div class="modal fade" id="deploymentModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              <i class="fa fa-cloud-upload"></i> Deploy to Static Hosting
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-success">
+              <h6><i class="fa fa-check-circle"></i> Your Portfolio is Static-Hosting-Ready!</h6>
+              <p>This portfolio uses localStorage and base64 images, making it perfect for any static hosting service.</p>
+            </div>
+            
+            <h6>🚀 Quick Deployment Steps:</h6>
+            <ol>
+              <li><strong>Export Your Data:</strong> Click "Export for Static Hosting" to download your portfolio data</li>
+              <li><strong>Update JSON Files:</strong> Replace content in assets/data/ with exported data</li>
+              <li><strong>Deploy to Your Chosen Service:</strong>
+                <ul>
+                  <li><strong>Netlify:</strong> Drag & drop your portfolio folder to netlify.com</li>
+                  <li><strong>Vercel:</strong> Connect GitHub repo to vercel.com</li>
+                  <li><strong>GitHub Pages:</strong> Enable Pages in repository settings</li>
+                  <li><strong>Surge.sh:</strong> Use command line: surge dist/</li>
+                </ul>
+              </li>
+              <li><strong>Live Portfolio:</strong> Your site will be live instantly!</li>
+            </ol>
+            
+            <h6>✅ What Works on Static Hosting:</h6>
+            <ul>
+              <li><i class="fa fa-check text-success"></i> Complete admin panel functionality</li>
+              <li><i class="fa fa-check text-success"></i> Image uploads (base64 storage)</li>
+              <li><i class="fa fa-check text-success"></i> Data persistence in browser</li>
+              <li><i class="fa fa-check text-success"></i> Export/import for portability</li>
+              <li><i class="fa fa-check text-success"></i> Real-time portfolio updates</li>
+            </ul>
+            
+            <div class="alert alert-info">
+              <h6><i class="fa fa-info-circle"></i> Static Hosting Benefits:</h6>
+              <ul class="mb-0">
+                <li>🆓 Free hosting available on many platforms</li>
+                <li>⚡ Lightning-fast global CDN</li>
+                <li>🔒 Automatic HTTPS on most platforms</li>
+                <li>🌐 Custom domain support</li>
+                <li>🔄 Auto-deploy from Git</li>
+                <li>🛡️ No server maintenance required</li>
+              </ul>
+            </div>
+            
+            <div class="text-center">
+              <button class="btn btn-success" onclick="exportForNetlify(); $('#deploymentModal').modal('hide');">
+                <i class="fa fa-download"></i> Export for Static Hosting
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // Remove existing modal if present
+  $('#deploymentModal').remove();
+  
+  // Add modal to page and show
+  $('body').append(instructions);
+  $('#deploymentModal').modal('show');
+}
+
 // Save project data to localStorage and update DataManager
-function saveProjectData() {
+async function saveProjectData() {
   try {
     localStorage.setItem('portfolioProjects', JSON.stringify(projects));
     
-    // Update the dataManager's project data as well
+    // Update the dataManager's project data
     if (window.dataManager) {
       window.dataManager.updateProjects(projects);
     }
@@ -177,11 +436,11 @@ function saveProjectData() {
 }
 
 // Save skills data to localStorage and update DataManager
-function saveSkillsData() {
+async function saveSkillsData() {
   try {
     localStorage.setItem('portfolioSkills', JSON.stringify(skills));
     
-    // Update the dataManager's skills data as well
+    // Update the dataManager's skills data
     if (window.dataManager) {
       window.dataManager.updateSkills(skills);
     }
@@ -231,7 +490,7 @@ function exportAllData() {
       projects: projects,
       skills: skills,
       profile: profile,
-      imageMetadata: window.fileImageManager ? window.fileImageManager.getUploadedImages() : {},
+      imageMetadata: window.imageManager ? window.imageManager.getUploadedImages() : {},
       exportDate: new Date().toISOString(),
       version: '2.0'
     };
@@ -304,8 +563,8 @@ function importAllData() {
 
 // Export images metadata
 function exportImages() {
-  if (window.fileImageManager) {
-    const imageData = window.fileImageManager.exportImageMetadata();
+  if (window.imageManager) {
+    const imageData = window.imageManager.exportImageData();
     const blob = new Blob([imageData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -345,30 +604,24 @@ function importImages() {
   input.click();
 }
 
-$(document).ready(function() {
-  // Initialize managers
-  window.dataManager = new DataManager();
-  
-  // Initialize file image manager
-  if (window.fileImageManager) {
-    console.log('File Image Manager initialized');
-  }
-  
-  // Check authentication
+// Authentication check
+function checkAuthentication() {
   if (localStorage.getItem('adminLoggedIn') !== 'true') {
     window.location.href = 'index.html';
-    return;
+    return false;
   }
-  
-  // Display admin email
-  $('#adminEmail').text(localStorage.getItem('adminEmail'));
-  
-  // Load data
-  loadProjects();
-  loadSkills();
-  loadProfile();
-  updateStats();
-  
+  return true;
+}
+
+// Setup navigation
+function setupNavigation() {
+  // Navigation handling is already implemented in the dashboard HTML
+  // This function can be expanded for additional navigation setup
+  console.log('✅ Navigation setup complete');
+}
+
+// Setup event listeners
+function setupEventListeners() {
   // Profile image upload handler
   $(document).on('change', '#profileImageUpload', function() {
     const file = this.files[0];
@@ -422,13 +675,63 @@ $(document).ready(function() {
     e.preventDefault();
     saveSiteSettings();
   });
-});
+}
 
 // Authentication
 function logout() {
   localStorage.removeItem('adminLoggedIn');
   localStorage.removeItem('adminEmail');
   window.location.href = 'index.html';
+}
+
+// UI Helper Functions
+function showAlert(message, type = 'info', duration = 5000) {
+  // Remove existing alerts
+  $('.admin-alert').remove();
+  
+  const alertClass = {
+    'success': 'alert-success',
+    'error': 'alert-danger',
+    'warning': 'alert-warning',
+    'info': 'alert-info'
+  }[type] || 'alert-info';
+  
+  const alertHtml = `
+    <div class="alert ${alertClass} admin-alert" style="position: fixed; top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
+      <button type="button" class="close" onclick="$(this).parent().remove()">
+        <span>&times;</span>
+      </button>
+      ${message}
+    </div>
+  `;
+  
+  $('body').append(alertHtml);
+  
+  // Auto-remove after duration
+  setTimeout(() => {
+    $('.admin-alert').fadeOut(500, function() { $(this).remove(); });
+  }, duration);
+}
+
+function showSection(sectionId) {
+  // Hide all sections
+  $('.content-section').removeClass('active');
+  $('.nav-link').removeClass('active');
+  
+  // Show selected section
+  $(`#${sectionId}`).addClass('active');
+  $(`.nav-link[onclick*="${sectionId}"]`).addClass('active');
+  
+  // Re-render content when section is shown
+  if (sectionId === 'projects') {
+    renderProjects();
+    console.log(`📁 Projects section shown - rendered ${projects.length} projects`);
+  } else if (sectionId === 'skills') {
+    renderSkills();
+    console.log(`🛠️ Skills section shown - rendered ${skills.length} skills`);
+  }
+  
+  console.log(`📄 Switched to section: ${sectionId}`);
 }
 
 // Navigation
@@ -442,62 +745,34 @@ function showSection(section) {
   $('a[onclick="showSection(\'' + section + '\')"]').addClass('active');
 }
 
-// Load Projects - checks localStorage first for any admin updates
-function loadProjects() {
-  // First check if we have updated data in localStorage
-  const localProjects = localStorage.getItem('portfolioProjects');
-  
-  if (localProjects) {
-    try {
-      projects = JSON.parse(localProjects);
-      renderProjects();
-      updateStats();
-      return;
-    } catch (e) {
-      console.error('Failed to parse local projects data');
-    }
-  }
-  
-  // Fallback to loading from original JSON file
-  $.getJSON('../assets/data/projects.json', function(data) {
-    projects = data;
+// Load Projects - uses DataManager
+async function loadProjects() {
+  try {
+    projects = await window.dataManager.getProjects();
     renderProjects();
     updateStats();
-  }).fail(function() {
-    console.error('Failed to load projects from file');
+    console.log(`📁 Loaded ${projects.length} projects from DataManager`);
+  } catch (error) {
+    console.error('❌ Error loading projects:', error);
     projects = [];
     renderProjects();
     updateStats();
-  });
+  }
 }
 
-// Load Skills - checks localStorage first for any admin updates  
-function loadSkills() {
-  // First check if we have updated data in localStorage
-  const localSkills = localStorage.getItem('portfolioSkills');
-  
-  if (localSkills) {
-    try {
-      skills = JSON.parse(localSkills);
-      renderSkills();
-      updateStats();
-      return;
-    } catch (e) {
-      console.error('Failed to parse local skills data');
-    }
-  }
-  
-  // Fallback to loading from original JSON file
-  $.getJSON('../assets/data/skills.json', function(data) {
-    skills = data;
+// Load Skills - uses DataManager
+async function loadSkills() {
+  try {
+    skills = await window.dataManager.getSkills();
     renderSkills();
     updateStats();
-  }).fail(function() {
-    console.error('Failed to load skills from file');
+    console.log(`🛠️ Loaded ${skills.length} skills from DataManager`);
+  } catch (error) {
+    console.error('❌ Error loading skills:', error);
     skills = [];
     renderSkills();
     updateStats();
-  });
+  }
 }
 
 // Update Statistics
@@ -530,8 +805,8 @@ function updateDataStatus() {
   
   // Update image status
   if (window.imageManager) {
-    const imageInfo = window.imageManager.getStorageInfo();
-    const imageStatus = `<span class="text-primary">${imageInfo.count} images (${imageInfo.totalSizeFormatted})</span>`;
+    const imageStats = window.imageManager.getStorageStats();
+    const imageStatus = `<span class="text-primary">${imageStats.totalImages} images (${imageStats.formattedSize})</span>`;
     $('#imageStatus').html(imageStatus);
   }
 }
@@ -663,8 +938,8 @@ async function handleImageUpload(file, callback, category = 'projects') {
     showNotification('Processing image upload...', 'info');
     
     // Use the file image manager
-    if (window.fileImageManager) {
-      const result = await window.fileImageManager.processImageUpload(file, category);
+    if (window.imageManager) {
+      const result = await window.imageManager.processImageUpload(file, category);
       
       if (result.success) {
         callback(result.relativePath);
@@ -713,38 +988,64 @@ async function handleImageUpload(file, callback, category = 'projects') {
 
 // Render Projects
 function renderProjects() {
+  console.log('🎨 Rendering projects...', projects.length, 'projects');
   const projectsList = $('#projectsList');
   projectsList.empty();
   
   if (projects.length === 0) {
-    projectsList.html('<p class="text-muted">No projects found.</p>');
+    const noProjectsHtml = `
+      <div class="alert alert-info">
+        <h5><i class="fa fa-info-circle"></i> No Projects Found</h5>
+        <p>No projects are currently loaded. This could be because:</p>
+        <ul>
+          <li>This is a fresh installation with no projects added yet</li>
+          <li>There was an error loading the projects data</li>
+          <li>The projects JSON file is empty or corrupted</li>
+        </ul>
+        <button class="btn btn-primary" onclick="openProjectModal()">
+          <i class="fa fa-plus"></i> Add Your First Project
+        </button>
+        <button class="btn btn-info ml-2" onclick="debugProjects()">
+          <i class="fa fa-bug"></i> Debug Loading Issues
+        </button>
+      </div>
+    `;
+    projectsList.html(noProjectsHtml);
     return;
   }
   
   projects.forEach((project, index) => {
     // Get image source (base64 from localStorage or file path)
-    const imageSrc = window.imageManager ? window.imageManager.getImageData(project.image) || project.image : project.image;
+    let imageSrc = project.image || '../assets/images/projects/project-1.png';
+    
+    // Try to get base64 image if available
+    if (window.imageManager && window.imageManager.getImageSrc) {
+      const base64Image = window.imageManager.getImageSrc(project.image);
+      if (base64Image && base64Image !== project.image) {
+        imageSrc = base64Image;
+      }
+    }
     
     const projectCard = `
-      <div class="project-card">
+      <div class="project-card" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
         <div class="row">
           <div class="col-md-2">
-            <img src="${imageSrc}" class="img-thumbnail" style="max-width: 80px;" 
+            <img src="${imageSrc}" class="img-thumbnail" style="max-width: 80px; height: 60px; object-fit: cover;" 
                  onerror="this.src='../assets/images/projects/project-1.png'">
           </div>
           <div class="col-md-7">
-            <h5>${project.title}</h5>
-            <p class="text-muted">${project.summary}</p>
+            <h5>${project.title || 'Untitled Project'}</h5>
+            <p class="text-muted">${project.summary || 'No description available'}</p>
             <small class="text-info">
-              <i class="fa fa-calendar"></i> ${project.date} | 
-              <i class="fa fa-tag"></i> ${project.type}
+              <i class="fa fa-calendar"></i> ${project.date || 'No date'} | 
+              <i class="fa fa-tag"></i> ${project.type || 'No category'}
             </small>
           </div>
           <div class="col-md-3 text-right">
-            <button class="btn btn-sm btn-primary" onclick="editProject(${index})">
+            <button class="btn btn-sm btn-primary" onclick="editProject(${index})" title="Edit this project">
               <i class="fa fa-edit"></i> Edit
             </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteProject(${index})">
+            <button class="btn btn-sm btn-danger ml-1" onclick="deleteProject(${index})" title="Delete this project">
               <i class="fa fa-trash"></i> Delete
             </button>
           </div>
@@ -753,42 +1054,62 @@ function renderProjects() {
     `;
     projectsList.append(projectCard);
   });
+  
+  console.log('✅ Projects rendered successfully');
 }
 
 // Render Skills
 function renderSkills() {
+  console.log('🎨 Rendering skills...', skills.length, 'skills');
   const skillsList = $('#skillsList');
   skillsList.empty();
   
   if (skills.length === 0) {
-    skillsList.html('<p class="text-muted">No skills found.</p>');
+    const noSkillsHtml = `
+      <div class="alert alert-info">
+        <h5><i class="fa fa-info-circle"></i> No Skills Found</h5>
+        <p>No skills are currently loaded. This could be because:</p>
+        <ul>
+          <li>This is a fresh installation with no skills added yet</li>
+          <li>There was an error loading the skills data</li>
+          <li>The skills JSON file is empty or corrupted</li>
+        </ul>
+        <button class="btn btn-primary" onclick="openSkillModal()">
+          <i class="fa fa-plus"></i> Add Your First Skill
+        </button>
+        <button class="btn btn-info ml-2" onclick="debugProjects()">
+          <i class="fa fa-bug"></i> Debug Loading Issues
+        </button>
+      </div>
+    `;
+    skillsList.html(noSkillsHtml);
     return;
   }
   
   skills.forEach((skill, index) => {
     const skillCard = `
-      <div class="skill-card">
+      <div class="skill-card" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 5px;">
         <div class="row">
           <div class="col-md-8">
-            <h5>${skill.title}</h5>
+            <h5>${skill.title || 'Untitled Skill'}</h5>
             <div class="progress" style="height: 8px;">
               <div class="progress-bar" role="progressbar" 
-                   style="width: ${skill.percent}" 
-                   aria-valuenow="${skill.percent.replace('%', '')}" 
+                   style="width: ${skill.percent || '0%'}" 
+                   aria-valuenow="${(skill.percent || '0%').replace('%', '')}" 
                    aria-valuemin="0" aria-valuemax="100">
               </div>
             </div>
             <small class="text-muted">
-              <strong>Sub-skills:</strong> ${skill.subSkills.join(', ')}
+              <strong>Sub-skills:</strong> ${(skill.subSkills || []).join(', ') || 'No sub-skills defined'}
             </small>
           </div>
           <div class="col-md-4 text-right">
-            <span class="badge badge-primary">${skill.percent}</span>
+            <span class="badge badge-primary">${skill.percent || '0%'}</span>
             <br><br>
-            <button class="btn btn-sm btn-primary" onclick="editSkill(${index})">
+            <button class="btn btn-sm btn-primary" onclick="editSkill(${index})" title="Edit this skill">
               <i class="fa fa-edit"></i> Edit
             </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteSkill(${index})">
+            <button class="btn btn-sm btn-danger ml-1" onclick="deleteSkill(${index})" title="Delete this skill">
               <i class="fa fa-trash"></i> Delete
             </button>
           </div>
@@ -797,6 +1118,8 @@ function renderSkills() {
     `;
     skillsList.append(skillCard);
   });
+  
+  console.log('✅ Skills rendered successfully');
 }
 
 // Project Management

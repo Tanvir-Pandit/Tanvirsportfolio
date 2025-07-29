@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Management - Portfolio Admin</title>
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            z-index: 1000;
+        }
+        .sidebar .nav-link {
+            color: #ecf0f1;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .skills-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-weight: 500;
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        .skill-preview {
+            margin-top: 15px;
+        }
+        .skill-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            margin: 3px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        .help-text {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="brand-logo">
+            <i class="fa fa-dashboard"></i> Portfolio Admin
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/projects">
+                    <i class="fa fa-folder-open"></i> Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin/skills">
+                    <i class="fa fa-star"></i> Skills
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/profile">
+                    <i class="fa fa-user"></i> Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/settings">
+                    <i class="fa fa-cogs"></i> Settings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/portfolio" target="_blank">
+                    <i class="fa fa-external-link"></i> View Portfolio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1><i class="fa fa-star"></i> Skills Management</h1>
+                <p class="text-muted mb-0">Manage your technical skills and expertise</p>
+            </div>
+        </div>
+        
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+        
+        <!-- Skills Form -->
+        <div class="skills-card card">
+            <div class="card-header">
+                <h5><i class="fa fa-edit"></i> Update Skills</h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="skillsContainer">
+                    <!-- Skills will be loaded here dynamically -->
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button type="button" class="btn btn-primary me-2" onclick="addNewSkill()">
+                        <i class="fa fa-plus"></i> Add New Skill
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="saveAllSkills()">
+                        <i class="fa fa-save"></i> Save All Skills
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Current Skills Display -->
+        <div class="skills-card card mt-4">
+            <div class="card-header">
+                <h5><i class="fa fa-eye"></i> Current Skills Overview</h5>
+            </div>
+            <div class="card-body">
+                <div class="row" id="currentSkillsDisplay">
+                    {% for skill in skills %}
+                    <div class="col-md-4 mb-3">
+                        <h6>{{ skill.title }} <span class="badge bg-success">{{ skill.percent }}</span></h6>
+                        <div>
+                            {% for subSkill in skill.subSkills %}
+                            <span class="skill-badge">{{ subSkill }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/assets/plugins/jquery-1.11.1.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        let skillsData = [];
+        
+        $(document).ready(function() {
+            loadSkills();
+        });
+        
+        function showAlert(message, type = 'success', duration = 5000) {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            $('#alertContainer').html(alertHtml);
+            
+            setTimeout(() => {
+                $('.alert').fadeOut();
+            }, duration);
+        }
+        
+        function loadSkills() {
+            $.get('/api/skills')
+                .done(function(skills) {
+                    skillsData = skills;
+                    displaySkills();
+                })
+                .fail(function() {
+                    showAlert('Failed to load skills', 'danger');
+                });
+        }
+        
+        function displaySkills() {
+            const container = $('#skillsContainer');
+            container.empty();
+            
+            skillsData.forEach((skill, index) => {
+                const skillHtml = `
+                    <div class="col-md-6 mb-4" data-skill-index="${index}">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">Skill ${index + 1}</h6>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="removeSkill(${index})">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control skill-title" value="${skill.title || ''}" onchange="updateSkill(${index})">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Proficiency</label>
+                                    <input type="text" class="form-control skill-percent" value="${skill.percent || '100%'}" onchange="updateSkill(${index})">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Sub-skills (one per line)</label>
+                                    <textarea class="form-control skill-subskills" rows="4" onchange="updateSkill(${index})">${(skill.subSkills || []).join('\\n')}</textarea>
+                                </div>
+                                <div class="skill-preview">
+                                    ${(skill.subSkills || []).map(sub => `<span class="skill-badge">${sub}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.append(skillHtml);
+            });
+            
+            updateCurrentSkillsDisplay();
+        }
+        
+        function addNewSkill() {
+            skillsData.push({
+                title: '',
+                percent: '100%',
+                subSkills: []
+            });
+            displaySkills();
+        }
+        
+        function removeSkill(index) {
+            if (confirm('Are you sure you want to remove this skill?')) {
+                skillsData.splice(index, 1);
+                displaySkills();
+            }
+        }
+        
+        function updateSkill(index) {
+            const skillCard = $(`[data-skill-index="${index}"]`);
+            const title = skillCard.find('.skill-title').val();
+            const percent = skillCard.find('.skill-percent').val();
+            const subSkillsText = skillCard.find('.skill-subskills').val();
+            const subSkills = subSkillsText.split('\\n').map(s => s.trim()).filter(s => s);
+            
+            skillsData[index] = {
+                title: title,
+                percent: percent,
+                subSkills: subSkills
+            };
+            
+            // Update preview
+            const previewHtml = subSkills.map(sub => `<span class="skill-badge">${sub}</span>`).join('');
+            skillCard.find('.skill-preview').html(previewHtml);
+            
+            updateCurrentSkillsDisplay();
+        }
+        
+        function saveAllSkills() {
+            $.ajax({
+                url: '/api/skills',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(skillsData),
+                success: function(response) {
+                    if (response.success) {
+                        showAlert(response.message, 'success');
+                        updateCurrentSkillsDisplay();
+                    } else {
+                        showAlert(response.message, 'danger');
+                    }
+                },
+                error: function() {
+                    showAlert('Failed to save skills', 'danger');
+                }
+            });
+        }
+        
+        function updateCurrentSkillsDisplay() {
+            const container = $('#currentSkillsDisplay');
+            container.empty();
+            
+            skillsData.forEach(skill => {
+                if (skill.title) {
+                    const skillHtml = `
+                        <div class="col-md-4 mb-3">
+                            <h6>${skill.title} <span class="badge bg-success">${skill.percent}</span></h6>
+                            <div>
+                                ${(skill.subSkills || []).map(sub => `<span class="skill-badge">${sub}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                    container.append(skillHtml);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

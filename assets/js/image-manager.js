@@ -1,170 +1,195 @@
-// Image Manager - Handles image uploads and storage
+// Static Portfolio Image Manager
+// Uses base64 encoding for images - perfect for static hosting
 class ImageManager {
   constructor() {
-    this.imageStore = 'portfolioImages';
-    this.init();
+    this.uploadedImages = this.loadUploadedImages();
   }
 
-  init() {
-    // Create image storage if it doesn't exist
-    if (!localStorage.getItem(this.imageStore)) {
-      localStorage.setItem(this.imageStore, JSON.stringify({}));
-    }
-  }
-
-  // Store image as base64 in localStorage with metadata
-  storeImage(file, callback) {
-    if (!file) {
-      callback(null);
-      return;
-    }
-
-    // Validate file
+  // Validate uploaded file
+  validateFile(file) {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    const maxSize = 5 * 1024 * 1024; // 5MB
+
     if (!allowedTypes.includes(file.type)) {
-      alert('Please select a valid image file (JPEG, PNG, GIF, WebP)');
-      callback(null);
-      return;
-    }
-
-    // Validate size (max 2MB for better performance)
-    if (file.size > 2 * 1024 * 1024) {
-      alert('Image size must be less than 2MB');
-      callback(null);
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        // Generate unique ID for the image
-        const timestamp = Date.now();
-        const randomString = Math.random().toString(36).substring(2, 8);
-        const extension = file.name.split('.').pop().toLowerCase();
-        const imageId = `img-${timestamp}-${randomString}`;
-        const imagePath = `assets/images/projects/${imageId}.${extension}`;
-
-        // Store image data
-        const imageData = {
-          id: imageId,
-          path: imagePath,
-          filename: `${imageId}.${extension}`,
-          originalName: file.name,
-          base64: e.target.result,
-          type: file.type,
-          size: file.size,
-          uploadDate: new Date().toISOString()
-        };
-
-        // Save to localStorage
-        const images = this.getAllImages();
-        images[imageId] = imageData;
-        localStorage.setItem(this.imageStore, JSON.stringify(images));
-
-        callback(imagePath, imageData);
-      } catch (error) {
-        console.error('Error storing image:', error);
-        callback(null);
-      }
-    };
-
-    reader.onerror = () => {
-      console.error('Error reading file');
-      callback(null);
-    };
-
-    reader.readAsDataURL(file);
-  }
-
-  // Get all stored images
-  getAllImages() {
-    try {
-      return JSON.parse(localStorage.getItem(this.imageStore)) || {};
-    } catch {
-      return {};
-    }
-  }
-
-  // Get image by path
-  getImageByPath(path) {
-    const images = this.getAllImages();
-    return Object.values(images).find(img => img.path === path);
-  }
-
-  // Get image base64 data by path
-  getImageData(path) {
-    const image = this.getImageByPath(path);
-    return image ? image.base64 : null;
-  }
-
-  // Delete image
-  deleteImage(path) {
-    const images = this.getAllImages();
-    const imageToDelete = Object.values(images).find(img => img.path === path);
-    
-    if (imageToDelete) {
-      delete images[imageToDelete.id];
-      localStorage.setItem(this.imageStore, JSON.stringify(images));
-      return true;
-    }
-    return false;
-  }
-
-  // Clean up unused images (images not referenced in projects)
-  cleanupUnusedImages(projects) {
-    const images = this.getAllImages();
-    const usedPaths = projects.map(p => p.image);
-    
-    Object.values(images).forEach(image => {
-      if (!usedPaths.includes(image.path)) {
-        delete images[image.id];
-      }
-    });
-    
-    localStorage.setItem(this.imageStore, JSON.stringify(images));
-  }
-
-  // Export all images as a downloadable zip-like structure
-  exportImages() {
-    const images = this.getAllImages();
-    const exportData = {};
-    
-    Object.values(images).forEach(image => {
-      exportData[image.filename] = {
-        path: image.path,
-        base64: image.base64,
-        originalName: image.originalName
+      return { 
+        valid: false, 
+        error: 'Invalid file type. Please upload JPG, PNG, GIF, or WebP images.' 
       };
+    }
+
+    if (file.size > maxSize) {
+      return { 
+        valid: false, 
+        error: 'File too large. Maximum size is 5MB.' 
+      };
+    }
+
+    return { valid: true };
+  }
+
+  // Process image upload for static hosting (base64 encoding)
+  async processImageUpload(file, category = 'general') {
+    return new Promise((resolve, reject) => {
+      // Validate file
+      const validation = this.validateFile(file);
+      if (!validation.valid) {
+        resolve({ success: false, error: validation.error });
+        return;
+      }
+
+      // Generate filename with timestamp
+      const timestamp = Date.now();
+      const extension = file.name.split('.').pop().toLowerCase();
+      
+      let fileName, relativePath;
+      
+      if (category === 'profile') {
+        fileName = `profile-${timestamp}.${extension}`;
+        relativePath = `assets/images/${fileName}`;
+      } else if (category === 'project') {
+        fileName = `project-${timestamp}.${extension}`;
+        relativePath = `assets/images/projects/${fileName}`;
+      } else {
+        fileName = `image-${timestamp}.${extension}`;
+        relativePath = `assets/images/${fileName}`;
+      }
+
+      // Create FileReader to convert to base64
+      const reader = new FileReader();
+      
+      reader.onload = (e) => {
+        const base64Data = e.target.result;
+        
+        // Store image data with base64 for Netlify compatibility
+        const imageData = {
+          fileName: fileName,
+          relativePath: relativePath,
+          base64Data: base64Data,
+          mimeType: file.type,
+          size: file.size,
+          uploadDate: new Date().toISOString(),
+          category: category,
+          staticCompatible: true
+        };
+        
+        // Store in localStorage
+        this.saveImageMetadata(fileName, imageData);
+        
+        // Auto-download the image file for manual placement
+        this.downloadImageFile(file, fileName, category);
+        
+        console.log('📁 Image processed for static hosting (base64):', relativePath);
+        
+        resolve({
+          success: true,
+          fileName: fileName,
+          relativePath: relativePath,
+          base64Data: base64Data,
+          staticCompatible: true
+        });
+      };
+      
+      reader.onerror = () => {
+        reject(new Error('Failed to read file'));
+      };
+      
+      reader.readAsDataURL(file);
     });
-    
-    const dataStr = JSON.stringify(exportData, null, 2);
-    const blob = new Blob([dataStr], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
+  }
+
+  // Get image source with base64 support for static hosting
+  getImageSrc(imagePath, defaultPath = 'assets/images/profile.png') {
+    if (!imagePath) return defaultPath;
+
+    // Check if it's an uploaded image
+    const fileName = imagePath.split('/').pop();
+    const metadata = this.uploadedImages[fileName];
+
+    if (metadata && metadata.base64Data) {
+      // Return base64 data URL for uploaded images
+      return metadata.base64Data;
+    }
+
+    // Return original path for default images
+    return imagePath;
+  }
+
+  // Download image file for manual placement
+  downloadImageFile(file, fileName, category) {
+    const url = URL.createObjectURL(file);
     
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'portfolio-images-export.json';
+    a.download = fileName;
+    a.style.display = 'none';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    // Show instruction notification
+    this.showImageInstructions(fileName, category);
   }
 
-  // Get storage usage info
-  getStorageInfo() {
-    const images = this.getAllImages();
-    const count = Object.keys(images).length;
-    const totalSize = Object.values(images).reduce((sum, img) => sum + img.size, 0);
+  // Show instructions for image placement
+  showImageInstructions(fileName, category) {
+    let targetPath;
+    if (category === 'profile') {
+      targetPath = 'assets/images/';
+    } else if (category === 'project') {
+      targetPath = 'assets/images/projects/';
+    } else {
+      targetPath = 'assets/images/';
+    }
+    
+    const message = `📸 ${fileName} downloaded! Place the file at: ${targetPath}${fileName}`;
+    
+    if (typeof showAlert === 'function') {
+      showAlert(message, 'info', 8000);
+    } else if (window.showAlert) {
+      window.showAlert(message, 'info', 8000);
+    } else {
+      console.log('📸 ' + message);
+      alert(message);
+    }
+  }
+
+  // Save image metadata to localStorage
+  saveImageMetadata(fileName, metadata) {
+    this.uploadedImages[fileName] = metadata;
+    localStorage.setItem('uploaded_images', JSON.stringify(this.uploadedImages));
+  }
+
+  // Load uploaded images from localStorage
+  loadUploadedImages() {
+    try {
+      const stored = localStorage.getItem('uploaded_images');
+      return stored ? JSON.parse(stored) : {};
+    } catch (error) {
+      console.error('Error loading uploaded images:', error);
+      return {};
+    }
+  }
+
+  // Get all uploaded images
+  getUploadedImages() {
+    return this.uploadedImages;
+  }
+
+  // Get storage statistics
+  getStorageStats() {
+    const images = Object.values(this.uploadedImages);
+    const totalSize = images.reduce((sum, img) => sum + (img.size || 0), 0);
     
     return {
-      count,
-      totalSize,
-      totalSizeFormatted: this.formatFileSize(totalSize),
-      storageUsed: new Blob([localStorage.getItem(this.imageStore)]).size,
-      storageUsedFormatted: this.formatFileSize(new Blob([localStorage.getItem(this.imageStore)]).size)
+      totalImages: images.length,
+      totalSize: totalSize,
+      staticCompatible: images.filter(img => img.staticCompatible).length,
+      formattedSize: this.formatFileSize(totalSize)
     };
   }
 
+  // Format file size for display
   formatFileSize(bytes) {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -172,7 +197,73 @@ class ImageManager {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   }
+
+  // Clear all uploaded images
+  clearUploadedImages() {
+    this.uploadedImages = {};
+    localStorage.removeItem('uploaded_images');
+    console.log('🗑️ All uploaded images cleared');
+  }
+
+  // Export image data for static hosting deployment
+  exportImageData() {
+    const exportData = {
+      images: this.uploadedImages,
+      stats: this.getStorageStats(),
+      exportDate: new Date().toISOString(),
+      staticInstructions: {
+        message: "Images are embedded as base64 data - no file copying needed for static hosting",
+        steps: [
+          "1. Images are already embedded in the exported JSON",
+          "2. Just deploy your portfolio to any static hosting service",
+          "3. All images will work automatically",
+          "4. No manual file copying required"
+        ]
+      }
+    };
+
+    return exportData;
+  }
+
+  // Import image data from backup
+  importImageData(data) {
+    if (data && data.images) {
+      this.uploadedImages = data.images;
+      localStorage.setItem('uploaded_images', JSON.stringify(this.uploadedImages));
+      console.log('📥 Image data imported successfully');
+      return true;
+    }
+    return false;
+  }
+
+  // Generate deployment-ready instructions
+  getStaticHostingInstructions() {
+    return {
+      title: "Static Hosting Image Deployment",
+      description: "Images are stored as base64 data, making deployment to any static host simple:",
+      advantages: [
+        "✅ No file copying required",
+        "✅ Images embedded in portfolio data",
+        "✅ Works immediately on any static host",
+        "✅ Self-contained deployment package"
+      ],
+      steps: [
+        "1. Export your portfolio data",
+        "2. Update JSON files with exported data",
+        "3. Deploy to any static hosting service",
+        "4. Images work automatically!"
+      ],
+      limitations: [
+        "⚠️ Base64 images increase file size",
+        "⚠️ Best for small to medium image collections",
+        "⚠️ Consider optimizing images before upload"
+      ]
+    };
+  }
 }
 
-// Global instance
+// Initialize the static image manager
 window.imageManager = new ImageManager();
+
+// For backward compatibility
+window.fileImageManager = window.imageManager;

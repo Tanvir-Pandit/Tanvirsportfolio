@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Portfolio Management</title>
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            z-index: 1000;
+        }
+        .sidebar .nav-link {
+            color: #ecf0f1;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: none;
+            transition: transform 0.3s;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        .stats-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .stats-icon.projects {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .stats-icon.skills {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .stats-icon.updated {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .stats-icon.types {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+        }
+        .stats-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .quick-actions {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .btn-action {
+            border-radius: 25px;
+            padding: 12px 25px;
+            margin: 5px;
+            font-weight: 500;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .btn-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .project-types-chart {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .type-bar {
+            background: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .type-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .user-info {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: white;
+            font-size: 20px;
+        }
+        .user-name {
+            color: #ecf0f1;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="brand-logo">
+            <i class="fa fa-dashboard"></i> Portfolio Admin
+        </div>
+        
+        <div class="user-info">
+            <div class="user-avatar">
+                <i class="fa fa-user"></i>
+            </div>
+            <p class="user-name">Welcome, {{ username }}</p>
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/projects">
+                    <i class="fa fa-folder-open"></i> Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/skills">
+                    <i class="fa fa-star"></i> Skills
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/profile">
+                    <i class="fa fa-user"></i> Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/settings">
+                    <i class="fa fa-cogs"></i> Settings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/portfolio" target="_blank">
+                    <i class="fa fa-external-link"></i> View Portfolio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1><i class="fa fa-dashboard"></i> Dashboard Overview</h1>
+                <p class="text-muted mb-0">Welcome to your portfolio management system</p>
+            </div>
+            <div>
+                <span class="badge bg-success">Online</span>
+                <span class="text-muted ms-2">{{ stats.last_updated }}</span>
+            </div>
+        </div>
+        
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-icon projects">
+                        <i class="fa fa-folder-open"></i>
+                    </div>
+                    <h3 class="stats-number">{{ stats.total_projects }}</h3>
+                    <p class="stats-label">Total Projects</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-icon skills">
+                        <i class="fa fa-star"></i>
+                    </div>
+                    <h3 class="stats-number">{{ stats.total_skills }}</h3>
+                    <p class="stats-label">Total Skills</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-icon types">
+                        <i class="fa fa-tags"></i>
+                    </div>
+                    <h3 class="stats-number">{{ stats.project_types|length }}</h3>
+                    <p class="stats-label">Project Types</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-icon updated">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                    <h3 class="stats-number stats-label">Last Updated</h3>
+                    <p class="stats-label">{{ stats.last_updated }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h4><i class="fa fa-bolt"></i> Quick Actions</h4>
+            <p class="text-muted">Manage your portfolio content efficiently</p>
+            <div class="d-flex flex-wrap">
+                <a href="/admin/projects" class="btn btn-primary btn-action">
+                    <i class="fa fa-plus"></i> Add New Project
+                </a>
+                <a href="/admin/skills" class="btn btn-success btn-action">
+                    <i class="fa fa-edit"></i> Update Skills
+                </a>
+                <a href="/admin/profile" class="btn btn-info btn-action">
+                    <i class="fa fa-user"></i> Edit Profile
+                </a>
+                <a href="/admin/settings" class="btn btn-warning btn-action">
+                    <i class="fa fa-cogs"></i> Site Settings
+                </a>
+                <a href="/portfolio" target="_blank" class="btn btn-secondary btn-action">
+                    <i class="fa fa-external-link"></i> Preview Portfolio
+                </a>
+            </div>
+        </div>
+        
+        <!-- Project Types Chart -->
+        {% if stats.project_types %}
+        <div class="project-types-chart">
+            <h4><i class="fa fa-chart-bar"></i> Project Distribution</h4>
+            <p class="text-muted">Overview of your project categories</p>
+            
+            {% set total_projects = stats.total_projects %}
+            {% for type, count in stats.project_types.items() %}
+            <div class="mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span>{{ type }}</span>
+                    <span class="text-muted">{{ count }} projects</span>
+                </div>
+                <div class="type-bar">
+                    {% set percentage = (count / total_projects * 100) if total_projects > 0 else 0 %}
+                    <div class="type-fill" style="width: {{ percentage }}%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    
+    <script src="/assets/plugins/jquery-1.11.1.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        // Add some interactivity
+        $(document).ready(function() {
+            // Animate stats numbers
+            $('.stats-number').each(function() {
+                if ($(this).text() && !isNaN($(this).text())) {
+                    $(this).prop('Counter', 0).animate({
+                        Counter: $(this).text()
+                    }, {
+                        duration: 1000,
+                        easing: 'swing',
+                        step: function(now) {
+                            $(this).text(Math.ceil(now));
+                        }
+                    });
+                }
+            });
+            
+            // Add hover effects to sidebar
+            $('.sidebar .nav-link').hover(function() {
+                $(this).find('i').addClass('fa-spin');
+            }, function() {
+                $(this).find('i').removeClass('fa-spin');
+            });
+        });
+    </script>
+</body>
+</html>

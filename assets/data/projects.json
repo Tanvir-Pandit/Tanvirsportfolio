@@ -10,7 +10,13 @@
     "status": "Done",
     "teamSize": 2,
     "role": "Backend API Development",
-    "technologies": ["Python", "MS SQL", "DeepSeek", "LLM", "REST API"],
+    "technologies": [
+      "Python",
+      "MS SQL",
+      "DeepSeek",
+      "LLM",
+      "REST API"
+    ],
     "description": "Advanced natural language to SQL conversion system that translates user queries into executable MS SQL statements. Features real-time query generation, execution, and result retrieval through comprehensive API endpoints. Enables non-technical users to interact with databases using plain English."
   },
   {
@@ -21,7 +27,13 @@
     "link": "#",
     "type": "Automation",
     "date": "2025-06-15",
-    "technologies": ["n8n", "Workflow Automation", "API Integration", "Business Process Management", "Node.js"],
+    "technologies": [
+      "n8n",
+      "Workflow Automation",
+      "API Integration",
+      "Business Process Management",
+      "Node.js"
+    ],
     "description": "Comprehensive automation architecture built with n8n platform to streamline business processes, integrate multiple services, and automate repetitive tasks. Features custom workflow design, API orchestration, data transformation, and real-time monitoring for enhanced operational efficiency."
   },
   {
@@ -34,7 +46,14 @@
     "date": "25-10-2024",
     "teamSize": 2,
     "role": "Backend Development",
-    "technologies": ["Python", "DeepSeek", "OpenAI", "LLM", "LangChain", "RTC"],
+    "technologies": [
+      "Python",
+      "DeepSeek",
+      "OpenAI",
+      "LLM",
+      "LangChain",
+      "RTC"
+    ],
     "description": "Intelligent conversational AI agent designed for airline customer service. Provides comprehensive flight information, handles booking requests, and delivers personalized assistance through advanced natural language processing and multi-agent coordination for enhanced user experience."
   },
   {
@@ -45,7 +64,13 @@
     "link": "#",
     "type": "Backend",
     "date": "2025-07-15",
-    "technologies": ["Python", "MCP", "JSON-RPC", "Cryptography", "REST API"],
+    "technologies": [
+      "Python",
+      "MCP",
+      "JSON-RPC",
+      "Cryptography",
+      "REST API"
+    ],
     "description": "A modular, extensible backend platform designed to expose and orchestrate business analytics tools for enterprise AI workflows. Implements Model Context Protocol for secure, context-aware communication between AI models and internal analytics functions including CRM reporting, lead analytics, and sales performance dashboards."
   },
   {
@@ -56,7 +81,13 @@
     "link": "#",
     "type": "IoT",
     "date": "2025-06-20",
-    "technologies": ["RFID", "AI Video Analytics", "PDF Generation", "Voice Notifications", "ERP Integration"],
+    "technologies": [
+      "RFID",
+      "AI Video Analytics",
+      "PDF Generation",
+      "Voice Notifications",
+      "ERP Integration"
+    ],
     "description": "Comprehensive vehicle scanner solution that automates weighbridge operations through RFID scanning, AI-powered video analytics, and digital record-keeping. Features voice notifications in Bangla, fraud prevention, and seamless ERP integration for industrial logistics hubs."
   },
   {
@@ -67,7 +98,13 @@
     "link": "#",
     "type": "AI",
     "date": "2024-06-30",
-    "technologies": ["PDF Processing", "OCR", "ERP Integration", "Data Extraction", "Steel Industry QC"],
+    "technologies": [
+      "PDF Processing",
+      "OCR",
+      "ERP Integration",
+      "Data Extraction",
+      "Steel Industry QC"
+    ],
     "description": "Automated solution for Akij Heavy Industries that extracts quality control data from laboratory PDF reports, captures chemical composition and batch information, and uploads directly to ERP systems, eliminating manual data entry and reducing errors."
   },
   {
@@ -78,7 +115,13 @@
     "link": "#",
     "type": "AI",
     "date": "2024-07-15",
-    "technologies": ["Large Language Model", "JSON Processing", "HR Automation", "ATS Integration", "Python"],
+    "technologies": [
+      "Large Language Model",
+      "JSON Processing",
+      "HR Automation",
+      "ATS Integration",
+      "Python"
+    ],
     "description": "Advanced resume parsing solution using custom-trained LLM to extract essential information from CVs regardless of format. Converts unstructured resume data into clean JSON output for seamless integration with HR systems and applicant tracking systems."
   },
   {
@@ -89,7 +132,13 @@
     "link": "#",
     "type": "Marketing",
     "date": "2024-11-22",
-    "technologies": ["AI Lead Generation", "Marketing Automation", "Social Media API", "CRM Integration", "Analytics"],
+    "technologies": [
+      "AI Lead Generation",
+      "Marketing Automation",
+      "Social Media API",
+      "CRM Integration",
+      "Analytics"
+    ],
     "description": "Comprehensive automation platform for lead generation and marketing campaign management. Features smart segmentation, multi-channel campaign automation, social media posting, and real-time analytics with CRM integration for complete marketing workflow automation."
   },
   {
@@ -100,7 +149,13 @@
     "link": "#",
     "type": "Enterprise",
     "date": "2023-08-18",
-    "technologies": ["Email Automation", "Maritime Documentation", "Survey Management", "ERP Integration", "Compliance"],
+    "technologies": [
+      "Email Automation",
+      "Maritime Documentation",
+      "Survey Management",
+      "ERP Integration",
+      "Compliance"
+    ],
     "description": "Unified automation system for maritime operations including survey scheduling, vessel documentation, voyage instructions, and lead generation. Features smart email notifications, digital report handling, and comprehensive audit trails for shipping industry compliance."
   },
   {
@@ -111,7 +166,13 @@
     "link": "#",
     "type": "AI",
     "date": "2025-07-25",
-    "technologies": ["Computer Vision", "Face Recognition", "Real-time Processing", "HR Integration", "Security"],
+    "technologies": [
+      "Computer Vision",
+      "Face Recognition",
+      "Real-time Processing",
+      "HR Integration",
+      "Security"
+    ],
     "description": "Automated attendance system using facial recognition to eliminate manual entry and prevent proxy attendance. Features contactless operation, real-time monitoring, HR system integration, and comprehensive reporting for workplace and educational institutions."
   },
   {
@@ -122,7 +183,13 @@
     "link": "#",
     "type": "AI",
     "date": "2024-06-30",
-    "technologies": ["Computer Vision", "Real-time Analytics", "Device Detection", "Workplace Monitoring", "Dashboard"],
+    "technologies": [
+      "Computer Vision",
+      "Real-time Analytics",
+      "Device Detection",
+      "Workplace Monitoring",
+      "Dashboard"
+    ],
     "description": "Advanced workplace monitoring solution using computer vision to count employees, track device usage (laptops), and provide real-time analytics. Enables data-driven management decisions with automated headcount, productivity analysis, and space optimization."
   },
   {
@@ -133,7 +200,13 @@
     "link": "#",
     "type": "AI",
     "date": "2024-05-12",
-    "technologies": ["Large Language Model", "Natural Language Processing", "ERP Integration", "Chatbot", "Knowledge Base"],
+    "technologies": [
+      "Large Language Model",
+      "Natural Language Processing",
+      "ERP Integration",
+      "Chatbot",
+      "Knowledge Base"
+    ],
     "description": "Intelligent chatbot system providing instant, conversational support for ERP and software manuals (iBOS ERP, Managerium). Features natural language Q&A, intelligent search, 24/7 availability, and continuous improvement through user interaction learning."
   },
   {
@@ -144,7 +217,13 @@
     "link": "#",
     "type": "AI",
     "date": "2023-10-08",
-    "technologies": ["Computer Vision", "OCR", "Real-time Processing", "Database Integration", "Security"],
+    "technologies": [
+      "Computer Vision",
+      "OCR",
+      "Real-time Processing",
+      "Database Integration",
+      "Security"
+    ],
     "description": "Advanced license plate detection and recognition system using computer vision for vehicle tracking, access control, and law enforcement. Supports multiple plate styles, provides automated alerts, and integrates with security and parking management systems."
   },
   {
@@ -155,7 +234,13 @@
     "link": "#",
     "type": "AI",
     "date": "2024-03-15",
-    "technologies": ["LiveKit", "OpenAI GPT", "Speech Processing", "Multi-Agent System", "React.js"],
+    "technologies": [
+      "LiveKit",
+      "OpenAI GPT",
+      "Speech Processing",
+      "Multi-Agent System",
+      "React.js"
+    ],
     "description": "Voice-first AI assistant for airline service simulation using real-time communication, natural language understanding, and multi-agent coordination. Features live audio streaming, speech-to-text/text-to-speech conversion, and specialized agents for booking, information, and support."
   },
   {
@@ -166,7 +251,13 @@
     "link": "#",
     "type": "IoT",
     "date": "2024-11-20",
-    "technologies": ["ESP32", "IoT Sensors", "TFT Display", "Bluetooth", "Environmental Monitoring"],
+    "technologies": [
+      "ESP32",
+      "IoT Sensors",
+      "TFT Display",
+      "Bluetooth",
+      "Environmental Monitoring"
+    ],
     "description": "Comprehensive IoT solution for poultry farming using TTGO T-Display with MQ gas sensors, DHT11 temperature/humidity sensor, and relay controls. Features automated ventilation/heating control, real-time display, QR code access, and Bluetooth monitoring."
   },
   {
@@ -177,7 +268,13 @@
     "link": "#",
     "type": "IoT",
     "date": "2024-11-30",
-    "technologies": ["ESP32", "MLX90614", "MPU6050", "Bluetooth", "Health Monitoring"],
+    "technologies": [
+      "ESP32",
+      "MLX90614",
+      "MPU6050",
+      "Bluetooth",
+      "Health Monitoring"
+    ],
     "description": "Advanced cattle monitoring solution using ESP32-based system with infrared temperature sensing and motion detection. Monitors cattle health parameters, displays real-time data on TFT screen, and provides remote monitoring via Bluetooth for livestock management."
   },
   {
@@ -188,7 +285,13 @@
     "link": "#",
     "type": "AI",
     "date": "2025-05-15",
-    "technologies": ["LangChain", "OpenAI/DeepSeek", "Flask API", "SQL Server", "Natural Language Processing"],
+    "technologies": [
+      "LangChain",
+      "OpenAI/DeepSeek",
+      "Flask API",
+      "SQL Server",
+      "Natural Language Processing"
+    ],
     "description": "Intelligent backend service that translates natural language questions into executable SQL queries for recruitment platforms. Features schema-aware query generation, validation, optimization, and secure execution with complex candidate filtering capabilities."
   },
   {
@@ -199,7 +302,13 @@
     "link": "#",
     "type": "Development Tool",
     "date": "2025-07-15",
-    "technologies": ["ASP.NET Core", "Large Language Model", "Code Generation", "REST API", "C#"],
+    "technologies": [
+      "ASP.NET Core",
+      "Large Language Model",
+      "Code Generation",
+      "REST API",
+      "C#"
+    ],
     "description": "Automated code generation tool that converts natural language requirements into production-ready ASP.NET Core RESTful API code. Features customizable templates, best practices implementation, error handling, and seamless development environment integration."
   },
   {
@@ -210,7 +319,13 @@
     "link": "#",
     "type": "Enterprise",
     "date": "2023-09-20",
-    "technologies": ["Document Templates", "PDF Generation", "File Conversion", "API Integration", "Business Automation"],
+    "technologies": [
+      "Document Templates",
+      "PDF Generation",
+      "File Conversion",
+      "API Integration",
+      "Business Automation"
+    ],
     "description": "Complete document automation platform for creating, formatting, and managing business documents. Features one-click generation, custom templates, file conversion tools, automated processing, and integration capabilities for legal, financial, and shipping documentation."
   },
   {
@@ -221,7 +336,13 @@
     "link": "#",
     "type": "Data Scraping",
     "date": "2023-07-20",
-    "technologies": ["Web Scraping", "Data Processing", "Automation", "Anti-blocking", "API Integration"],
+    "technologies": [
+      "Web Scraping",
+      "Data Processing",
+      "Automation",
+      "Anti-blocking",
+      "API Integration"
+    ],
     "description": "Comprehensive web scraping solution for automated data extraction from websites. Features scheduled scraping, customizable rules, data cleaning, robust anti-blocking mechanisms, and seamless integration with analytics platforms and databases."
   }
 ]

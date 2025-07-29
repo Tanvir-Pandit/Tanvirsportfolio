@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Settings - Portfolio Admin</title>
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sidebar {
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            min-height: 100vh;
+            padding: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            z-index: 1000;
+        }
+        .sidebar .nav-link {
+            color: #ecf0f1;
+            padding: 15px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(5px);
+        }
+        .sidebar .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .settings-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-weight: 500;
+        }
+        .btn-success:hover {
+            transform: translateY(-2px);
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+        .help-text {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        .form-check {
+            margin: 10px 0;
+        }
+        .form-check-input {
+            border-radius: 4px;
+        }
+        .form-check-input:checked {
+            background-color: #667eea;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="brand-logo">
+            <i class="fa fa-dashboard"></i> Portfolio Admin
+        </div>
+        
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/projects">
+                    <i class="fa fa-folder-open"></i> Projects
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/skills">
+                    <i class="fa fa-star"></i> Skills
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/profile">
+                    <i class="fa fa-user"></i> Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/admin/settings">
+                    <i class="fa fa-cogs"></i> Settings
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/portfolio" target="_blank">
+                    <i class="fa fa-external-link"></i> View Portfolio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1><i class="fa fa-cogs"></i> Site Settings</h1>
+                <p class="text-muted mb-0">Configure your portfolio website settings</p>
+            </div>
+        </div>
+        
+        <!-- Alert Messages -->
+        <div id="alertContainer"></div>
+        
+        <!-- Basic Settings -->
+        <div class="settings-card card">
+            <div class="card-header">
+                <h5><i class="fa fa-info-circle"></i> Basic Site Information</h5>
+            </div>
+            <div class="card-body">
+                <form id="basicSettingsForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Site Title</label>
+                                <input type="text" class="form-control" id="siteTitle" placeholder="My Portfolio">
+                                <div class="help-text">This appears in the browser tab and search results</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Author Name</label>
+                                <input type="text" class="form-control" id="authorName" placeholder="Your Name">
+                                <div class="help-text">Your full name for metadata</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Site Description</label>
+                        <textarea class="form-control" id="siteDescription" rows="2" placeholder="Professional Portfolio Website"></textarea>
+                        <div class="help-text">Brief description of your portfolio site</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Contact Email</label>
+                        <input type="email" class="form-control" id="contactEmail" placeholder="your.email@example.com">
+                        <div class="help-text">Primary contact email for your portfolio</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Social Links -->
+        <div class="settings-card card">
+            <div class="card-header">
+                <h5><i class="fa fa-share-alt"></i> Social Media Links</h5>
+            </div>
+            <div class="card-body">
+                <form id="socialLinksForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">GitHub Profile</label>
+                                <input type="url" class="form-control" id="githubLink" placeholder="https://github.com/yourusername">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">LinkedIn Profile</label>
+                                <input type="url" class="form-control" id="linkedinLink" placeholder="https://linkedin.com/in/yourusername">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Twitter Profile</label>
+                                <input type="url" class="form-control" id="twitterLink" placeholder="https://twitter.com/yourusername">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label">Facebook Profile</label>
+                                <input type="url" class="form-control" id="facebookLink" placeholder="https://facebook.com/yourusername">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- SEO Settings -->
+        <div class="settings-card card">
+            <div class="card-header">
+                <h5><i class="fa fa-search"></i> SEO Settings</h5>
+            </div>
+            <div class="card-body">
+                <form id="seoSettingsForm">
+                    <div class="mb-3">
+                        <label class="form-label">Meta Keywords</label>
+                        <input type="text" class="form-control" id="metaKeywords" placeholder="portfolio, developer, web development">
+                        <div class="help-text">Comma-separated keywords for search engines</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Meta Description</label>
+                        <textarea class="form-control" id="metaDescription" rows="2" placeholder="Professional portfolio showcasing my work and skills"></textarea>
+                        <div class="help-text">Description that appears in search results (150-160 characters)</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Analytics Settings -->
+        <div class="settings-card card">
+            <div class="card-header">
+                <h5><i class="fa fa-chart-line"></i> Analytics Settings</h5>
+            </div>
+            <div class="card-body">
+                <form id="analyticsSettingsForm">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="enableAnalytics">
+                        <label class="form-check-label" for="enableAnalytics">
+                            Enable Google Analytics
+                        </label>
+                    </div>
+                    
+                    <div class="mb-3 mt-3">
+                        <label class="form-label">Google Analytics ID</label>
+                        <input type="text" class="form-control" id="googleAnalyticsId" placeholder="GA-XXXXXXXXX-X">
+                        <div class="help-text">Your Google Analytics tracking ID</div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Save Button -->
+        <div class="text-center">
+            <button type="button" class="btn btn-success" onclick="saveAllSettings()">
+                <i class="fa fa-save"></i> Save All Settings
+            </button>
+        </div>
+    </div>
+    
+    <script src="/assets/plugins/jquery-1.11.1.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            loadSettings();
+        });
+        
+        function showAlert(message, type = 'success', duration = 5000) {
+            const alertHtml = `
+                <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            $('#alertContainer').html(alertHtml);
+            
+            setTimeout(() => {
+                $('.alert').fadeOut();
+            }, duration);
+        }
+        
+        function loadSettings() {
+            $.get('/api/settings')
+                .done(function(settings) {
+                    // Basic settings
+                    $('#siteTitle').val(settings.site_title || '');
+                    $('#authorName').val(settings.author_name || '');
+                    $('#siteDescription').val(settings.site_description || '');
+                    $('#contactEmail').val(settings.contact_email || '');
+                    
+                    // Social links
+                    if (settings.social_links) {
+                        $('#githubLink').val(settings.social_links.github || '');
+                        $('#linkedinLink').val(settings.social_links.linkedin || '');
+                        $('#twitterLink').val(settings.social_links.twitter || '');
+                        $('#facebookLink').val(settings.social_links.facebook || '');
+                    }
+                    
+                    // SEO settings
+                    if (settings.seo) {
+                        $('#metaKeywords').val(settings.seo.meta_keywords || '');
+                        $('#metaDescription').val(settings.seo.meta_description || '');
+                    }
+                    
+                    // Analytics settings
+                    if (settings.analytics) {
+                        $('#enableAnalytics').prop('checked', settings.analytics.enable_analytics || false);
+                        $('#googleAnalyticsId').val(settings.analytics.google_analytics_id || '');
+                    }
+                })
+                .fail(function() {
+                    showAlert('Failed to load settings', 'danger');
+                });
+        }
+        
+        function saveAllSettings() {
+            const settingsData = {
+                site_title: $('#siteTitle').val(),
+                author_name: $('#authorName').val(),
+                site_description: $('#siteDescription').val(),
+                contact_email: $('#contactEmail').val(),
+                social_links: {
+                    github: $('#githubLink').val(),
+                    linkedin: $('#linkedinLink').val(),
+                    twitter: $('#twitterLink').val(),
+                    facebook: $('#facebookLink').val()
+                },
+                seo: {
+                    meta_keywords: $('#metaKeywords').val(),
+                    meta_description: $('#metaDescription').val()
+                },
+                analytics: {
+                    enable_analytics: $('#enableAnalytics').is(':checked'),
+                    google_analytics_id: $('#googleAnalyticsId').val()
+                }
+            };
+            
+            $.ajax({
+                url: '/api/settings',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(settingsData),
+                success: function(response) {
+                    if (response.success) {
+                        showAlert(response.message, 'success');
+                    } else {
+                        showAlert(response.message, 'danger');
+                    }
+                },
+                error: function() {
+                    showAlert('Failed to save settings', 'danger');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

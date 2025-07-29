@@ -168,6 +168,15 @@
             <i class="fa fa-refresh"></i> Reset to Original
           </button>
         </div>
+        
+        <div class="btn-group ml-3" role="group">
+          <button class="btn btn-warning" onclick="exportForNetlify()" title="Export data for static hosting deployment">
+            <i class="fa fa-cloud-upload"></i> Export for Deployment
+          </button>
+          <button class="btn btn-info" onclick="showNetlifyInstructions()" title="View static hosting deployment guide">
+            <i class="fa fa-question-circle"></i> Deployment Guide
+          </button>
+        </div>
       </div>
     </div>
     
@@ -392,10 +401,16 @@
   <!-- Projects Section -->
   <div id="projects" class="content-section">
     <div class="row">
-      <div class="col-md-8">
+      <div class="col-md-6">
         <h4>Projects Management</h4>
       </div>
-      <div class="col-md-4 text-right">
+      <div class="col-md-6 text-right">
+        <button class="btn btn-info btn-sm" onclick="debugProjects()" title="Debug project loading">
+          <i class="fa fa-bug"></i> Debug
+        </button>
+        <button class="btn btn-success btn-sm" onclick="reloadProjects()" title="Reload projects">
+          <i class="fa fa-refresh"></i> Reload
+        </button>
         <button class="btn btn-primary" onclick="openProjectModal()">
           <i class="fa fa-plus"></i> Add Project
         </button>
@@ -579,7 +594,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../assets/js/data-manager.js"></script>
-<script src="../assets/js/file-image-manager.js"></script>
+<script src="../assets/js/image-manager.js"></script>
 <script src="admin.js"></script>
 </body>
 </html>
