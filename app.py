@@ -14,8 +14,8 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 
 # Admin credentials (in production, use a database)
 ADMIN_CREDENTIALS = {
-    'username': 'admin',
-    'password': generate_password_hash('admin123')  # Change this password!
+    'username': 'tanvirrcse@gmail.com',
+    'password': generate_password_hash('T@nvir2000')  # Change this password!
 }
 
 # Allowed file extensions for images
