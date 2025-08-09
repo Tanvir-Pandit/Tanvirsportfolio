@@ -1,15 +1,11 @@
 [
   {
-    "id": "1",
     "title": "Text to SQL Generator",
-    "summary": "AI-powered system that generates MS SQL queries from natural language text and executes them via APIs.",
-    "image": "assets/images/projects/project-featured.png",
-    "link": "https://texttosql.ibos.io/apidocs/",
     "type": "AI",
+    "summary": "AI-powered system that generates MS SQL queries from natural language text and executes them via APIs.",
+    "description": "Advanced natural language to SQL conversion system that translates user queries into executable MS SQL statements. Features real-time query generation, execution, and result retrieval through comprehensive API endpoints. Enables non-technical users to interact with databases using plain English.",
+    "link": "https://texttosql.ibos.io/apidocs/",
     "date": "2025-04-29",
-    "status": "Done",
-    "teamSize": 2,
-    "role": "Backend API Development",
     "technologies": [
       "Python",
       "MS SQL",
@@ -17,7 +13,8 @@
       "LLM",
       "REST API"
     ],
-    "description": "Advanced natural language to SQL conversion system that translates user queries into executable MS SQL statements. Features real-time query generation, execution, and result retrieval through comprehensive API endpoints. Enables non-technical users to interact with databases using plain English."
+    "image": "assets/images/projects/text_to_sql_4d722fc9.png",
+    "id": "1"
   },
   {
     "id": "2",

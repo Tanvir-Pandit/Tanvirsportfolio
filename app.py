@@ -52,7 +52,7 @@ def load_json_file(filename):
                     "location": "Dhaka, Bangladesh",
                     "email": "tanvirrcse@gmail.com",
                     "website": "http://www.website.com",
-                    "phone": ""
+                    "phone": "+8801948660818"
                 },
                 "socialLinks": {
                     "github": "https://github.com/yourusername",
