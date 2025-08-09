@@ -17,12 +17,11 @@
     "id": "1"
   },
   {
-    "id": "2",
     "title": "n8n Automation Architecture",
-    "summary": "Enterprise-grade workflow automation platform for business process optimization and integration.",
-    "image": "assets/images/projects/project-1.png",
-    "link": "#",
     "type": "Automation",
+    "summary": "Enterprise-grade workflow automation platform for business process optimization and integration.",
+    "description": "Comprehensive automation architecture built with n8n platform to streamline business processes, integrate multiple services, and automate repetitive tasks. Features custom workflow design, API orchestration, data transformation, and real-time monitoring for enhanced operational efficiency.",
+    "link": "#",
     "date": "2025-06-15",
     "technologies": [
       "n8n",
@@ -31,18 +30,16 @@
       "Business Process Management",
       "Node.js"
     ],
-    "description": "Comprehensive automation architecture built with n8n platform to streamline business processes, integrate multiple services, and automate repetitive tasks. Features custom workflow design, API orchestration, data transformation, and real-time monitoring for enhanced operational efficiency."
+    "image": "assets/images/projects/ChatGPT_Image_Aug_9_2025_04_21_21_PM_30baccd2.png",
+    "id": "2"
   },
   {
-    "id": "3",
     "title": "AKIJ Air Chatbot",
-    "summary": "Agentic AI chatbot for flight information and ticket booking through conversational interface.",
-    "image": "assets/images/projects/project-2.png",
-    "link": "https://akijairagent.ibos.io/",
     "type": "AI",
-    "date": "25-10-2024",
-    "teamSize": 2,
-    "role": "Backend Development",
+    "summary": "Agentic AI chatbot for flight information and ticket booking through conversational interface.",
+    "description": "Intelligent conversational AI agent designed for airline customer service. Provides comprehensive flight information, handles booking requests, and delivers personalized assistance through advanced natural language processing and multi-agent coordination for enhanced user experience.",
+    "link": "https://akijairagent.ibos.io/",
+    "date": "",
     "technologies": [
       "Python",
       "DeepSeek",
@@ -51,15 +48,15 @@
       "LangChain",
       "RTC"
     ],
-    "description": "Intelligent conversational AI agent designed for airline customer service. Provides comprehensive flight information, handles booking requests, and delivers personalized assistance through advanced natural language processing and multi-agent coordination for enhanced user experience."
+    "image": "assets/images/projects/ChatGPT_Image_Aug_9_2025_04_25_26_PM_2f8c8920.png",
+    "id": "3"
   },
   {
-    "id": "4",
     "title": "Model Context Protocol (MCP) Analytics Server",
-    "summary": "Enterprise AI analytics server using MCP standard for secure business intelligence integration.",
-    "image": "assets/images/projects/project-3.png",
-    "link": "#",
     "type": "Backend",
+    "summary": "Enterprise AI analytics server using MCP standard for secure business intelligence integration.",
+    "description": "A modular, extensible backend platform designed to expose and orchestrate business analytics tools for enterprise AI workflows. Implements Model Context Protocol for secure, context-aware communication between AI models and internal analytics functions including CRM reporting, lead analytics, and sales performance dashboards.",
+    "link": "#",
     "date": "2025-07-15",
     "technologies": [
       "Python",
@@ -68,15 +65,15 @@
       "Cryptography",
       "REST API"
     ],
-    "description": "A modular, extensible backend platform designed to expose and orchestrate business analytics tools for enterprise AI workflows. Implements Model Context Protocol for secure, context-aware communication between AI models and internal analytics functions including CRM reporting, lead analytics, and sales performance dashboards."
+    "image": "assets/images/projects/ChatGPT_Image_Aug_9_2025_04_39_57_PM_2ffd7cfc.png",
+    "id": "4"
   },
   {
-    "id": "5",
     "title": "KRAL Gate Entry and Vehicle Automation",
-    "summary": "Automated vehicle entry, weighing, and exit system for industrial sites using RFID and AI.",
-    "image": "assets/images/projects/project-4.png",
-    "link": "#",
     "type": "IoT",
+    "summary": "Automated vehicle entry, weighing, and exit system for industrial sites using RFID and AI.",
+    "description": "Comprehensive vehicle scanner solution that automates weighbridge operations through RFID scanning, AI-powered video analytics, and digital record-keeping. Features voice notifications in Bangla, fraud prevention, and seamless ERP integration for industrial logistics hubs.",
+    "link": "#",
     "date": "2025-06-20",
     "technologies": [
       "RFID",
@@ -85,15 +82,15 @@
       "Voice Notifications",
       "ERP Integration"
     ],
-    "description": "Comprehensive vehicle scanner solution that automates weighbridge operations through RFID scanning, AI-powered video analytics, and digital record-keeping. Features voice notifications in Bangla, fraud prevention, and seamless ERP integration for industrial logistics hubs."
+    "image": "assets/images/projects/Screenshot_2025-08-09_164324_4f203536.png",
+    "id": "5"
   },
   {
-    "id": "6",
     "title": "Automated QC Data Extraction for Steel Industry",
-    "summary": "AI-powered PDF processing system for quality control data extraction and ERP integration.",
-    "image": "assets/images/projects/project-1.png",
-    "link": "#",
     "type": "AI",
+    "summary": "AI-powered PDF processing system for quality control data extraction and ERP integration.",
+    "description": "Automated solution for Akij Heavy Industries that extracts quality control data from laboratory PDF reports, captures chemical composition and batch information, and uploads directly to ERP systems, eliminating manual data entry and reducing errors.",
+    "link": "#",
     "date": "2024-06-30",
     "technologies": [
       "PDF Processing",
@@ -102,15 +99,15 @@
       "Data Extraction",
       "Steel Industry QC"
     ],
-    "description": "Automated solution for Akij Heavy Industries that extracts quality control data from laboratory PDF reports, captures chemical composition and batch information, and uploads directly to ERP systems, eliminating manual data entry and reducing errors."
+    "image": "assets/images/projects/9618d884-2b9d-41e5-b945-b98b07c77a08_450ef51b.png",
+    "id": "6"
   },
   {
-    "id": "7",
     "title": "AI-Powered CV Parsing System",
-    "summary": "Custom LLM-based resume parser converting CVs to structured JSON for HR automation.",
-    "image": "assets/images/projects/project-2.png",
-    "link": "#",
     "type": "AI",
+    "summary": "Custom LLM-based resume parser converting CVs to structured JSON for HR automation.",
+    "description": "Advanced resume parsing solution using custom-trained LLM to extract essential information from CVs regardless of format. Converts unstructured resume data into clean JSON output for seamless integration with HR systems and applicant tracking systems.",
+    "link": "#",
     "date": "2024-07-15",
     "technologies": [
       "Large Language Model",
@@ -119,15 +116,15 @@
       "ATS Integration",
       "Python"
     ],
-    "description": "Advanced resume parsing solution using custom-trained LLM to extract essential information from CVs regardless of format. Converts unstructured resume data into clean JSON output for seamless integration with HR systems and applicant tracking systems."
+    "image": "assets/images/projects/What_is_resume_parsing_89ac5a68.gif",
+    "id": "7"
   },
   {
-    "id": "8",
     "title": "Automated Lead Generation & Marketing Platform",
-    "summary": "AI-driven lead generation with automated marketing campaigns and social media management.",
-    "image": "assets/images/projects/project-3.png",
-    "link": "#",
     "type": "Marketing",
+    "summary": "AI-driven lead generation with automated marketing campaigns and social media management.",
+    "description": "Comprehensive automation platform for lead generation and marketing campaign management. Features smart segmentation, multi-channel campaign automation, social media posting, and real-time analytics with CRM integration for complete marketing workflow automation.",
+    "link": "#",
     "date": "2024-11-22",
     "technologies": [
       "AI Lead Generation",
@@ -136,15 +133,15 @@
       "CRM Integration",
       "Analytics"
     ],
-    "description": "Comprehensive automation platform for lead generation and marketing campaign management. Features smart segmentation, multi-channel campaign automation, social media posting, and real-time analytics with CRM integration for complete marketing workflow automation."
+    "image": "assets/images/projects/22fcaeae-9b04-43fa-ba15-395a2e641730_9a005690.png",
+    "id": "8"
   },
   {
-    "id": "9",
     "title": "Maritime Operations Automation System",
-    "summary": "Smart notification system for maritime operations, survey scheduling, and vessel documentation.",
-    "image": "assets/images/projects/project-4.png",
-    "link": "#",
     "type": "Enterprise",
+    "summary": "Smart notification system for maritime operations, survey scheduling, and vessel documentation.",
+    "description": "Unified automation system for maritime operations including survey scheduling, vessel documentation, voyage instructions, and lead generation. Features smart email notifications, digital report handling, and comprehensive audit trails for shipping industry compliance.",
+    "link": "#",
     "date": "2023-08-18",
     "technologies": [
       "Email Automation",
@@ -153,15 +150,15 @@
       "ERP Integration",
       "Compliance"
     ],
-    "description": "Unified automation system for maritime operations including survey scheduling, vessel documentation, voyage instructions, and lead generation. Features smart email notifications, digital report handling, and comprehensive audit trails for shipping industry compliance."
+    "image": "assets/images/projects/ChatGPT_Image_Aug_9_2025_04_57_47_PM_8a556ab4.png",
+    "id": "9"
   },
   {
-    "id": "10",
     "title": "Face Recognition Attendance System",
-    "summary": "Contactless attendance tracking using AI-powered facial recognition technology.",
-    "image": "assets/images/projects/project-1.png",
-    "link": "#",
     "type": "AI",
+    "summary": "Contactless attendance tracking using AI-powered facial recognition technology.",
+    "description": "Automated attendance system using facial recognition to eliminate manual entry and prevent proxy attendance. Features contactless operation, real-time monitoring, HR system integration, and comprehensive reporting for workplace and educational institutions.",
+    "link": "#",
     "date": "2025-07-25",
     "technologies": [
       "Computer Vision",
@@ -170,15 +167,15 @@
       "HR Integration",
       "Security"
     ],
-    "description": "Automated attendance system using facial recognition to eliminate manual entry and prevent proxy attendance. Features contactless operation, real-time monitoring, HR system integration, and comprehensive reporting for workplace and educational institutions."
+    "image": "assets/images/projects/Screenshot_2025-08-09_170239_36ad4523.png",
+    "id": "10"
   },
   {
-    "id": "11",
     "title": "Vision-Based Employee Monitoring System",
-    "summary": "Computer vision system for employee counting, device usage tracking, and workplace analytics.",
-    "image": "assets/images/projects/project-3.png",
-    "link": "#",
     "type": "AI",
+    "summary": "Computer vision system for employee counting, device usage tracking, and workplace analytics.",
+    "description": "Advanced workplace monitoring solution using computer vision to count employees, track device usage (laptops), and provide real-time analytics. Enables data-driven management decisions with automated headcount, productivity analysis, and space optimization.",
+    "link": "#",
     "date": "2024-06-30",
     "technologies": [
       "Computer Vision",
@@ -187,15 +184,15 @@
       "Workplace Monitoring",
       "Dashboard"
     ],
-    "description": "Advanced workplace monitoring solution using computer vision to count employees, track device usage (laptops), and provide real-time analytics. Enables data-driven management decisions with automated headcount, productivity analysis, and space optimization."
+    "image": "assets/images/projects/68747470733a2f2f64726976652e676f6f676c652e636f6d2f75633f6578706f72743d766965772669643d31553056525a6d3262716b457748704d2d6c474f494d737a643478543174386d56_5eb40faf.png",
+    "id": "11"
   },
   {
-    "id": "12",
     "title": "AI Chatbot for ERP Manual Assistance",
-    "summary": "LLM-powered conversational assistant for ERP system support and documentation queries.",
-    "image": "assets/images/projects/project-4.png",
-    "link": "#",
     "type": "AI",
+    "summary": "LLM-powered conversational assistant for ERP system support and documentation queries.",
+    "description": "Intelligent chatbot system providing instant, conversational support for ERP and software manuals (iBOS ERP, Managerium). Features natural language Q&A, intelligent search, 24/7 availability, and continuous improvement through user interaction learning.",
+    "link": "#",
     "date": "2024-05-12",
     "technologies": [
       "Large Language Model",
@@ -204,32 +201,34 @@
       "Chatbot",
       "Knowledge Base"
     ],
-    "description": "Intelligent chatbot system providing instant, conversational support for ERP and software manuals (iBOS ERP, Managerium). Features natural language Q&A, intelligent search, 24/7 availability, and continuous improvement through user interaction learning."
+    "image": "assets/images/projects/22fcaeae-9b04-43fa-ba15-395a2e641730_f3c33a94.png",
+    "id": "12"
   },
   {
-    "id": "13",
     "title": "Automatic License Plate Detection System",
-    "summary": "Computer vision system for real-time vehicle license plate recognition and tracking.",
-    "image": "assets/images/projects/project-1.png",
-    "link": "#",
     "type": "AI",
+    "summary": "Computer vision system for real-time vehicle license plate recognition and tracking.",
+    "description": "Advanced license plate detection and recognition system using computer vision for vehicle tracking, access control, and law enforcement. Supports multiple plate styles, provides automated alerts, and integrates with security and parking management systems.",
+    "link": "#",
     "date": "2023-10-08",
     "technologies": [
       "Computer Vision",
       "OCR",
       "Real-time Processing",
       "Database Integration",
-      "Security"
+      "Security",
+      "YOLO",
+      "Torch"
     ],
-    "description": "Advanced license plate detection and recognition system using computer vision for vehicle tracking, access control, and law enforcement. Supports multiple plate styles, provides automated alerts, and integrates with security and parking management systems."
+    "image": "assets/images/projects/sensors-21-03028-g001_66ddfe7c.png",
+    "id": "13"
   },
   {
-    "id": "14",
     "title": "Akij Air - Voice-Powered AI Chatbot",
-    "summary": "Real-time voice assistant for airline customer service with multi-agent AI coordination.",
-    "image": "assets/images/projects/project-2.png",
-    "link": "#",
     "type": "AI",
+    "summary": "Real-time voice assistant for airline customer service with multi-agent AI coordination.",
+    "description": "Voice-first AI assistant for airline service simulation using real-time communication, natural language understanding, and multi-agent coordination. Features live audio streaming, speech-to-text/text-to-speech conversion, and specialized agents for booking, information, and support.",
+    "link": "#",
     "date": "2024-03-15",
     "technologies": [
       "LiveKit",
@@ -238,15 +237,15 @@
       "Multi-Agent System",
       "React.js"
     ],
-    "description": "Voice-first AI assistant for airline service simulation using real-time communication, natural language understanding, and multi-agent coordination. Features live audio streaming, speech-to-text/text-to-speech conversion, and specialized agents for booking, information, and support."
+    "image": "assets/images/projects/project-2.png",
+    "id": "14"
   },
   {
-    "id": "15",
     "title": "Smart Poultry Farm IoT System",
-    "summary": "IoT-based poultry farm monitoring with environmental controls and QR code access.",
-    "image": "assets/images/projects/project-3.png",
-    "link": "#",
     "type": "IoT",
+    "summary": "IoT-based poultry farm monitoring with environmental controls and QR code access.",
+    "description": "Comprehensive IoT solution for poultry farming using TTGO T-Display with MQ gas sensors, DHT11 temperature/humidity sensor, and relay controls. Features automated ventilation/heating control, real-time display, QR code access, and Bluetooth monitoring.",
+    "link": "#",
     "date": "2024-11-20",
     "technologies": [
       "ESP32",
@@ -255,15 +254,15 @@
       "Bluetooth",
       "Environmental Monitoring"
     ],
-    "description": "Comprehensive IoT solution for poultry farming using TTGO T-Display with MQ gas sensors, DHT11 temperature/humidity sensor, and relay controls. Features automated ventilation/heating control, real-time display, QR code access, and Bluetooth monitoring."
+    "image": "assets/images/projects/Poultry-Environment-Monitoring-IoT-Model-The-sensor-node-consists-of-an-Arduino-UNO-The_d14aedd0.png",
+    "id": "15"
   },
   {
-    "id": "16",
     "title": "Smart Cattle Monitoring System",
-    "summary": "IoT-based livestock health monitoring using infrared temperature and motion sensing.",
-    "image": "assets/images/projects/project-4.png",
-    "link": "#",
     "type": "IoT",
+    "summary": "IoT-based livestock health monitoring using infrared temperature and motion sensing.",
+    "description": "Advanced cattle monitoring solution using ESP32-based system with infrared temperature sensing and motion detection. Monitors cattle health parameters, displays real-time data on TFT screen, and provides remote monitoring via Bluetooth for livestock management.",
+    "link": "#",
     "date": "2024-11-30",
     "technologies": [
       "ESP32",
@@ -272,15 +271,15 @@
       "Bluetooth",
       "Health Monitoring"
     ],
-    "description": "Advanced cattle monitoring solution using ESP32-based system with infrared temperature sensing and motion detection. Monitors cattle health parameters, displays real-time data on TFT screen, and provides remote monitoring via Bluetooth for livestock management."
+    "image": "assets/images/projects/sensors-21-02885-g001_efd0fb2b.png",
+    "id": "16"
   },
   {
-    "id": "17",
     "title": "AI-Based SQL Generator for Recruitment",
-    "summary": "Natural language to SQL converter for HireDesk recruitment system using LLM integration.",
-    "image": "assets/images/projects/project-1.png",
-    "link": "#",
     "type": "AI",
+    "summary": "Natural language to SQL converter for HireDesk recruitment system using LLM integration.",
+    "description": "Intelligent backend service that translates natural language questions into executable SQL queries for recruitment platforms. Features schema-aware query generation, validation, optimization, and secure execution with complex candidate filtering capabilities.",
+    "link": "#",
     "date": "2025-05-15",
     "technologies": [
       "LangChain",
@@ -289,15 +288,15 @@
       "SQL Server",
       "Natural Language Processing"
     ],
-    "description": "Intelligent backend service that translates natural language questions into executable SQL queries for recruitment platforms. Features schema-aware query generation, validation, optimization, and secure execution with complex candidate filtering capabilities."
+    "image": "assets/images/projects/ChatGPT_Image_Aug_9_2025_05_17_33_PM_660430d8.png",
+    "id": "17"
   },
   {
-    "id": "18",
     "title": "ASP.NET Core API Code Generator",
-    "summary": "LLM-powered automatic generation of RESTful API code for ASP.NET Core applications.",
-    "image": "assets/images/projects/project-2.png",
-    "link": "#",
     "type": "Development Tool",
+    "summary": "LLM-powered automatic generation of RESTful API code for ASP.NET Core applications.",
+    "description": "Automated code generation tool that converts natural language requirements into production-ready ASP.NET Core RESTful API code. Features customizable templates, best practices implementation, error handling, and seamless development environment integration.",
+    "link": "#",
     "date": "2025-07-15",
     "technologies": [
       "ASP.NET Core",
@@ -306,15 +305,15 @@
       "REST API",
       "C#"
     ],
-    "description": "Automated code generation tool that converts natural language requirements into production-ready ASP.NET Core RESTful API code. Features customizable templates, best practices implementation, error handling, and seamless development environment integration."
+    "image": "assets/images/projects/ChatGPT_Image_Aug_9_2025_05_22_15_PM_899a8efd.png",
+    "id": "18"
   },
   {
-    "id": "19",
     "title": "Automated Document Generation Platform",
-    "summary": "Comprehensive document automation system for business, legal, and shipping documentation.",
-    "image": "assets/images/projects/project-3.png",
-    "link": "#",
     "type": "Enterprise",
+    "summary": "Comprehensive document automation system for business, legal, and shipping documentation.",
+    "description": "Complete document automation platform for creating, formatting, and managing business documents. Features one-click generation, custom templates, file conversion tools, automated processing, and integration capabilities for legal, financial, and shipping documentation.",
+    "link": "#",
     "date": "2023-09-20",
     "technologies": [
       "Document Templates",
@@ -323,15 +322,15 @@
       "API Integration",
       "Business Automation"
     ],
-    "description": "Complete document automation platform for creating, formatting, and managing business documents. Features one-click generation, custom templates, file conversion tools, automated processing, and integration capabilities for legal, financial, and shipping documentation."
+    "image": "assets/images/projects/hq720_d91b0d35.jpg",
+    "id": "19"
   },
   {
-    "id": "20",
     "title": "Automated Web Scraping System",
-    "summary": "Intelligent data collection platform for automated web scraping and structured data extraction.",
-    "image": "assets/images/projects/project-4.png",
-    "link": "#",
     "type": "Data Scraping",
+    "summary": "Intelligent data collection platform for automated web scraping and structured data extraction.",
+    "description": "Comprehensive web scraping solution for automated data extraction from websites. Features scheduled scraping, customizable rules, data cleaning, robust anti-blocking mechanisms, and seamless integration with analytics platforms and databases.",
+    "link": "#",
     "date": "2023-07-20",
     "technologies": [
       "Web Scraping",
@@ -340,6 +339,7 @@
       "Anti-blocking",
       "API Integration"
     ],
-    "description": "Comprehensive web scraping solution for automated data extraction from websites. Features scheduled scraping, customizable rules, data cleaning, robust anti-blocking mechanisms, and seamless integration with analytics platforms and databases."
+    "image": "assets/images/projects/web-scraping-attack_4e63c8d7.jpg",
+    "id": "20"
   }
 ]
